@@ -8,6 +8,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { RouterModule } from '@angular/router';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { HeaderDetailsComponent } from './components/header-details/header-details.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { HeaderDetailsComponent } from './components/header-details/header-detai
     HomePageComponent,
     ExpensesComponent,
     HeaderDetailsComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
