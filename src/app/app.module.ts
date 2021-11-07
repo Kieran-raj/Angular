@@ -6,9 +6,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RouterModule } from '@angular/router';
+import { ExpensesComponent } from './expenses/expenses.component';
+import { HeaderDetailsComponent } from './components/header-details/header-details.component';
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent],
+  declarations: [
+    AppComponent,
+    HomePageComponent,
+    ExpensesComponent,
+    HeaderDetailsComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -16,6 +23,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'home', component: HomePageComponent },
+      { path: 'expenses', component: ExpensesComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]),
   ],
