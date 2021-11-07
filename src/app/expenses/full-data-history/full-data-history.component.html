@@ -1,0 +1,34 @@
+<app-header-details [pageTitle]="pageTitle"></app-header-details>
+
+<p>
+  This should contain full history data with the ability to search each
+  categories, dates or filter
+</p>
+
+<div class="card">
+  <div class="card-header">Full Historic Data</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table" *ngIf="transactionData.length">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of transactionData">
+            <td>{{ transaction.date }}</td>
+            <td>{{ transaction.description }}</td>
+            <td>{{ transaction.category }}</td>
+            <td>{{ transaction.amount | number: ".2" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<button><a [routerLink]="'/home'">Home</a></button>

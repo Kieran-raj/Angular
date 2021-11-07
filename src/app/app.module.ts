@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { HeaderDetailsComponent } from './components/header-details/header-details.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { FullDataHistoryComponent } from './expenses/full-data-history/full-data-history.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     ExpensesComponent,
     HeaderDetailsComponent,
     NavBarComponent,
+    FullDataHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +28,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     RouterModule.forRoot([
       { path: 'home', component: HomePageComponent },
       { path: 'expenses', component: ExpensesComponent },
+      { path: 'expenses/history', component: FullDataHistoryComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]),
   ],
