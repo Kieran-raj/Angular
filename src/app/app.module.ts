@@ -10,6 +10,7 @@ import { ExpensesComponent } from './expenses/expenses.component';
 import { HeaderDetailsComponent } from './components/header-details/header-details.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FullDataHistoryComponent } from './expenses/full-data-history/full-data-history.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FullDataHistoryComponent } from './expenses/full-data-history/full-data
       { path: 'expenses/history', component: FullDataHistoryComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
