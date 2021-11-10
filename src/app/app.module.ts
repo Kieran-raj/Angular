@@ -36,8 +36,9 @@ import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]),
     BrowserAnimationsModule,
+    NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent, FullDataHistoryComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
