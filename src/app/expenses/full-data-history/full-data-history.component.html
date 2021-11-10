@@ -1,28 +1,51 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <app-nav-bar></app-nav-bar>
 <div class="container">
-  <p>
-    This should contain full history data with the ability to search each
-    categories, dates or filter
-  </p>
-  <div class="card center">
+  <div class="card center mt-4">
     <div class="card-header">
       <div class="row">
-        <div class="col-9 mt-2">
-          <h5>Full Historic Data</h5>
+        <div class="col-5 mt-3">
+          <h2>Full Historic Data</h2>
         </div>
-        <div class="col-3 mt-2 mr-0">
-          <h5>Total Spent: £{{ total }}</h5>
+        <div class="col-5"></div>
+        <div class="col-2 mt-3 mr-0">
+          <h3>Total Spent: £{{ total | number: ".2" }}</h3>
         </div>
       </div>
     </div>
     <div class="card-body">
-      <div class="row">
-        <div class="col-3">Start Date:</div>
-        <div class="col-3">End Date:</div>
-        <div class="col-6"></div>
-      </div>
-      <div class="table-responsive">
+      <form [formGroup]="filterGroup" (submit)="submit($event)">
+        <div class="row">
+          <div [formGroup]="filterGroup" class="col-3">
+            <label class="mb-1" for="startDate">Start Date</label>
+            <input
+              class="form-control"
+              type="date"
+              id="startDate"
+              name="startDate"
+              formControlName="startDate"
+            />
+          </div>
+          <div [formGroup]="filterGroup" class="col-3">
+            <label class="mb-1" for="endDate">End Date</label>
+            <input
+              class="form-control"
+              type="date"
+              id="endDate"
+              name="endDate"
+              formControlName="endDate"
+            />
+          </div>
+          <div class="col-5">
+            <app-dropdown-menu [filterGroup]="filterGroup"></app-dropdown-menu>
+          </div>
+          <div class="col-1">
+            <button type="submit" class="btn btn-success mt-4">Apply</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive mt-2">
         <table class="table" *ngIf="transactionData.length">
           <thead>
             <tr>

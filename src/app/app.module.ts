@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,6 +12,7 @@ import { HeaderDetailsComponent } from './components/header-details/header-detai
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FullDataHistoryComponent } from './expenses/full-data-history/full-data-history.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderDetailsComponent,
     NavBarComponent,
     FullDataHistoryComponent,
+    DropdownMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, FullDataHistoryComponent],
 })
 export class AppModule {}

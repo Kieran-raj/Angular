@@ -6,11 +6,24 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TransactionsService {
-  url: string = 'http://192.168.1.57:5000/expenses/full_data';
+  url: string = 'http://192.168.1.57:5000/expenses';
 
   constructor(private http: HttpClient) {}
 
   getAllTransactions(): Observable<any> {
-    return this.http.get(this.url);
+    return this.http.get(`${this.url}/full_data`);
+  }
+
+  getFilteredTransactions(
+    startDate: string,
+    endDate: string,
+    category: string
+  ): Observable<any> {
+    console.log(
+      `${this.url}/filtered_data?startDate=${startDate}&endDate=${endDate}&category=${category}`
+    );
+    return this.http.get(
+      `${this.url}/filtered_data?startDate=${startDate}&endDate=${endDate}&category=${category}`
+    );
   }
 }
