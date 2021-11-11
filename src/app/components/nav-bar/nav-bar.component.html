@@ -1,5 +1,5 @@
 <div class="container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="#">Symbol??</a>
     <button
       class="navbar-toggler"
@@ -13,14 +13,34 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item active">
           <a class="nav-link" [routerLink]="'/home'"
             >Home <span class="sr-only"></span
           ></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/expenses']">Expenses</a>
+          <div ngbDropdown id="dropDown">
+            <button class="nav-link" id="expensesDropDown" ngbDropdownToggle>
+              Expenses
+            </button>
+            <div
+              ngbDropdownMenu
+              id="expensesMenu"
+              aria-labelledby="expensesDropDown"
+            >
+              <a class="nav-link" [routerLink]="['/expenses']">Summary</a>
+              <a class="nav-link" [routerLink]="'/expenses/history'"
+                >Historic Data</a
+              >
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Stocks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Account</a>
         </li>
       </ul>
     </div>
