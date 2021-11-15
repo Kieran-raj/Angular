@@ -36,11 +36,14 @@
               formControlName="endDate"
             />
           </div>
-          <div class="col-5">
+          <div class="col-4">
             <app-dropdown-menu [filterGroup]="filterGroup"></app-dropdown-menu>
           </div>
           <div class="col-1">
             <button type="submit" class="btn btn-success mt-4">Apply</button>
+          </div>
+          <div class="col-1">
+            <button type="reset" class="btn btn btn-danger mt-4">Clear</button>
           </div>
         </div>
       </form>

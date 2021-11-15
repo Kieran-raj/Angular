@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -37,6 +38,7 @@ import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.
     ]),
     BrowserAnimationsModule,
     NgbModule,
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
