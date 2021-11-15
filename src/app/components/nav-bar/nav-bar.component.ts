@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
+  @Input()
+  hideHomeLink: boolean = false
+  navLinkClass: string = ''
 
   constructor() { }
 
   ngOnInit(): void {
+    if (this.hideHomeLink) {
+      this.navLinkClass = 'hideHomeLink'
+    }
   }
 
 }
