@@ -6,8 +6,12 @@
       <h2 class="mb-0">Expenses Summary</h2>
     </div>
     <div class="card-body">
-      chart to go here
-      <ngx-charts-line-chart></ngx-charts-line-chart>
+      <div class="row">
+        <div class="col-6">
+          <app-line-chart [data]="data">
+          </app-line-chart>
+        </div>
+      </div>
     </div>
   </div>
 </div>
