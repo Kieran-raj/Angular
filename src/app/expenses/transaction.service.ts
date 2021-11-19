@@ -30,4 +30,8 @@ export class TransactionsService {
   getAmountsOnly(): Observable<any> {
     return this.http.get(`${this.url}/get_daily_amounts`);
   }
+
+  getCategoricalAmounts(): Observable<any> {
+    return this.http.get(`${this.url}/get_categorical_amounts`);
+  }
 }

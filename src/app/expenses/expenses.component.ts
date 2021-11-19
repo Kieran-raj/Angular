@@ -8,9 +8,10 @@ import { TransactionsService } from './transaction.service';
 })
 export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
-  data: any = [];
+  lineData: any = [];
+  barData: any = [];
 
-  view: any = [700, 350];
+  view: any = [1300, 350];
   legend: boolean = true;
   legendPosition: string = 'below';
   showLabels: boolean = true;
@@ -23,28 +24,26 @@ export class ExpensesComponent implements OnInit {
   xAxisTicks: any[] = [];
   tooltipTemplate: any[] = [];
 
-  formattedData: any = [
-    {
-      name: 'Transactions',
-      series: [],
-    },
-  ];
-
   constructor(private transactionService: TransactionsService) {}
 
   ngOnInit(): void {
     this.transactionService.getAmountsOnly().subscribe((results) => {
-      this.data = this.formatData(results.data.transaction);
-      this.xAxisTicks = this.generateXTicks(results.data.transaction);
+      this.lineData = this.formatLineBarData(results.data.transaction);
+      this.xAxisTicks = this.generateLineXTicks(results.data.transaction);
       this.tooltipTemplate = this.tooltipTemplateGenerator(
         results.data.transaction
       );
     });
   }
 
-  formatData(data: []): any {
+  formatLineBarData(data: []): any {
     let series: any = [];
-    let newData = this.formattedData;
+    let newData = [
+      {
+        name: 'Transactions',
+        series: [],
+      },
+    ];
     for (let i = 0; i < data.length; i++) {
       let newFormat: any = {};
       newFormat = {
@@ -57,9 +56,9 @@ export class ExpensesComponent implements OnInit {
     return newData;
   }
 
-  generateXTicks(data: []): any[] {
+  generateLineXTicks(data: []): any[] {
     let dates: any[] = [];
-    for (let i = 0; i < data.length; i = i + 6) {
+    for (let i = 0; i < data.length; i = i + 5) {
       dates.push(data[i]['date']);
     }
     return dates;
