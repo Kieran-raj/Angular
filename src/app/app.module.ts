@@ -14,7 +14,6 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FullDataHistoryComponent } from './expenses/full-data-history/full-data-history.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
-import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
     NavBarComponent,
     FullDataHistoryComponent,
     DropdownMenuComponent,
-    LineChartComponent,
   ],
   imports: [
     BrowserModule,

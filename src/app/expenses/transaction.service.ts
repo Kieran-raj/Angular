@@ -26,4 +26,8 @@ export class TransactionsService {
       `${this.url}/filtered_data?startDate=${startDate}&endDate=${endDate}&category=${category}`
     );
   }
+
+  getAmountsOnly(): Observable<any> {
+    return this.http.get(`${this.url}/get_daily_amounts`);
+  }
 }

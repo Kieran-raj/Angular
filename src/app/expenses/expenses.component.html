@@ -1,15 +1,40 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <app-nav-bar></app-nav-bar>
 <div class="container">
-  <div class="card-center mt-4">
+  <div class="card-center mt-4 border-primary">
     <div class="card-header">
       <h2 class="mb-0">Expenses Summary</h2>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-6">
-          <app-line-chart [data]="data">
-          </app-line-chart>
+          <form>
+            <div class="row">inputs here</div>
+          </form>
+          <ngx-charts-line-chart
+            [view]="view"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [xAxisTicks]="xAxisTicks"
+            [results]="data"
+          >
+            <ng-template #tooltipTemplate let-model="model" class="tooltip">
+              <div>
+                {{ model.series }}
+              </div>
+              <div>
+                Date: {{ model.name }} Amount: £{{ model.value | number: ".2" }}
+              </div>
+            </ng-template>
+            <ng-template #seriesTooltipTemplate let-model="model">
+              <div>
+                <h5>Amount: £{{ model[0].value | number: ".2" }}</h5>
+              </div>
+            </ng-template>
+          </ngx-charts-line-chart>
         </div>
       </div>
     </div>
