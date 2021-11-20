@@ -9,20 +9,12 @@ import { TransactionsService } from './transaction.service';
 export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
   lineData: any = [];
-  barData: any = [];
 
-  view: any = [1300, 350];
-  legend: boolean = true;
+  view: any = [1050, 350];
   legendPosition: string = 'below';
-  showLabels: boolean = true;
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  showXAxisLabel: boolean = true;
   xAxisLabel: string = 'Date';
   yAxisLabel: string = 'Amount (£)';
   xAxisTicks: any[] = [];
-  tooltipTemplate: any[] = [];
 
   constructor(private transactionService: TransactionsService) {}
 
@@ -30,9 +22,6 @@ export class ExpensesComponent implements OnInit {
     this.transactionService.getAmountsOnly().subscribe((results) => {
       this.lineData = this.formatLineBarData(results.data.transaction);
       this.xAxisTicks = this.generateLineXTicks(results.data.transaction);
-      this.tooltipTemplate = this.tooltipTemplateGenerator(
-        results.data.transaction
-      );
     });
   }
 
@@ -62,18 +51,5 @@ export class ExpensesComponent implements OnInit {
       dates.push(data[i]['date']);
     }
     return dates;
-  }
-
-  tooltipTemplateGenerator(data: []): any[] {
-    let template: any[] = [];
-    for (let i = 0; i < data.length; i++) {
-      let format = {};
-      format = {
-        name: data[i]['date'],
-        value: `£${data[i]['amount']}`,
-      };
-      template.push(format);
-    }
-    return template;
   }
 }

@@ -1,15 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.scss']
+  styleUrls: ['./line-chart.component.scss'],
 })
 export class LineChartComponent implements OnInit {
+  @Input()
+  sourceData: any[] = [];
+  @Input()
+  view: any = [];
+  @Input()
+  xAxisLabel: string = '';
+  @Input()
+  yAxisLabel: string = '';
+  @Input()
+  xAxisTicks: any[] = [];
+  @Input()
+  legend: boolean = true;
+  @Input()
+  legendTitle: string = '';
+  @Input()
+  legendPosition: any = '';
 
-  constructor() { }
+  xAxis: boolean = true;
+  yAxis: boolean = true;
 
-  ngOnInit(): void {
-  }
+  showXAxisLabel: boolean = true;
+  showYAxisLabel: boolean = true;
 
+  constructor() {}
+
+  ngOnInit(): void {}
 }
