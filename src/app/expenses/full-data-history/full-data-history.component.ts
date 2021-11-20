@@ -41,7 +41,6 @@ export class FullDataHistoryComponent implements OnInit {
       )
       .subscribe((results) => {
         this.transactionData = results.data.transactions;
-        console.log(this.transactionData);
         this.total = results.data.total;
       });
   }

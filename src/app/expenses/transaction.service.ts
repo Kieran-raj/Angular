@@ -31,6 +31,10 @@ export class TransactionsService {
     return this.http.get(`${this.url}/get_daily_amounts`);
   }
 
+  getMonthlyAmounts(): Observable<any> {
+    return this.http.get(`${this.url}/get_monthly_amounts`);
+  }
+
   getCategoricalAmounts(): Observable<any> {
     return this.http.get(`${this.url}/get_categorical_amounts`);
   }

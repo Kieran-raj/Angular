@@ -9,12 +9,15 @@ import { TransactionsService } from './transaction.service';
 export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
   lineData: any = [];
+  frequency: string = 'daily'
 
   view: any = [1050, 350];
   legendPosition: string = 'below';
   xAxisLabel: string = 'Date';
   yAxisLabel: string = 'Amount (£)';
   xAxisTicks: any[] = [];
+
+  dropDownValues = ['Daily', 'Weekly', 'Monthly']
 
   constructor(private transactionService: TransactionsService) {}
 

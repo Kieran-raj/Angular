@@ -1,4 +1,4 @@
-<div [formGroup]="filterGroup">
+<div *ngIf="filterGroup" [formGroup]="filterGroup">
   <label class="mb-1" for="category">Choose a category</label>
   <select
     class="form-control"
@@ -12,5 +12,11 @@
     <option value="social">Social</option>
     <option value="online">Online</option>
     <option value="other">Other</option>
+  </select>
+</div>
+
+<div *ngIf="dropDownValues">  
+  <select >
+    <option *ngFor="let item of dropDownValues" [value]="item">{{ item }}</option>
   </select>
 </div>

@@ -19,7 +19,9 @@
           </app-line-chart>
         </div>
         <div class="col-2 border">
-          <div>Dropdown: daily, weekly, monthly, yearly</div>
+          <div>
+            <app-dropdown-menu [dropDownValues]="dropDownValues"></app-dropdown-menu>
+          </div>
           <br />
           <div>Radio button to check moving average on and off</div>
           <br />
