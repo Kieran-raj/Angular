@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ExpensesComponent } from '../../expenses/expenses.component'
 
 @Component({
   selector: 'app-dropdown-menu',
@@ -11,9 +10,17 @@ export class DropdownMenuComponent implements OnInit {
   @Input()
   public filterGroup!: FormGroup;
   @Input()
-  public dropDownValues: string[] = []
+  public dropDownValues: string[] = [];
+
+  @Output() newDropDownValue = new EventEmitter<string>();
+  dropDownValue: string = '';
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  getDropDownValue(event: any): void {
+    this.dropDownValue = event.target.value;
+    this.newDropDownValue.emit(this.dropDownValue);
+  }
 }

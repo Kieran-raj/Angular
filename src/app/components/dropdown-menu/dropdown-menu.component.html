@@ -15,8 +15,10 @@
   </select>
 </div>
 
-<div *ngIf="dropDownValues">  
-  <select >
-    <option *ngFor="let item of dropDownValues" [value]="item">{{ item }}</option>
+<div *ngIf="dropDownValues">
+  <select (change)="getDropDownValue($event)">
+    <option *ngFor="let item of dropDownValues" [value]="item">
+      {{ item }}
+    </option>
   </select>
 </div>

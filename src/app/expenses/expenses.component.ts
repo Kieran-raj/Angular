@@ -9,7 +9,7 @@ import { TransactionsService } from './transaction.service';
 export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
   lineData: any = [];
-  frequency: string = 'daily'
+  isdailyData: boolean = true;
 
   view: any = [1050, 350];
   legendPosition: string = 'below';
@@ -17,18 +17,19 @@ export class ExpensesComponent implements OnInit {
   yAxisLabel: string = 'Amount (£)';
   xAxisTicks: any[] = [];
 
-  dropDownValues = ['Daily', 'Weekly', 'Monthly']
+  dropDownValues = ['Daily', 'Weekly', 'Monthly'];
 
   constructor(private transactionService: TransactionsService) {}
 
   ngOnInit(): void {
     this.transactionService.getAmountsOnly().subscribe((results) => {
-      this.lineData = this.formatLineBarData(results.data.transaction);
-      this.xAxisTicks = this.generateLineXTicks(results.data.transaction);
+      this.lineData = this.formatDailyLineBarData(results.data.transaction);
+      console.log(JSON.stringify(this.lineData));
+      this.xAxisTicks = this.generateLineXTicks(results.data.transaction, 5);
     });
   }
 
-  formatLineBarData(data: []): any {
+  formatDailyLineBarData(data: []): any {
     let series: any = [];
     let newData = [
       {
@@ -48,11 +49,25 @@ export class ExpensesComponent implements OnInit {
     return newData;
   }
 
-  generateLineXTicks(data: []): any[] {
+  formatMonthlyData(data: []): any {}
+
+  generateLineXTicks(data: [], interal: number): any[] {
     let dates: any[] = [];
-    for (let i = 0; i < data.length; i = i + 5) {
+    for (let i = 0; i < data.length; i = i + interal) {
       dates.push(data[i]['date']);
     }
     return dates;
+  }
+
+  dropDownValue(value: string): void {
+    console.log(value);
+    if (value === 'Monthly') {
+      this.isdailyData = !this.isdailyData;
+      this.transactionService.getMonthlyAmounts().subscribe((results) => {
+        console.log(JSON.stringify(results.data.transaction));
+      });
+    } else if (value === 'Daily') {
+      this.isdailyData = true;
+    }
   }
 }
