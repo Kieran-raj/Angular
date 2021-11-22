@@ -9,6 +9,7 @@ import { TransactionsService } from './transaction.service';
 export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
   lineData: any = [];
+  barData: any = [];
   isdailyData: boolean = true;
 
   view: any = [1050, 350];
@@ -23,9 +24,8 @@ export class ExpensesComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionService.getAmountsOnly().subscribe((results) => {
-      this.lineData = this.formatDailyLineBarData(results.data.transaction);
-      console.log(JSON.stringify(this.lineData));
-      this.xAxisTicks = this.generateLineXTicks(results.data.transaction, 5);
+      this.lineData = this.formatDailyLineBarData(results.data.dailyAmounts);
+      this.xAxisTicks = this.generateLineXTicks(results.data.dailyAmounts, 5);
     });
   }
 
@@ -49,6 +49,29 @@ export class ExpensesComponent implements OnInit {
     return newData;
   }
 
+  sampleInput = [
+    {
+      amount: 685.15,
+      month: 'July',
+      year: 2021,
+    },
+    {
+      amount: 511.51,
+      month: 'August',
+      year: 2021,
+    },
+    {
+      amount: 711.91,
+      month: 'September',
+      year: 2021,
+    },
+    {
+      amount: 29.65,
+      month: 'October',
+      year: 2021,
+    },
+  ];
+
   formatMonthlyData(data: []): any {}
 
   generateLineXTicks(data: [], interal: number): any[] {
@@ -60,11 +83,10 @@ export class ExpensesComponent implements OnInit {
   }
 
   dropDownValue(value: string): void {
-    console.log(value);
     if (value === 'Monthly') {
       this.isdailyData = !this.isdailyData;
       this.transactionService.getMonthlyAmounts().subscribe((results) => {
-        console.log(JSON.stringify(results.data.transaction));
+        console.log(JSON.stringify(results.data.monthlyAmounts));
       });
     } else if (value === 'Daily') {
       this.isdailyData = true;

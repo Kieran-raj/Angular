@@ -14,6 +14,10 @@ export class TransactionsService {
     return this.http.get(`${this.url}/full_data`);
   }
 
+  getYears(): Observable<any> {
+    return this.http.get(`${this.url}/full_data/all_years`);
+  }
+
   getFilteredTransactions(
     startDate: string,
     endDate: string,
