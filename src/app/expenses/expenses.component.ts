@@ -12,8 +12,9 @@ export class ExpensesComponent implements OnInit {
   barData: any = [];
   years: any[] = [];
   isDailyData: boolean = true;
+  isWeeklyData: boolean = false;
+  isMonthlyData: boolean = false
   
-
   view: any = [1050, 350];
   legendPosition: string = 'below';
   xAxisLabel: string = 'Date';
@@ -89,12 +90,23 @@ export class ExpensesComponent implements OnInit {
 
   dropDownValue(value: string): void {
     if (value === 'Monthly') {
-      this.isDailyData = !this.isDailyData;
+      this.isDailyData = false;
+      this.isMonthlyData = true;
       this.transactionService.getMonthlyAmounts().subscribe((results) => {
         this.barData = this.formatMonthlyData(results.data.monthlyAmounts)
       });
     } else if (value === 'Daily') {
       this.isDailyData = true;
+      this.isWeeklyData = false
+      this.isMonthlyData = false;
+    } else if (value === 'Monthly') {
+      this.isDailyData = false;
+      this.isMonthlyData = true;
+      this.isWeeklyData = false;
+    } else if (value === 'Weekly') {
+      this.isWeeklyData = true;
+      this.isMonthlyData = false;
+      this.isDailyData = false;
     }
   }
 }
