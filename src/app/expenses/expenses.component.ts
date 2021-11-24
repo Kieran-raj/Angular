@@ -11,7 +11,8 @@ export class ExpensesComponent implements OnInit {
   lineData: any = [];
   barData: any = [];
   years: any[] = [];
-  isdailyData: boolean = true;
+  isDailyData: boolean = true;
+  
 
   view: any = [1050, 350];
   legendPosition: string = 'below';
@@ -88,12 +89,12 @@ export class ExpensesComponent implements OnInit {
 
   dropDownValue(value: string): void {
     if (value === 'Monthly') {
-      this.isdailyData = !this.isdailyData;
+      this.isDailyData = !this.isDailyData;
       this.transactionService.getMonthlyAmounts().subscribe((results) => {
         this.barData = this.formatMonthlyData(results.data.monthlyAmounts)
       });
     } else if (value === 'Daily') {
-      this.isdailyData = true;
+      this.isDailyData = true;
     }
   }
 }

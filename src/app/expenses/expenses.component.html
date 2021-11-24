@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-10 border">
           <app-line-chart
-            *ngIf="isdailyData"
+            *ngIf="isDailyData"
             [sourceData]="lineData"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel"
@@ -18,7 +18,7 @@
             [view]="view"
           >
           </app-line-chart>
-          <app-bar-chart *ngIf="!isdailyData" [sourceData]="barData"></app-bar-chart>
+          <app-bar-chart *ngIf="!isDailyData" [sourceData]="barData"></app-bar-chart>
         </div>
         <div class="col-2 border">
           <div>
