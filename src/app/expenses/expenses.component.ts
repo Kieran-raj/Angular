@@ -10,6 +10,7 @@ export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
   lineData: any = [];
   barData: any = [];
+  years: any[] = [];
   isdailyData: boolean = true;
 
   view: any = [1050, 350];
@@ -27,6 +28,10 @@ export class ExpensesComponent implements OnInit {
       this.lineData = this.formatDailyLineBarData(results.data.dailyAmounts);
       this.xAxisTicks = this.generateLineXTicks(results.data.dailyAmounts, 5);
     });
+
+    this.transactionService.getYears().subscribe((results) => {
+      this.years = results.data.years.sort()
+    })
   }
 
   formatDailyLineBarData(data: []): any {
@@ -49,30 +54,29 @@ export class ExpensesComponent implements OnInit {
     return newData;
   }
 
-  sampleInput = [
-    {
-      amount: 685.15,
-      month: 'July',
-      year: 2021,
-    },
-    {
-      amount: 511.51,
-      month: 'August',
-      year: 2021,
-    },
-    {
-      amount: 711.91,
-      month: 'September',
-      year: 2021,
-    },
-    {
-      amount: 29.65,
-      month: 'October',
-      year: 2021,
-    },
-  ];
-
-  formatMonthlyData(data: []): any {}
+  formatMonthlyData(data: any[]): any {
+    let newDataLayout: any[] = []
+    
+    for (let i = 0; i < this.years.length; i++) {
+      newDataLayout.push({
+        name: (this.years.sort()[i].toString()),
+        series: []
+      })
+    }
+    for (let i=0; i<this.years.length; i++) {
+      let series: any[] = []
+      for (let j=0; j<data.length; j++) {
+        if (this.years[i] === data[j].year) {
+          series.push({
+            name: data[j].month,
+            value: data[j].amount
+          })
+          newDataLayout[i].series = series
+        }
+      }
+    }
+    return newDataLayout
+}
 
   generateLineXTicks(data: [], interal: number): any[] {
     let dates: any[] = [];
@@ -86,7 +90,7 @@ export class ExpensesComponent implements OnInit {
     if (value === 'Monthly') {
       this.isdailyData = !this.isdailyData;
       this.transactionService.getMonthlyAmounts().subscribe((results) => {
-        console.log(JSON.stringify(results.data.monthlyAmounts));
+        this.barData = this.formatMonthlyData(results.data.monthlyAmounts)
       });
     } else if (value === 'Daily') {
       this.isdailyData = true;

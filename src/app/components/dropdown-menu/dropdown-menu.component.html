@@ -16,7 +16,7 @@
 </div>
 
 <div *ngIf="dropDownValues.length > 1">
-  <select (change)="getDropDownValue($event)">
+  <select (change)="onChange($event)">
     <option *ngFor="let item of dropDownValues" [value]="item">
       {{ item }}
     </option>

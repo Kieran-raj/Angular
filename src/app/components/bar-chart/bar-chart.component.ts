@@ -23,6 +23,15 @@ export class BarChartComponent implements OnInit {
 
   sampleTestData: any[] = [
     {
+      name: '2020',
+      series : [
+        {
+          name: 'December',
+          value: 431.12
+        }
+      ]
+    },
+    {
       name: '2021',
       series: [
         {
@@ -38,11 +47,11 @@ export class BarChartComponent implements OnInit {
           value: 711.91,
         },
         {
-          name: 'October',
-          value: 29.65,
-        },
+          name: 'December',
+          value: 230.19
+        }
       ],
-    },
+    }
   ];
 
   constructor() {}

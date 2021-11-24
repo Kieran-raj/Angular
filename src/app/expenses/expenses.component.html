@@ -18,7 +18,7 @@
             [view]="view"
           >
           </app-line-chart>
-          <app-bar-chart *ngIf="!isdailyData"></app-bar-chart>
+          <app-bar-chart *ngIf="!isdailyData" [sourceData]="barData"></app-bar-chart>
         </div>
         <div class="col-2 border">
           <div>

@@ -23,6 +23,7 @@
     </ng-template>
     <ng-template #seriesTooltipTemplate let-model="model">
       <div>
+        <h5>Date: {{ model[0].name }}</h5>
         <h5>Amount: £{{ model[0].value | number: ".2" }}</h5>
       </div>
     </ng-template>

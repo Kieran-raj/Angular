@@ -19,7 +19,7 @@ export class DropdownMenuComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getDropDownValue(event: any): void {
+  onChange(event: any): void {
     this.dropDownValue = event.target.value;
     this.newDropDownValue.emit(this.dropDownValue);
   }
