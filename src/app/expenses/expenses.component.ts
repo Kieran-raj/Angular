@@ -13,8 +13,7 @@ export class ExpensesComponent implements OnInit {
   years: any[] = [];
   isDailyData: boolean = true;
   isWeeklyData: boolean = false;
-  isMonthlyData: boolean = false
-  
+  isMonthlyData: boolean = false;
   view: any = [1050, 350];
   legendPosition: string = 'below';
   xAxisLabel: string = 'Date';
@@ -32,8 +31,8 @@ export class ExpensesComponent implements OnInit {
     });
 
     this.transactionService.getYears().subscribe((results) => {
-      this.years = results.data.years.sort()
-    })
+      this.years = results.data.years.sort();
+    });
   }
 
   formatDailyLineBarData(data: []): any {
@@ -57,28 +56,28 @@ export class ExpensesComponent implements OnInit {
   }
 
   formatMonthlyData(data: any[]): any {
-    let newDataLayout: any[] = []
-    
+    let newDataLayout: any[] = [];
+
     for (let i = 0; i < this.years.length; i++) {
       newDataLayout.push({
-        name: (this.years.sort()[i].toString()),
-        series: []
-      })
+        name: this.years.sort()[i].toString(),
+        series: [],
+      });
     }
-    for (let i=0; i<this.years.length; i++) {
-      let series: any[] = []
-      for (let j=0; j<data.length; j++) {
+    for (let i = 0; i < this.years.length; i++) {
+      let series: any[] = [];
+      for (let j = 0; j < data.length; j++) {
         if (this.years[i] === data[j].year) {
           series.push({
             name: data[j].month,
-            value: data[j].amount
-          })
-          newDataLayout[i].series = series
+            value: data[j].amount,
+          });
+          newDataLayout[i].series = series;
         }
       }
     }
-    return newDataLayout
-}
+    return newDataLayout;
+  }
 
   generateLineXTicks(data: [], interal: number): any[] {
     let dates: any[] = [];
@@ -93,11 +92,11 @@ export class ExpensesComponent implements OnInit {
       this.isDailyData = false;
       this.isMonthlyData = true;
       this.transactionService.getMonthlyAmounts().subscribe((results) => {
-        this.barData = this.formatMonthlyData(results.data.monthlyAmounts)
+        this.barData = this.formatMonthlyData(results.data.monthlyAmounts);
       });
     } else if (value === 'Daily') {
       this.isDailyData = true;
-      this.isWeeklyData = false
+      this.isWeeklyData = false;
       this.isMonthlyData = false;
     } else if (value === 'Monthly') {
       this.isDailyData = false;

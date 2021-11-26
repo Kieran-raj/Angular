@@ -19,17 +19,17 @@ export class BarChartComponent implements OnInit {
   showXAxisLabel = true;
   xAxisLabel = 'Year';
   showYAxisLabel = true;
-  yAxisLabel = 'Population';
+  yAxisLabel = 'Amount (£)';
 
   sampleTestData: any[] = [
     {
       name: '2020',
-      series : [
+      series: [
         {
           name: 'December',
-          value: 431.12
-        }
-      ]
+          value: 431.12,
+        },
+      ],
     },
     {
       name: '2021',
@@ -48,10 +48,10 @@ export class BarChartComponent implements OnInit {
         },
         {
           name: 'December',
-          value: 230.19
-        }
+          value: 230.19,
+        },
       ],
-    }
+    },
   ];
 
   constructor() {}

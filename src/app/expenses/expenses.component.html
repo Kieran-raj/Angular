@@ -18,10 +18,11 @@
             [view]="view"
           >
           </app-line-chart>
-          <app-bar-chart *ngIf="isMonthlyData" [sourceData]="barData"></app-bar-chart>
-          <div *ngIf="isWeeklyData">
-            Weekly drop selected
-          </div>
+          <app-bar-chart
+            *ngIf="isMonthlyData"
+            [sourceData]="barData"
+          ></app-bar-chart>
+          <div *ngIf="isWeeklyData">Weekly drop selected</div>
         </div>
         <div class="col-2 border">
           <div>
@@ -34,6 +35,8 @@
           <div>Radio button to check moving average on and off</div>
           <br />
           <div>choose date range</div>
+          <br />
+          <div>On click maybe go into a break down</div>
         </div>
       </div>
       <div class="row">
