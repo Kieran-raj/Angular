@@ -54,7 +54,7 @@ export class ExpensesComponent implements OnInit {
     newData[0].series = series;
     return newData;
   }
-
+  // TODO:Need to order bar chart data based on months
   formatMonthlyData(data: any[]): any {
     let newDataLayout: any[] = [];
 

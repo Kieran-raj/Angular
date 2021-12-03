@@ -31,7 +31,7 @@ export class FullDataHistoryComponent implements OnInit {
       this.total = results.data.total;
     });
   }
-
+  // TODO: Getting error when no data is being returned due to status code 204
   submit(_: Event): void {
     this.transactionService
       .getFilteredTransactions(
