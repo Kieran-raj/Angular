@@ -32,11 +32,16 @@
             ></app-dropdown-menu>
           </div>
           <br />
-          <div>Radio button to check moving average on and off</div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Display moving average</label>
+          </div>
           <br />
-          <div>choose date range</div>
+          <div><app-date-filter [isDaily]="isDailyData" [isMonthly]="isMonthlyData"></app-date-filter></div>
           <br />
           <div>On click maybe go into a break down</div>
+          <br />
+          <div>Radio butons to choose a given year</div>
         </div>
       </div>
       <div class="row">

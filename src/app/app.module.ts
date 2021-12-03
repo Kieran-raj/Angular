@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { DateFilterComponent } from './components/date-filter/date-filter.component'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { BarChartComponent } from './components/bar-chart/bar-chart.component';
     DropdownMenuComponent,
     LineChartComponent,
     BarChartComponent,
+    DateFilterComponent,
   ],
   imports: [
     BrowserModule,
