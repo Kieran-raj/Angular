@@ -1,3 +1,4 @@
+// TODO: NEED TO ADD TYPES TO ALL MISSING TYPES
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from './transaction.service';
 
@@ -9,17 +10,19 @@ import { TransactionsService } from './transaction.service';
 export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
   lineData: any = [];
+  movingAverageData: any = [];
   barData: any = [];
-  years: any[] = [];
+  years: number[] = [];
   isDailyData: boolean = true;
   isWeeklyData: boolean = false;
   isMonthlyData: boolean = false;
-  view: any = [1050, 350];
+  view: number[] = [1050, 350];
   legendPosition: string = 'below';
   xAxisLabel: string = 'Date';
   yAxisLabel: string = 'Amount (£)';
-  xAxisTicks: any[] = [];
+  xAxisTicks: string[] = [];
 
+  movingAverageToggle: boolean = false;
   dropDownValues = ['Daily', 'Weekly', 'Monthly'];
 
   constructor(private transactionService: TransactionsService) {}
@@ -54,7 +57,7 @@ export class ExpensesComponent implements OnInit {
     newData[0].series = series;
     return newData;
   }
-  // TODO:Need to order bar chart data based on months
+
   formatMonthlyData(data: any[]): any {
     let newDataLayout: any[] = [];
 
@@ -79,8 +82,8 @@ export class ExpensesComponent implements OnInit {
     return newDataLayout;
   }
 
-  generateLineXTicks(data: [], interal: number): any[] {
-    let dates: any[] = [];
+  generateLineXTicks(data: [], interal: number): string[] {
+    let dates: string[] = [];
     for (let i = 0; i < data.length; i = i + interal) {
       dates.push(data[i]['date']);
     }
@@ -103,6 +106,12 @@ export class ExpensesComponent implements OnInit {
       this.isWeeklyData = true;
       this.isMonthlyData = false;
       this.isDailyData = false;
+    }
+  }
+
+  setToggleValue(value: Event) {
+    if (!value.defaultPrevented) {
+      this.movingAverageToggle = !this.movingAverageToggle;
     }
   }
 }
