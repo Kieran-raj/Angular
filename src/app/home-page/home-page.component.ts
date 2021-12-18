@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
+  pageTitle: string = 'Home';
+  hideHomeLink: boolean = true
+
   constructor() {}
 
   ngOnInit(): void {}

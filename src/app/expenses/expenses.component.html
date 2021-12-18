@@ -1,0 +1,62 @@
+<app-header-details [pageTitle]="pageTitle"></app-header-details>
+<app-nav-bar></app-nav-bar>
+<div class="container">
+  <div class="card-center mt-4">
+    <div class="card-header">
+      <h2 class="mb-0">Expenses Summary</h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-10">
+          <app-line-chart
+            *ngIf="isDailyData"
+            [sourceData]="lineData"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [xAxisTicks]="xAxisTicks"
+            [legendPosition]="legendPosition"
+            [view]="view"
+          >
+          </app-line-chart>
+          <app-bar-chart
+            *ngIf="isMonthlyData"
+            [sourceData]="barData"
+          ></app-bar-chart>
+          <div *ngIf="isWeeklyData">Weekly drop selected</div>
+        </div>
+        <div class="col-2">
+          <div>
+            <app-dropdown-menu
+              [dropDownValues]="dropDownValues"
+              (newDropDownValue)="dropDownValue($event)"
+            ></app-dropdown-menu>
+          </div>
+          <br />
+          <div class="form-check form-switch" *ngIf="isDailyData">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="flexSwitchCheckDefault"
+              (change)="setToggleValue($event)"
+            />
+            <label class="form-check-label" for="flexSwitchCheckDefault"
+              >Display moving average</label
+            >
+          </div>
+          <br />
+          <div>
+            <app-date-filter
+              [isDaily]="isDailyData"
+              [isMonthly]="isMonthlyData"
+            ></app-date-filter>
+          </div>
+          <br />
+          <div>Radio butons to choose a given year</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-7"></div>
+      </div>
+    </div>
+  </div>
+</div>
