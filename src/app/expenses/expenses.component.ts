@@ -1,4 +1,6 @@
 // TODO: NEED TO ADD TYPES TO ALL MISSING TYPES
+// TODO: Need to add a loading wheel
+// TODO: Need to add a no data found
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from './transaction.service';
 

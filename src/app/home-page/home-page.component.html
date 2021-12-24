@@ -1,18 +1,19 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <app-nav-bar [hideHomeLink]="hideHomeLink"></app-nav-bar>
 <div class="container">
-    <div class="row h-100">
-        <div class="col-sm-4 my-auto text-center">
-            <button class="btn btn-secondary btn-lg"><a>About me</a></button>
-        </div>
-        <div class="col-sm-4 my-auto text-center">
-            <button class="btn btn-secondary btn-lg"><a [routerLink]="['/expenses']">Expenses</a></button>
-        </div>
-        <div class="col-sm-4 my-auto text-center">
-            <button class="btn btn-secondary btn-lg"><a>Stocks</a></button>
-        </div>
+  <div class="row h-100">
+    <div class="col-sm-4 my-auto text-center">
+      <button class="btn btn-secondary btn-lg mb-5"><a>About me</a></button>
     </div>
+    <div class="col-sm-4 my-auto text-center">
+      <button class="btn btn-secondary btn-lg mb-5">
+        <a [routerLink]="['/expenses']">Expenses</a>
+      </button>
+    </div>
+    <div class="col-sm-4 my-auto text-center">
+      <button class="btn btn-secondary btn-lg mb-5"><a>Stocks</a></button>
+    </div>
+  </div>
 </div>
-
 
 <router-outlet></router-outlet>

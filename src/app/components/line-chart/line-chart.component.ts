@@ -4,6 +4,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class LineChartComponent implements OnInit {
   @Input()
