@@ -6,7 +6,7 @@
     id="category"
     formControlName="category"
   >
-    <option value="">Select a category</option>
+    <option value="">Choose a category</option>
     <option value="food">Food</option>
     <option value="transport">Transport</option>
     <option value="social">Social</option>
@@ -15,10 +15,24 @@
   </select>
 </div>
 
-<div *ngIf="dropDownValues.length > 1">
-  <select (change)="onChange($event)">
-    <option *ngFor="let item of dropDownValues" [value]="item">
-      {{ item }}
-    </option>
-  </select>
+<div class="col" *ngIf="!hideGranularityDropDown">
+  <div ngbDropdown>
+    <button
+      class="btn btn-outline-secondary"
+      id="dropdown"
+      ngbDropdownToggle
+      [ngStyle]="{ width: '190px' }"
+    >
+      {{ dropDownValue }}
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdown">
+      <button
+        ngbDropdownItem
+        *ngFor="let item of dropDownValues"
+        (click)="onGranularitySelection(item)"
+      >
+        {{ item }}
+      </button>
+    </div>
+  </div>
 </div>

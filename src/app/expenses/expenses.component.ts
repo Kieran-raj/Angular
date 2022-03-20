@@ -2,6 +2,7 @@
 // TODO: Need to add a loading wheel
 // TODO: Need to add a no data found
 import { Component, OnInit } from '@angular/core';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { TransactionsService } from './transaction.service';
 
 @Component({
@@ -84,10 +85,14 @@ export class ExpensesComponent implements OnInit {
     return newDataLayout;
   }
 
-  generateLineXTicks(data: [], interal: number): string[] {
+  generateLineXTicks(
+    data: [],
+    interval: number,
+    dateColumn: string = 'date'
+  ): string[] {
     let dates: string[] = [];
-    for (let i = 0; i < data.length; i = i + interal) {
-      dates.push(data[i]['date']);
+    for (let i = 0; i < data.length; i = i + interval) {
+      dates.push(data[i][dateColumn]);
     }
     return dates;
   }
@@ -115,5 +120,31 @@ export class ExpensesComponent implements OnInit {
     if (!value.defaultPrevented) {
       this.movingAverageToggle = !this.movingAverageToggle;
     }
+  }
+
+  newSelectedStartDate(value: NgbDate) {
+    const newStartData = new Date(`${value.year}-${value.month}-${value.day}`);
+    const filteredData = this.lineData[0]['series'].filter(
+      (dailyAmount: any) => new Date(dailyAmount.name) >= newStartData
+    );
+    this.lineData = [{ name: 'Transcations', series: filteredData }];
+    this.xAxisTicks = this.generateLineXTicks(
+      this.lineData[0]['series'],
+      5,
+      'name'
+    );
+  }
+
+  newSelectedEndDate(value: NgbDate) {
+    const newEndDate = new Date(`${value.year}-${value.month}-${value.day}`);
+    const filteredData = this.lineData[0]['series'].filter(
+      (dailyAmount: any) => new Date(dailyAmount.name) <= newEndDate
+    );
+    this.lineData = [{ name: 'Transcations', series: filteredData }];
+    this.xAxisTicks = this.generateLineXTicks(
+      this.lineData[0]['series'],
+      5,
+      'name'
+    );
   }
 }

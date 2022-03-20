@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dropdown-menu',
@@ -13,14 +14,19 @@ export class DropdownMenuComponent implements OnInit {
   public dropDownValues: string[] = [];
 
   @Output() newDropDownValue = new EventEmitter<string>();
-  dropDownValue: string = '';
+  dropDownValue: string = 'Select granularity';
+  hideGranularityDropDown = false;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.router.url.includes('history')) {
+      this.hideGranularityDropDown = true;
+    }
+  }
 
-  onChange(event: any): void {
-    this.dropDownValue = event.target.value;
+  onGranularitySelection(granularity: string): void {
+    this.dropDownValue = granularity;
     this.newDropDownValue.emit(this.dropDownValue);
   }
 }

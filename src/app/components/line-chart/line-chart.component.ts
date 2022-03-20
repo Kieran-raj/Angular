@@ -30,6 +30,8 @@ export class LineChartComponent implements OnInit {
   showXAxisLabel: boolean = true;
   showYAxisLabel: boolean = true;
 
+  rangeFillOpacity = 10;
+
   constructor() {}
 
   ngOnInit(): void {}

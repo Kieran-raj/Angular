@@ -12,4 +12,8 @@
   [legendPosition]="legendPosition"
   [legendTitle]="legendTitle"
 >
+  <ng-template #tooltipTemplate let-model="model" class="tooltip">
+    <div>{{ model.series }}</div>
+    <div>{{ model.name }} - £{{ model.value | number: ".2" }}</div>
+  </ng-template>
 </ngx-charts-bar-vertical-2d>

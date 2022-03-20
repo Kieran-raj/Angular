@@ -1,7 +1,7 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <app-nav-bar></app-nav-bar>
 <div class="container">
-  <div class="card-center mt-4">
+  <div class="card-center mt-2">
     <div class="card-header">
       <h2 class="mb-0">Expenses Summary</h2>
     </div>
@@ -44,11 +44,19 @@
             >
           </div>
           <br />
-          <div>
-            <app-date-filter
-              [isDaily]="isDailyData"
-              [isMonthly]="isMonthlyData"
-            ></app-date-filter>
+          <div *ngIf="isDailyData">
+            <div class="mb-2">
+              Start Date
+              <app-date-filter
+                (newDate)="newSelectedStartDate($event)"
+              ></app-date-filter>
+            </div>
+            <div>
+              End Date
+              <app-date-filter
+                (newDate)="newSelectedEndDate($event)"
+              ></app-date-filter>
+            </div>
           </div>
           <br />
           <div>Radio butons to choose a given year</div>
