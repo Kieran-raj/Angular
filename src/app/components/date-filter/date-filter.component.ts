@@ -13,7 +13,9 @@ import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 })
 export class DateFilterComponent implements OnInit {
   faCalender = faCalendarDays;
-  model!: NgbDateStruct;
+  model!: string | NgbDateStruct;
+
+  @Input() labelName = '';
 
   @Output() newDate = new EventEmitter<NgbDate>();
 
@@ -23,5 +25,9 @@ export class DateFilterComponent implements OnInit {
 
   selectedDate(newDate: NgbDate): void {
     this.newDate.emit(newDate);
+  }
+
+  clearCalender() {
+    this.model = ' ';
   }
 }

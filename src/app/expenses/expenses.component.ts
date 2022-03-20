@@ -24,6 +24,8 @@ export class ExpensesComponent implements OnInit {
   xAxisLabel: string = 'Date';
   yAxisLabel: string = 'Amount (£)';
   xAxisTicks: string[] = [];
+  startDate = 'Start Date';
+  endDate = 'End Date';
 
   movingAverageToggle: boolean = false;
   dropDownValues = ['Daily', 'Weekly', 'Monthly'];
