@@ -17,6 +17,7 @@ import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { DateFilterComponent } from './components/date-filter/date-filter.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { DateFilterComponent } from './components/date-filter/date-filter.compon
     BrowserAnimationsModule,
     NgbModule,
     NgxChartsModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

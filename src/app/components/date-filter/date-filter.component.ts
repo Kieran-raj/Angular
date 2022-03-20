@@ -1,19 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  NgbDate,
+  NgbCalendar,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
+import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-date-filter',
   templateUrl: './date-filter.component.html',
-  styleUrls: ['./date-filter.component.scss']
+  styleUrls: ['./date-filter.component.scss'],
 })
 export class DateFilterComponent implements OnInit {
-  @Input()
-  isDaily: boolean = true
-  @Input()
-  isMonthly: boolean = false
+  faCalender = faCalendarDays;
+  model!: NgbDateStruct;
 
-  constructor() { }
+  @Output() newDate = new EventEmitter<NgbDate>();
 
-  ngOnInit(): void {
+  constructor(private calender: NgbCalendar) {}
+
+  ngOnInit(): void {}
+
+  selectedDate(newDate: NgbDate): void {
+    this.newDate.emit(newDate);
   }
-
 }

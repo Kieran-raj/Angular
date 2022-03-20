@@ -10,6 +10,7 @@ export class FullDataHistoryComponent implements OnInit {
   pageTitle: string = 'Historic Data';
   transactionData: any = [];
   total: number = 0;
+  dropDownMenuItems: string[] = [];
 
   @Input()
   public filterGroup: FormGroup;
@@ -23,6 +24,7 @@ export class FullDataHistoryComponent implements OnInit {
       endDate: null,
       category: '',
     });
+    this.dropDownMenuItems = ['Food', 'Transport', 'Social', 'Online', 'Other'];
   }
 
   ngOnInit(): void {
