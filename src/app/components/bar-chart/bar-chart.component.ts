@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { BarData } from 'src/app/shared/models/bar-data';
 
 @Component({
   selector: 'app-bar-chart',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class BarChartComponent implements OnInit {
   @Input()
-  sourceData: any[] = [];
+  sourceData: BarData[] = [];
 
   view: any = [1050, 350];
   showXAxis = true;
@@ -16,7 +17,7 @@ export class BarChartComponent implements OnInit {
   gradient = false;
   showLegend = true;
   legendPosition: any = 'below';
-  legendTitle: string = '';
+  legendTitle = '';
   showXAxisLabel = true;
   xAxisLabel = 'Year';
   showYAxisLabel = true;

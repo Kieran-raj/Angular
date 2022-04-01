@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Transactions } from '../shared/models/transactions';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,8 @@ export class TransactionsService {
 
   constructor(private http: HttpClient) {}
 
-  getAllTransactions(): Observable<any> {
-    return this.http.get(`${this.url}/full_data`);
+  getAllTransactions(): Observable<Transactions> {
+    return this.http.get<Transactions>(`${this.url}/full_data`);
   }
 
   getYears(): Observable<any> {
@@ -22,21 +23,18 @@ export class TransactionsService {
     startDate: string,
     endDate: string,
     category: string
-  ): Observable<any> {
-    console.log(
-      `${this.url}/filtered_data?startDate=${startDate}&endDate=${endDate}&category=${category}`
-    );
-    return this.http.get(
+  ): Observable<Transactions> {
+    return this.http.get<Transactions>(
       `${this.url}/filtered_data?startDate=${startDate}&endDate=${endDate}&category=${category}`
     );
   }
 
-  getAmountsOnly(): Observable<any> {
-    return this.http.get(`${this.url}/get_daily_amounts`);
+  getAmountsOnly(): Observable<Transactions> {
+    return this.http.get<Transactions>(`${this.url}/get_daily_amounts`);
   }
 
-  getMonthlyAmounts(): Observable<any> {
-    return this.http.get(`${this.url}/get_monthly_amounts`);
+  getMonthlyAmounts(): Observable<Transactions> {
+    return this.http.get<Transactions>(`${this.url}/get_monthly_amounts`);
   }
 
   getCategoricalAmounts(): Observable<any> {

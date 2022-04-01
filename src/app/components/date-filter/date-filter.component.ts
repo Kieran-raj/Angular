@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+} from '@angular/core';
 import {
   NgbDate,
   NgbCalendar,
@@ -13,9 +20,12 @@ import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 })
 export class DateFilterComponent implements OnInit {
   faCalender = faCalendarDays;
-  model!: NgbDateStruct;
+  model: string | NgbDateStruct;
 
-  @Output() newDate = new EventEmitter<NgbDate>();
+  @Input() labelName = '';
+  @Input() clear: boolean;
+
+  @Output() newDate = new EventEmitter<NgbDate | null>();
 
   constructor(private calender: NgbCalendar) {}
 
@@ -23,5 +33,11 @@ export class DateFilterComponent implements OnInit {
 
   selectedDate(newDate: NgbDate): void {
     this.newDate.emit(newDate);
+  }
+
+  ngOnChanges(): void {
+    if (this.clear) {
+      this.model = ' ';
+    }
   }
 }

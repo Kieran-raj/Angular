@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
+import { Transactions } from 'src/app/shared/models/transactions';
 import { TransactionsService } from '../transaction.service';
 
 @Component({
@@ -8,8 +10,8 @@ import { TransactionsService } from '../transaction.service';
 })
 export class FullDataHistoryComponent implements OnInit {
   pageTitle: string = 'Historic Data';
-  transactionData: any = [];
-  total: number = 0;
+  transactionData: DailyTransaction[] | undefined = [];
+  total: number | undefined = 0;
   dropDownMenuItems: string[] = [];
 
   @Input()
