@@ -3,6 +3,12 @@
 // TODO: Need to add a no data found
 import { Component, OnInit } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { BarData } from '../shared/models/bar-data';
+import { DailyAmount } from '../shared/models/daily-amount-data';
+import { DailyTransaction } from '../shared/models/daily-transaction';
+import { LineData } from '../shared/models/line-data';
+import { LineDataSeries } from '../shared/models/line-data-series';
+import { MonthlyTransaction } from '../shared/models/monthly-transaction';
 import { TransactionsService } from './transaction.service';
 
 @Component({
@@ -12,9 +18,9 @@ import { TransactionsService } from './transaction.service';
 })
 export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
-  lineData: any = [];
+  lineData: LineData[];
   movingAverageData: any = [];
-  barData: any = [];
+  barData: BarData[] = [];
   years: number[] = [];
   isDailyData: boolean = true;
   isWeeklyData: boolean = false;
@@ -34,8 +40,22 @@ export class ExpensesComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionService.getAmountsOnly().subscribe((results) => {
-      this.lineData = this.formatDailyLineBarData(results.data.dailyAmounts);
-      this.xAxisTicks = this.generateLineXTicks(results.data.dailyAmounts, 5);
+      const mappedDailyAmountsToNgxCharts = results.data.transactions?.map(
+        (dailyAmount: DailyTransaction) => {
+          return { value: dailyAmount.amount, name: dailyAmount.date };
+        }
+      );
+      this.lineData = [
+        {
+          name: 'Transactions',
+          series: mappedDailyAmountsToNgxCharts,
+        },
+      ];
+
+      this.xAxisTicks = this.generateLineXTicks(
+        5,
+        mappedDailyAmountsToNgxCharts
+      );
     });
 
     this.transactionService.getYears().subscribe((results) => {
@@ -43,28 +63,8 @@ export class ExpensesComponent implements OnInit {
     });
   }
 
-  formatDailyLineBarData(data: []): any {
-    let series: any = [];
-    let newData = [
-      {
-        name: 'Transactions',
-        series: [],
-      },
-    ];
-    for (let i = 0; i < data.length; i++) {
-      let newFormat: any = {};
-      newFormat = {
-        name: data[i]['date'],
-        value: data[i]['amount'],
-      };
-      series.push(newFormat);
-    }
-    newData[0].series = series;
-    return newData;
-  }
-
-  formatMonthlyData(data: any[]): any {
-    let newDataLayout: any[] = [];
+  formatMonthlyData(data?: MonthlyTransaction[]): BarData[] {
+    let newDataLayout: BarData[] = [];
 
     for (let i = 0; i < this.years.length; i++) {
       newDataLayout.push({
@@ -72,31 +72,32 @@ export class ExpensesComponent implements OnInit {
         series: [],
       });
     }
-    for (let i = 0; i < this.years.length; i++) {
-      let series: any[] = [];
-      for (let j = 0; j < data.length; j++) {
-        if (this.years[i] === data[j].year) {
-          series.push({
-            name: data[j].month,
-            value: data[j].amount,
-          });
-          newDataLayout[i].series = series;
+    if (data) {
+      for (let i = 0; i < this.years.length; i++) {
+        let series: any[] = [];
+        for (let j = 0; j < data.length; j++) {
+          if (this.years[i] === data[j].year) {
+            series.push({
+              name: data[j].month,
+              value: data[j].amount,
+            });
+            newDataLayout[i].series = series;
+          }
         }
       }
     }
     return newDataLayout;
   }
 
-  generateLineXTicks(
-    data: [],
-    interval: number,
-    dateColumn: string = 'date'
-  ): string[] {
+  generateLineXTicks(interval: number, data?: LineDataSeries[]): string[] {
     let dates: string[] = [];
-    for (let i = 0; i < data.length; i = i + interval) {
-      dates.push(data[i][dateColumn]);
+    if (data) {
+      for (let i = 0; i < data.length; i = i + interval) {
+        dates.push(data[i].name);
+      }
+      return dates;
     }
-    return dates;
+    return [];
   }
 
   dropDownValue(value: string): void {
@@ -105,7 +106,7 @@ export class ExpensesComponent implements OnInit {
       this.isWeeklyData = false;
       this.isMonthlyData = true;
       this.transactionService.getMonthlyAmounts().subscribe((results) => {
-        this.barData = this.formatMonthlyData(results.data.monthlyAmounts);
+        this.barData = this.formatMonthlyData(results.data.monthlyTransactions);
       });
     } else if (value === 'Daily') {
       this.isDailyData = true;
@@ -126,27 +127,20 @@ export class ExpensesComponent implements OnInit {
 
   newSelectedStartDate(value: NgbDate) {
     const newStartData = new Date(`${value.year}-${value.month}-${value.day}`);
-    const filteredData = this.lineData[0]['series'].filter(
-      (dailyAmount: any) => new Date(dailyAmount.name) >= newStartData
+    const filteredData = this.lineData[0].series?.filter(
+      (dailyAmount) => new Date(dailyAmount.name) >= newStartData
     );
     this.lineData = [{ name: 'Transcations', series: filteredData }];
-    this.xAxisTicks = this.generateLineXTicks(
-      this.lineData[0]['series'],
-      5,
-      'name'
-    );
+    this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
   }
 
   newSelectedEndDate(value: NgbDate) {
     const newEndDate = new Date(`${value.year}-${value.month}-${value.day}`);
-    const filteredData = this.lineData[0]['series'].filter(
-      (dailyAmount: any) => new Date(dailyAmount.name) <= newEndDate
+
+    const filteredData = this.lineData[0].series?.filter(
+      (dailyAmount) => new Date(dailyAmount.name) <= newEndDate
     );
     this.lineData = [{ name: 'Transcations', series: filteredData }];
-    this.xAxisTicks = this.generateLineXTicks(
-      this.lineData[0]['series'],
-      5,
-      'name'
-    );
+    this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
   }
 }
