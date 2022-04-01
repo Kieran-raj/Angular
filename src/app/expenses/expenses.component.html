@@ -48,6 +48,7 @@
             <div class="mb-2">
               <app-date-filter
                 [labelName]="startDate"
+                [clear]="clearDatePicker"
                 (newDate)="newSelectedStartDate($event)"
               ></app-date-filter>
             </div>
@@ -55,11 +56,17 @@
               <app-date-filter
                 [labelName]="endDate"
                 (newDate)="newSelectedEndDate($event)"
+                [clear]="clearDatePicker"
               ></app-date-filter>
             </div>
           </div>
           <br />
           <div>Radio butons to choose a given year</div>
+          <div>
+            <button class="btn btn-secondary col-12" (click)="resetGraph()">
+              Reset Graph
+            </button>
+          </div>
         </div>
       </div>
       <div class="row">

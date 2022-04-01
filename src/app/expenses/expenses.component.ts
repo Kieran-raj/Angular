@@ -18,6 +18,7 @@ import { TransactionsService } from './transaction.service';
 })
 export class ExpensesComponent implements OnInit {
   pageTitle: string = 'Expenses';
+  allData: LineData[];
   lineData: LineData[];
   movingAverageData: any = [];
   barData: BarData[] = [];
@@ -33,6 +34,7 @@ export class ExpensesComponent implements OnInit {
   startDate = 'Start Date';
   endDate = 'End Date';
 
+  clearDatePicker = false;
   movingAverageToggle: boolean = false;
   dropDownValues = ['Daily', 'Weekly', 'Monthly'];
 
@@ -46,6 +48,13 @@ export class ExpensesComponent implements OnInit {
         }
       );
       this.lineData = [
+        {
+          name: 'Transactions',
+          series: mappedDailyAmountsToNgxCharts,
+        },
+      ];
+
+      this.allData = [
         {
           name: 'Transactions',
           series: mappedDailyAmountsToNgxCharts,
@@ -125,22 +134,35 @@ export class ExpensesComponent implements OnInit {
     }
   }
 
-  newSelectedStartDate(value: NgbDate) {
-    const newStartData = new Date(`${value.year}-${value.month}-${value.day}`);
-    const filteredData = this.lineData[0].series?.filter(
-      (dailyAmount) => new Date(dailyAmount.name) >= newStartData
+  newSelectedStartDate(value: NgbDate | null) {
+    let newStartDate: Date;
+    if (value) {
+      newStartDate = new Date(`${value.year}-${value.month}-${value.day}`);
+    }
+
+    const filteredData = this.allData[0].series?.filter(
+      (dailyAmount) => new Date(dailyAmount.name) >= newStartDate
     );
     this.lineData = [{ name: 'Transcations', series: filteredData }];
     this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
   }
 
-  newSelectedEndDate(value: NgbDate) {
-    const newEndDate = new Date(`${value.year}-${value.month}-${value.day}`);
+  newSelectedEndDate(value?: NgbDate | null) {
+    let newEndDate: Date;
+    if (value) {
+      newEndDate = new Date(`${value.year}-${value.month}-${value.day}`);
+    }
 
-    const filteredData = this.lineData[0].series?.filter(
+    const filteredData = this.allData[0].series?.filter(
       (dailyAmount) => new Date(dailyAmount.name) <= newEndDate
     );
     this.lineData = [{ name: 'Transcations', series: filteredData }];
     this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
+  }
+
+  resetGraph() {
+    this.lineData = this.allData;
+    this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
+    this.clearDatePicker = true;
   }
 }
