@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
-import { Transactions } from 'src/app/shared/models/transactions';
+import { selectDailyTransactions } from '../date-state/selectors/transactions.selectors';
+import { TransactionState } from '../date-state/states/transactions.state';
 import { TransactionsService } from '../transaction.service';
 
 @Component({
@@ -9,16 +12,19 @@ import { TransactionsService } from '../transaction.service';
   styleUrls: ['./full-data-history.component.scss'],
 })
 export class FullDataHistoryComponent implements OnInit {
-  pageTitle: string = 'Historic Data';
-  transactionData: DailyTransaction[] | undefined = [];
-  total: number | undefined = 0;
-  dropDownMenuItems: string[] = [];
+  public pageTitle: string = 'Historic Data';
+  public transactionData: DailyTransaction[] | undefined = [];
+  public total: number | undefined = 0;
+  public dropDownMenuItems: string[] = [];
 
   @Input()
   public filterGroup: FormGroup;
 
+  private subscriptions: Subscription[] = [];
+
   constructor(
     private transactionService: TransactionsService,
+    private transactionStore: Store<TransactionState>,
     formBuilder: FormBuilder
   ) {
     this.filterGroup = formBuilder.group({
@@ -30,12 +36,16 @@ export class FullDataHistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.transactionService.getAllTransactions().subscribe((results) => {
-      this.transactionData = results.data.transactions;
-      this.total = results.data.total;
-    });
+    this.subscriptions.push(
+      this.transactionStore
+        .select(selectDailyTransactions)
+        .subscribe((results) => {
+          this.transactionData = results?.transactions;
+          this.total = results?.transactionTotal;
+        })
+    );
   }
-  // TODO: Getting error when no data is being returned due to status code 204
+
   submit(_: Event): void {
     this.transactionService
       .getFilteredTransactions(
@@ -49,5 +59,7 @@ export class FullDataHistoryComponent implements OnInit {
       });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
 }

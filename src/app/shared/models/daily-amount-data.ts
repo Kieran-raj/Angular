@@ -1,4 +1,4 @@
-export class DailyAmount {
+export interface DailyAmount {
   /**
    * Amount
    */

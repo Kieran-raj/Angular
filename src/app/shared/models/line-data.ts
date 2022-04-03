@@ -1,6 +1,6 @@
 import { LineDataSeries } from './line-data-series';
 
-export class LineData {
+export interface LineData {
   /**
    * Name of the data set
    */
