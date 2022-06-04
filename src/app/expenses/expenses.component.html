@@ -48,15 +48,13 @@
             <div class="mb-2">
               <app-date-filter
                 [labelName]="startDate"
-                [clear]="clearDatePicker"
-                (newDate)="newSelectedStartDate($event)"
+                (newDate)="newSelectedDate($event, true)"
               ></app-date-filter>
             </div>
             <div>
               <app-date-filter
                 [labelName]="endDate"
-                (newDate)="newSelectedEndDate($event)"
-                [clear]="clearDatePicker"
+                (newDate)="newSelectedDate($event, false)"
               ></app-date-filter>
             </div>
           </div>

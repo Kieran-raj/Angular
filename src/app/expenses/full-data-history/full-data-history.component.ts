@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
-import { selectDailyTransactions } from '../date-state/selectors/transactions.selectors';
-import { TransactionState } from '../date-state/states/transactions.state';
+import { selectDailyTransactions } from '../data-state/selectors/transactions.selectors';
+import { TransactionState } from '../data-state/states/transactions.state';
 import { TransactionsService } from '../transaction.service';
 
 @Component({
@@ -16,11 +16,10 @@ export class FullDataHistoryComponent implements OnInit {
   public transactionData: DailyTransaction[] | undefined = [];
   public total: number | undefined = 0;
   public dropDownMenuItems: string[] = [];
+  private subscriptions: Subscription[] = [];
 
   @Input()
   public filterGroup: FormGroup;
-
-  private subscriptions: Subscription[] = [];
 
   constructor(
     private transactionService: TransactionsService,
