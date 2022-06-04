@@ -4,7 +4,12 @@
 
 1. Reset button for expenses summary page
 2. Work with JSON-Server
-3. Integrate NgRx - **MASSIVE JOB**
+3. Integrate NgRx - **MASSIVE JOB** (~~Daily Transactions~~, Weekly, Monthly, Implement in components)
+
+- Make sure to implement subscriptions when selecting data to prevent memory leaks
+- Maybe look at failuer states if
+- ~~Add dailyTotal to daily transactions state and then have an transactions object inside that~~
+
 4. Integrate date picker into full history (might be more difficult to do)
 5. ~~Change nav bar words to symbols and add the words to the tooltip~~ &#x2611;
 6. ~~Get datepickers working for expenses~~ &#x2611;

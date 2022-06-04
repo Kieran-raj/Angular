@@ -1,14 +1,23 @@
 // TODO: NEED TO ADD TYPES TO ALL MISSING TYPES
 // TODO: Need to add a loading wheel
 // TODO: Need to add a no data found
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { BarData } from '../shared/models/bar-data';
-import { DailyAmount } from '../shared/models/daily-amount-data';
 import { DailyTransaction } from '../shared/models/daily-transaction';
 import { LineData } from '../shared/models/line-data';
 import { LineDataSeries } from '../shared/models/line-data-series';
 import { MonthlyTransaction } from '../shared/models/monthly-transaction';
+import {
+  loadDailyTransactions,
+  loadMonthlyTransactions,
+} from './data-state/actions/transactions.action';
+import { selectDailyTransactions } from './data-state/selectors/transactions.selectors';
+import { TransactionState } from './data-state/states/transactions.state';
 import { TransactionsService } from './transaction.service';
 
 @Component({
@@ -17,28 +26,54 @@ import { TransactionsService } from './transaction.service';
   styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
-  pageTitle: string = 'Expenses';
-  allData: LineData[];
-  lineData: LineData[];
-  movingAverageData: any = [];
-  barData: BarData[] = [];
-  years: number[] = [];
-  isDailyData: boolean = true;
-  isWeeklyData: boolean = false;
-  isMonthlyData: boolean = false;
-  view: number[] = [1050, 350];
-  legendPosition: string = 'below';
-  xAxisLabel: string = 'Date';
-  yAxisLabel: string = 'Amount (£)';
-  xAxisTicks: string[] = [];
-  startDate = 'Start Date';
-  endDate = 'End Date';
+  @ViewChild(DateFilterComponent, { static: true })
+  public dateFilter: DateFilterComponent;
 
-  clearDatePicker = false;
+  public pageTitle: string = 'Expenses';
+  public allData: LineData[];
+  public lineData: LineData[];
+  public mappedToNgxChartsLineData: any;
+  public movingAverageData: any = [];
+  public barData: BarData[] = [];
+  public years: number[] = [];
+  public isDailyData: boolean = true;
+  public isWeeklyData: boolean = false;
+  public isMonthlyData: boolean = false;
+  public view: number[] = [1050, 350];
+  public legendPosition: string = 'below';
+  public xAxisLabel: string = 'Date';
+  public yAxisLabel: string = 'Amount (£)';
+  public xAxisTicks: string[] = [];
+  public startDate = 'Start Date';
+  public endDate = 'End Date';
+  public isLoading: boolean;
+
   movingAverageToggle: boolean = false;
   dropDownValues = ['Daily', 'Weekly', 'Monthly'];
 
-  constructor(private transactionService: TransactionsService) {}
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private transactionService: TransactionsService,
+    private transactionStore: Store<TransactionState>
+  ) {
+    this.transactionStore.dispatch(
+      loadDailyTransactions({
+        transactions: {
+          transactionTotal: 0,
+          transactions: [],
+        },
+      })
+    );
+
+    this.transactionStore.dispatch(
+      loadMonthlyTransactions({
+        transactions: {
+          monthlyTransactions: [],
+        },
+      })
+    );
+  }
 
   ngOnInit(): void {
     this.transactionService.getAmountsOnly().subscribe((results) => {
@@ -111,20 +146,17 @@ export class ExpensesComponent implements OnInit {
 
   dropDownValue(value: string): void {
     if (value === 'Monthly') {
-      this.isDailyData = false;
-      this.isWeeklyData = false;
+      this.isDailyData = this.isWeeklyData = false;
       this.isMonthlyData = true;
       this.transactionService.getMonthlyAmounts().subscribe((results) => {
         this.barData = this.formatMonthlyData(results.data.monthlyTransactions);
       });
     } else if (value === 'Daily') {
       this.isDailyData = true;
-      this.isWeeklyData = false;
-      this.isMonthlyData = false;
+      this.isWeeklyData = this.isMonthlyData = false;
     } else {
       this.isWeeklyData = true;
-      this.isMonthlyData = false;
-      this.isDailyData = false;
+      this.isMonthlyData = this.isDailyData = false;
     }
   }
 
@@ -134,35 +166,33 @@ export class ExpensesComponent implements OnInit {
     }
   }
 
-  newSelectedStartDate(value: NgbDate | null) {
-    let newStartDate: Date;
+  newSelectedDate(value: NgbDate | null, isStartDate: boolean) {
+    let newDate: Date;
     if (value) {
-      newStartDate = new Date(`${value.year}-${value.month}-${value.day}`);
+      newDate = new Date(`${value.year}-${value.month}-${value.day}`);
     }
 
-    const filteredData = this.allData[0].series?.filter(
-      (dailyAmount) => new Date(dailyAmount.name) >= newStartDate
-    );
-    this.lineData = [{ name: 'Transcations', series: filteredData }];
-    this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
-  }
+    this.lineData = [
+      {
+        name: 'Transactions',
+        series: this.lineData[0].series?.filter((dailyAmount) => {
+          return isStartDate
+            ? new Date(dailyAmount.name) >= newDate
+            : new Date(dailyAmount.name) <= newDate;
+        }),
+      },
+    ];
 
-  newSelectedEndDate(value?: NgbDate | null) {
-    let newEndDate: Date;
-    if (value) {
-      newEndDate = new Date(`${value.year}-${value.month}-${value.day}`);
-    }
-
-    const filteredData = this.allData[0].series?.filter(
-      (dailyAmount) => new Date(dailyAmount.name) <= newEndDate
-    );
-    this.lineData = [{ name: 'Transcations', series: filteredData }];
     this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
   }
 
   resetGraph() {
     this.lineData = this.allData;
     this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
-    this.clearDatePicker = true;
+    this.dateFilter.clearDateField();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

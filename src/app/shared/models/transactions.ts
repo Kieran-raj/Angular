@@ -1,7 +1,7 @@
 import { DailyTransaction } from './daily-transaction';
 import { MonthlyTransaction } from './monthly-transaction';
 
-export class Transactions {
+export interface Transactions {
   /**
    * Transaction data
    */

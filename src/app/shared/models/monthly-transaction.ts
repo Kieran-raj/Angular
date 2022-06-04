@@ -1,4 +1,4 @@
-export class MonthlyTransaction {
+export interface MonthlyTransaction {
   /**
    * Monthly total amount
    */

@@ -1,6 +1,6 @@
 import { MonthlyTransaction } from './monthly-transaction';
 
-export class BarData {
+export interface BarData {
   /**
    * Year
    */
