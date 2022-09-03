@@ -8,8 +8,7 @@ export const loadDailyTransactions = createAction(
   `${transacationsPrefix} Load All Daily Transactions`,
   props<{
     transactions: {
-      transactionTotal: number;
-      transactions: DailyTransaction[];
+      dailyTransactions: DailyTransaction[];
     };
   }>()
 );
@@ -18,8 +17,7 @@ export const loadDailyTransactionsSuccess = createAction(
   `${transacationsPrefix} Load All Daily Transactions Success`,
   props<{
     transactions: {
-      transactionTotal?: number;
-      transactions?: DailyTransaction[];
+      dailyTransactions?: DailyTransaction[];
     };
   }>()
 );

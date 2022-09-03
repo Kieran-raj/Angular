@@ -23,7 +23,6 @@ export class DateFilterComponent implements OnInit {
   model: string | NgbDateStruct;
 
   @Input() labelName = '';
-  // @Input() clear: boolean;
 
   @Output() newDate = new EventEmitter<NgbDate | null>();
 

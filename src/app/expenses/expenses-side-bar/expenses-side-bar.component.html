@@ -1,0 +1,21 @@
+<div>
+  <app-dropdown-menu
+    [dropDownValues]="dropDownValues"
+    (newDropDownValue)="dropDownValueChange($event)"
+  >
+  </app-dropdown-menu>
+</div>
+<div *ngIf="showDateSelection">
+  <app-date-filter [labelName]="'Start Date'"></app-date-filter>
+  <app-date-filter [labelName]="'End Date'"></app-date-filter>
+</div>
+<div>
+  <button class="btn btn-secondary mt-2" (click)="resetButtonClick($event)">
+    {{ resetText }}
+  </button>
+</div>
+
+<!-- <app-date-filter
+  [labelName]="endDate"
+  (newDate)="newSelectedDate($event, false)"
+></app-date-filter> -->

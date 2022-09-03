@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { BarData } from '../shared/models/bar-data';
 import { DailyTransaction } from '../shared/models/daily-transaction';
@@ -16,9 +16,13 @@ import {
   loadDailyTransactions,
   loadMonthlyTransactions,
 } from './data-state/actions/transactions.action';
-import { selectDailyTransactions } from './data-state/selectors/transactions.selectors';
+import {
+  selectDailyTransactions,
+  selectMonthlyTransactions,
+} from './data-state/selectors/transactions.selectors';
+import { Transactions } from 'src/app/shared/models/transactions';
 import { TransactionState } from './data-state/states/transactions.state';
-import { TransactionsService } from './transaction.service';
+import { TransactionsService } from './api-services/transaction.service';
 
 @Component({
   selector: 'app-expenses',
@@ -29,6 +33,9 @@ export class ExpensesComponent implements OnInit {
   @ViewChild(DateFilterComponent, { static: true })
   public dateFilter: DateFilterComponent;
 
+  /**
+   * Graph Properties
+   */
   public pageTitle: string = 'Expenses';
   public allData: LineData[];
   public lineData: LineData[];
@@ -39,19 +46,37 @@ export class ExpensesComponent implements OnInit {
   public isDailyData: boolean = true;
   public isWeeklyData: boolean = false;
   public isMonthlyData: boolean = false;
-  public view: number[] = [1050, 350];
+  public view: number[] = [1150, 350];
   public legendPosition: string = 'below';
   public xAxisLabel: string = 'Date';
   public yAxisLabel: string = 'Amount (£)';
   public xAxisTicks: string[] = [];
-  public startDate = 'Start Date';
-  public endDate = 'End Date';
+
   public isLoading: boolean;
 
-  movingAverageToggle: boolean = false;
-  dropDownValues = ['Daily', 'Weekly', 'Monthly'];
+  /**
+   * Whether to show date selection.
+   * @type {boolean}
+   */
+  public showDateSelection = true;
 
-  private subscriptions: Subscription[] = [];
+  /**
+   * Daily amounts.
+   * @type {Observable<DailyTransaction[] | undefined>}
+   */
+  public dailyAmounts$: Observable<DailyTransaction[] | undefined>;
+
+  /**
+   * Monthly amounts.
+   * @type {Observable<MonthlyTransaction[] | undefined>}
+   */
+  public monthlyAmounts$: Observable<MonthlyTransaction[] | undefined>;
+
+  /**
+   * Subscriptions
+   * @type {Subscription[]}
+   */
+  public subscriptions: Subscription[] = [];
 
   constructor(
     private transactionService: TransactionsService,
@@ -60,8 +85,7 @@ export class ExpensesComponent implements OnInit {
     this.transactionStore.dispatch(
       loadDailyTransactions({
         transactions: {
-          transactionTotal: 0,
-          transactions: [],
+          dailyTransactions: [],
         },
       })
     );
@@ -76,8 +100,13 @@ export class ExpensesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.transactionService.getAmountsOnly().subscribe((results) => {
-      const mappedDailyAmountsToNgxCharts = results.data.transactions?.map(
+    this.dailyAmounts$ = this.transactionStore.select(selectDailyTransactions);
+    this.monthlyAmounts$ = this.transactionStore.select(
+      selectMonthlyTransactions
+    );
+
+    this.dailyAmounts$.subscribe((results: DailyTransaction[] | undefined) => {
+      const mappedDailyAmountsToNgxCharts = results?.map(
         (dailyAmount: DailyTransaction) => {
           return { value: dailyAmount.amount, name: dailyAmount.date };
         }
@@ -89,12 +118,12 @@ export class ExpensesComponent implements OnInit {
         },
       ];
 
-      this.allData = [
-        {
-          name: 'Transactions',
-          series: mappedDailyAmountsToNgxCharts,
-        },
-      ];
+      //   this.allData = [
+      //     {
+      //       name: 'Transactions',
+      //       series: mappedDailyAmountsToNgxCharts,
+      //     },
+      //   ];
 
       this.xAxisTicks = this.generateLineXTicks(
         5,
@@ -144,25 +173,29 @@ export class ExpensesComponent implements OnInit {
     return [];
   }
 
+  dropDownChange(value: string): void {
+    // console.log(value);
+  }
   dropDownValue(value: string): void {
     if (value === 'Monthly') {
       this.isDailyData = this.isWeeklyData = false;
       this.isMonthlyData = true;
-      this.transactionService.getMonthlyAmounts().subscribe((results) => {
-        this.barData = this.formatMonthlyData(results.data.monthlyTransactions);
-      });
+      this.subscriptions.push(
+        this.monthlyAmounts$.subscribe(
+          (results: MonthlyTransaction[] | undefined) => {
+            this.barData = this.formatMonthlyData(results);
+          }
+        )
+      );
+      // this.transactionService.getMonthlyAmounts().subscribe((results) => {
+      //   this.barData = this.formatMonthlyData(results.data.monthlyTransactions);
+      // });
     } else if (value === 'Daily') {
       this.isDailyData = true;
       this.isWeeklyData = this.isMonthlyData = false;
     } else {
       this.isWeeklyData = true;
       this.isMonthlyData = this.isDailyData = false;
-    }
-  }
-
-  setToggleValue(value: Event) {
-    if (!value.defaultPrevented) {
-      this.movingAverageToggle = !this.movingAverageToggle;
     }
   }
 

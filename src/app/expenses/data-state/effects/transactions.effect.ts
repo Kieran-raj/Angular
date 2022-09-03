@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs';
 import { Transactions } from 'src/app/shared/models/transactions';
-import { TransactionsService } from '../../transaction.service';
+import { TransactionsService } from '../../api-services/transaction.service';
+
 import {
   loadDailyTransactions,
   loadDailyTransactionsSuccess,
@@ -16,15 +17,15 @@ export class TransactionsEffect {
     this.actions$.pipe(
       ofType(loadDailyTransactions),
       mergeMap(() =>
-        this.transactionService.getAllTransactions().pipe(
-          map((transactionData: Transactions) =>
-            loadDailyTransactionsSuccess({
+        this.transactionService.getAmountsOnly().pipe(
+          map((transactionData: Transactions) => {
+            console.log(transactionData);
+            return loadDailyTransactionsSuccess({
               transactions: {
-                transactionTotal: transactionData.data.total,
-                transactions: transactionData.data.transactions,
+                dailyTransactions: transactionData.data.transactions,
               },
-            })
-          )
+            });
+          })
         )
       )
     )
