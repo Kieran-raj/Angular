@@ -10,10 +10,10 @@ export const selectTransactionsState = createFeatureSelector<TransactionState>(
 
 export const selectDailyTransactions = createSelector(
   selectTransactionsState,
-  (state: TransactionState) => state.dailyTransactions
+  (state: TransactionState) => state.dailyTransactions?.transactions
 );
 
 export const selectMonthlyTransactions = createSelector(
   selectTransactionsState,
-  (state: TransactionState) => state.monthlyTransactions
+  (state: TransactionState) => state.monthlyTransactions?.monthlyTransactions
 );

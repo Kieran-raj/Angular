@@ -1,8 +1,6 @@
-<div class="container">
+<div class="px-2">
   <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#"
-      ><fa-icon [icon]="faLandmark"></fa-icon> Name</a
-    >
+    <a class="navbar-brand" href="#">Finance</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -25,28 +23,6 @@
             ><fa-icon [icon]="faHouse" size="lg"></fa-icon>
             <span class="sr-only"></span
           ></a>
-        </li>
-        <li class="nav-item">
-          <div ngbDropdown id="dropDown">
-            <button
-              class="nav-link"
-              id="expensesDropDown"
-              title="Expenses"
-              ngbDropdownToggle
-            >
-              <fa-icon [icon]="faCoins" size="lg"></fa-icon>
-            </button>
-            <div
-              ngbDropdownMenu
-              id="expensesMenu"
-              aria-labelledby="expensesDropDown"
-            >
-              <a class="nav-link" [routerLink]="['/expenses']">Summary</a>
-              <a class="nav-link" [routerLink]="'/expenses/history'"
-                >Historic Data</a
-              >
-            </div>
-          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" title="Stocks"

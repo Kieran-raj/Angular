@@ -1,13 +1,13 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <app-nav-bar></app-nav-bar>
-<div class="container">
-  <div class="card-center mt-2">
+<div class="px-2">
+  <div class="card mt-2">
     <div class="card-header">
       <h2 class="mb-0">Expenses Summary</h2>
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-10">
+        <div class="col-7">
           <app-line-chart
             *ngIf="isDailyData"
             [sourceData]="lineData"
@@ -25,50 +25,16 @@
           <div *ngIf="isWeeklyData">Weekly drop selected</div>
         </div>
         <div class="col-2">
-          <div>
-            <app-dropdown-menu
-              [dropDownValues]="dropDownValues"
-              (newDropDownValue)="dropDownValue($event)"
-            ></app-dropdown-menu>
-          </div>
-          <br />
-          <div class="form-check form-switch" *ngIf="isDailyData">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="flexSwitchCheckDefault"
-              (change)="setToggleValue($event)"
-            />
-            <label class="form-check-label" for="flexSwitchCheckDefault"
-              >Display moving average</label
-            >
-          </div>
-          <br />
-          <div *ngIf="isDailyData">
-            <div class="mb-2">
-              <app-date-filter
-                [labelName]="startDate"
-                (newDate)="newSelectedDate($event, true)"
-              ></app-date-filter>
-            </div>
-            <div>
-              <app-date-filter
-                [labelName]="endDate"
-                (newDate)="newSelectedDate($event, false)"
-              ></app-date-filter>
-            </div>
-          </div>
-          <br />
-          <div>Radio butons to choose a given year</div>
-          <div>
-            <button class="btn btn-secondary col-12" (click)="resetGraph()">
-              Reset Graph
-            </button>
-          </div>
+          <app-expenses-side-bar
+            [showDateSelection]="showDateSelection"
+            (resetButton)="resetGraph()"
+            (dropDownValue)="dropDownChange($event)"
+          ></app-expenses-side-bar>
         </div>
+        <div class="col-3">Pie Chart Here</div>
       </div>
       <div class="row">
-        <div class="col-7"></div>
+        <div class="col-7"><app-grid></app-grid></div>
       </div>
     </div>
   </div>

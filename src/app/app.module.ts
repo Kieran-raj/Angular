@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { HeaderDetailsComponent } from './components/header-details/header-details.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { FullDataHistoryComponent } from './expenses/full-data-history/full-data-history.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
@@ -24,6 +23,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { TransactionsEffect } from './expenses/data-state/effects/transactions.effect';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { ExpensesSideBarComponent } from './expenses/expenses-side-bar/expenses-side-bar.component';
+import { GridComponent } from './components/grid/grid.component';
 
 @NgModule({
   declarations: [
@@ -32,11 +33,12 @@ import { environment } from 'src/environments/environment';
     ExpensesComponent,
     HeaderDetailsComponent,
     NavBarComponent,
-    FullDataHistoryComponent,
     DropdownMenuComponent,
     LineChartComponent,
     BarChartComponent,
     DateFilterComponent,
+    ExpensesSideBarComponent,
+    GridComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,6 @@ import { environment } from 'src/environments/environment';
     RouterModule.forRoot([
       { path: 'home', component: HomePageComponent },
       { path: 'expenses', component: ExpensesComponent },
-      { path: 'expenses/history', component: FullDataHistoryComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]),
     BrowserAnimationsModule,
@@ -63,5 +64,6 @@ import { environment } from 'src/environments/environment';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [ExpensesSideBarComponent],
 })
 export class AppModule {}

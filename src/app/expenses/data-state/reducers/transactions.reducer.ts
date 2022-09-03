@@ -25,8 +25,7 @@ export const transactionsReducer = createReducer(
     return {
       ...state,
       dailyTransactions: {
-        transactionTotal: action.transactions.transactionTotal,
-        transactions: action.transactions.transactions,
+        transactions: action.transactions.dailyTransactions,
       },
       isLoading: true,
     };
@@ -35,8 +34,7 @@ export const transactionsReducer = createReducer(
     return {
       ...state,
       dailyTransactions: {
-        transactionTotal: action.transactions.transactionTotal,
-        transactions: action.transactions.transactions,
+        transactions: action.transactions.dailyTransactions,
       },
       isLoading: false,
     };
