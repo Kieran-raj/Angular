@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { chartSettings } from 'src/app/shared/settings/chart-settings';
 
 @Component({
   selector: 'app-line-chart',
@@ -10,25 +11,22 @@ export class LineChartComponent implements OnInit {
   @Input()
   sourceData: any[] = [];
   @Input()
-  view: any = [];
-  @Input()
-  xAxisLabel: string = '';
-  @Input()
-  yAxisLabel: string = '';
-  @Input()
   xAxisTicks: any[] = [];
-  @Input()
-  legend: boolean = true;
-  @Input()
-  legendTitle: string = '';
-  @Input()
-  legendPosition: any = '';
 
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-
-  showXAxisLabel: boolean = true;
-  showYAxisLabel: boolean = true;
+  view: any = [
+    chartSettings.lineChart.xViewSize,
+    chartSettings.lineChart.yViewSize,
+  ];
+  xAxisLabel = chartSettings.lineChart.xAxisLabel;
+  yAxisLabel = chartSettings.lineChart.yAxisLabel;
+  legend = chartSettings.lineChart.legend;
+  legendTitle = chartSettings.lineChart.legendTitle;
+  legendPosition: any = chartSettings.lineChart.legendPosition;
+  xAxis = chartSettings.lineChart.xAxis;
+  yAxis = chartSettings.lineChart.yAxis;
+  showXAxisLabel = chartSettings.lineChart.showXAxisLabel;
+  showYAxisLabel = chartSettings.lineChart.showYAxisLabel;
+  scheme = chartSettings.lineChart.scheme;
 
   rangeFillOpacity = 10;
 

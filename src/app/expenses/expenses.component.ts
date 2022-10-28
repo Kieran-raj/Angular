@@ -1,16 +1,12 @@
 // TODO: NEED TO ADD TYPES TO ALL MISSING TYPES
-// TODO: Need to add a loading wheel
-// TODO: Need to add a no data found
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
+
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { BarData } from '../shared/models/bar-data';
 import { DailyTransaction } from '../shared/models/daily-transaction';
 import { LineData } from '../shared/models/line-data';
-import { LineDataSeries } from '../shared/models/line-data-series';
 import { MonthlyTransaction } from '../shared/models/monthly-transaction';
 import {
   loadDailyTransactions,
@@ -20,16 +16,16 @@ import {
   selectDailyTransactions,
   selectMonthlyTransactions,
 } from './data-state/selectors/transactions.selectors';
-import { Transactions } from 'src/app/shared/models/transactions';
 import { TransactionState } from './data-state/states/transactions.state';
 import { TransactionsService } from './api-services/transaction.service';
+import { ChartHelper } from '../shared/helper-functions/chart-functions';
 
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
 })
-export class ExpensesComponent implements OnInit {
+export class ExpensesComponent implements OnInit, AfterViewInit {
   @ViewChild(DateFilterComponent, { static: true })
   public dateFilter: DateFilterComponent;
 
@@ -39,20 +35,24 @@ export class ExpensesComponent implements OnInit {
   public pageTitle: string = 'Expenses';
   public allData: LineData[];
   public lineData: LineData[];
-  public mappedToNgxChartsLineData: any;
   public movingAverageData: any = [];
   public barData: BarData[] = [];
   public years: number[] = [];
-  public isDailyData: boolean = true;
-  public isWeeklyData: boolean = false;
-  public isMonthlyData: boolean = false;
-  public view: number[] = [1150, 350];
-  public legendPosition: string = 'below';
-  public xAxisLabel: string = 'Date';
-  public yAxisLabel: string = 'Amount (£)';
   public xAxisTicks: string[] = [];
 
   public isLoading: boolean;
+
+  /**
+   * What is the chosen granularity for the chart.
+   * @type {string}
+   */
+  public chartMode = 'Daily';
+
+  /**
+   * Current drop down value.
+   * @type {BehaviorSubject<string>}
+   */
+  public dropDownCurrentValue = new BehaviorSubject(this.chartMode);
 
   /**
    * Whether to show date selection.
@@ -80,7 +80,8 @@ export class ExpensesComponent implements OnInit {
 
   constructor(
     private transactionService: TransactionsService,
-    private transactionStore: Store<TransactionState>
+    private transactionStore: Store<TransactionState>,
+    private chartHelper: ChartHelper
   ) {
     this.transactionStore.dispatch(
       loadDailyTransactions({
@@ -117,112 +118,50 @@ export class ExpensesComponent implements OnInit {
           series: mappedDailyAmountsToNgxCharts,
         },
       ];
-
-      //   this.allData = [
-      //     {
-      //       name: 'Transactions',
-      //       series: mappedDailyAmountsToNgxCharts,
-      //     },
-      //   ];
-
-      this.xAxisTicks = this.generateLineXTicks(
+      this.xAxisTicks = this.chartHelper.generateLineXTicks(
         5,
         mappedDailyAmountsToNgxCharts
       );
     });
 
-    this.transactionService.getYears().subscribe((results) => {
-      this.years = results.data.years.sort();
-    });
-  }
-
-  formatMonthlyData(data?: MonthlyTransaction[]): BarData[] {
-    let newDataLayout: BarData[] = [];
-
-    for (let i = 0; i < this.years.length; i++) {
-      newDataLayout.push({
-        name: this.years.sort()[i].toString(),
-        series: [],
-      });
-    }
-    if (data) {
-      for (let i = 0; i < this.years.length; i++) {
-        let series: any[] = [];
-        for (let j = 0; j < data.length; j++) {
-          if (this.years[i] === data[j].year) {
-            series.push({
-              name: data[j].month,
-              value: data[j].amount,
-            });
-            newDataLayout[i].series = series;
-          }
-        }
-      }
-    }
-    return newDataLayout;
-  }
-
-  generateLineXTicks(interval: number, data?: LineDataSeries[]): string[] {
-    let dates: string[] = [];
-    if (data) {
-      for (let i = 0; i < data.length; i = i + interval) {
-        dates.push(data[i].name);
-      }
-      return dates;
-    }
-    return [];
+    this.years = [2021];
+    // this.transactionService.getYears().subscribe((results) => {
+    //   this.years = results.data.years.sort();
+    // });
   }
 
   dropDownChange(value: string): void {
-    // console.log(value);
+    this.dropDownCurrentValue.next(value);
   }
-  dropDownValue(value: string): void {
+
+  ngAfterViewInit() {
+    this.subscriptions.push(
+      this.dropDownCurrentValue.subscribe((newValue) => {
+        if (this.chartMode !== newValue) {
+          this.changeChart(newValue);
+        }
+        this.chartMode = newValue;
+      })
+    );
+  }
+
+  changeChart(value: string): void {
     if (value === 'Monthly') {
-      this.isDailyData = this.isWeeklyData = false;
-      this.isMonthlyData = true;
       this.subscriptions.push(
         this.monthlyAmounts$.subscribe(
           (results: MonthlyTransaction[] | undefined) => {
-            this.barData = this.formatMonthlyData(results);
+            this.barData = this.chartHelper.formatMonthlyData(
+              this.years,
+              results
+            );
           }
         )
       );
-      // this.transactionService.getMonthlyAmounts().subscribe((results) => {
-      //   this.barData = this.formatMonthlyData(results.data.monthlyTransactions);
-      // });
-    } else if (value === 'Daily') {
-      this.isDailyData = true;
-      this.isWeeklyData = this.isMonthlyData = false;
-    } else {
-      this.isWeeklyData = true;
-      this.isMonthlyData = this.isDailyData = false;
     }
-  }
-
-  newSelectedDate(value: NgbDate | null, isStartDate: boolean) {
-    let newDate: Date;
-    if (value) {
-      newDate = new Date(`${value.year}-${value.month}-${value.day}`);
-    }
-
-    this.lineData = [
-      {
-        name: 'Transactions',
-        series: this.lineData[0].series?.filter((dailyAmount) => {
-          return isStartDate
-            ? new Date(dailyAmount.name) >= newDate
-            : new Date(dailyAmount.name) <= newDate;
-        }),
-      },
-    ];
-
-    this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
   }
 
   resetGraph() {
-    this.lineData = this.allData;
-    this.xAxisTicks = this.generateLineXTicks(5, this.lineData[0].series);
-    this.dateFilter.clearDateField();
+    this.dropDownCurrentValue.next('Daily');
   }
 
   ngOnDestroy(): void {

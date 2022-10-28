@@ -25,6 +25,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { ExpensesSideBarComponent } from './expenses/expenses-side-bar/expenses-side-bar.component';
 import { GridComponent } from './components/grid/grid.component';
+import { ChartHelper } from './shared/helper-functions/chart-functions';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { GridComponent } from './components/grid/grid.component';
     }),
     EffectsModule.forRoot([TransactionsEffect]),
   ],
-  providers: [],
+  providers: [ChartHelper],
   bootstrap: [AppComponent],
   exports: [ExpensesSideBarComponent],
 })
