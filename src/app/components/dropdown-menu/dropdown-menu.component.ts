@@ -8,22 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./dropdown-menu.component.scss'],
 })
 export class DropdownMenuComponent implements OnInit {
+  /**
+   * Tooltip string.
+   * @type {string}
+   */
   @Input()
-  public filterGroup!: FormGroup;
+  public toolTipTitle: string;
+
   @Input()
   public dropDownValues: string[] = [];
+  @Input()
+  public dropDownValue: string;
 
   @Output() newDropDownValue = new EventEmitter<string>();
-  dropDownValue: string = 'Select granularity';
-  hideGranularityDropDown = false;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    if (this.router.url.includes('history')) {
-      this.hideGranularityDropDown = true;
-    }
-  }
+  ngOnInit(): void {}
 
   onGranularitySelection(granularity: string): void {
     this.dropDownValue = granularity;

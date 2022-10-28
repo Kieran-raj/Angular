@@ -22,6 +22,7 @@ export class BarChartComponent implements OnInit {
   xAxisLabel = 'Year';
   showYAxisLabel = true;
   yAxisLabel = 'Amount (£)';
+  scheme = 'vivid';
 
   constructor() {}
 

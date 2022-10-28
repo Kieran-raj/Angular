@@ -1,19 +1,21 @@
-<ngx-charts-bar-vertical-2d
-  [view]="view"
-  [results]="sourceData"
-  [gradient]="gradient"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [legend]="showLegend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [legendPosition]="legendPosition"
-  [legendTitle]="legendTitle"
->
-  <ng-template #tooltipTemplate let-model="model" class="tooltip">
-    <div>{{ model.series }}</div>
-    <div>{{ model.name }} - £{{ model.value | number: ".2" }}</div>
-  </ng-template>
-</ngx-charts-bar-vertical-2d>
+<div>
+  <ngx-charts-bar-vertical-2d
+    [results]="sourceData"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [legendPosition]="legendPosition"
+    [legendTitle]="legendTitle"
+    [scheme]="scheme"
+  >
+    <ng-template #tooltipTemplate let-model="model" class="tooltip">
+      <div>{{ model.series }}</div>
+      <div>{{ model.name }} - £{{ model.value | number: ".2" }}</div>
+    </ng-template>
+  </ngx-charts-bar-vertical-2d>
+</div>

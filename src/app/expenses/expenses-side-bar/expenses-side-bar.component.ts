@@ -33,12 +33,6 @@ export class ExpensesSideBarComponent implements OnInit {
   public dropDownValue = new EventEmitter();
 
   /**
-   * Event emitter for a change in the toggle.
-   */
-  @Output()
-  checkBoxToggle = new EventEmitter();
-
-  /**
    * Event for reset button.
    */
   @Output()
@@ -65,7 +59,13 @@ export class ExpensesSideBarComponent implements OnInit {
    * Drop down values
    * @type {string[]}
    */
-  public dropDownValues = ['Daily', 'Weekly', 'Monthly'];
+  public dropDownValues = ['Daily', 'Monthly'];
+
+  /**
+   * Initial drop down value
+   * @type {string}
+   */
+  public initialDropDownValue = 'Daily';
 
   constructor() {}
 
@@ -73,9 +73,11 @@ export class ExpensesSideBarComponent implements OnInit {
 
   resetButtonClick(event: Event): void {
     this.resetButton.emit(event);
+    this.initialDropDownValue = 'Daily';
   }
 
   dropDownValueChange(value: string): void {
+    this.initialDropDownValue = value;
     this.dropDownValue.emit(value);
   }
 }

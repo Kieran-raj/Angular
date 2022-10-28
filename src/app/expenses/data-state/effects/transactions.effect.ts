@@ -19,7 +19,6 @@ export class TransactionsEffect {
       mergeMap(() =>
         this.transactionService.getAmountsOnly().pipe(
           map((transactionData: Transactions) => {
-            console.log(transactionData);
             return loadDailyTransactionsSuccess({
               transactions: {
                 dailyTransactions: transactionData.data.transactions,

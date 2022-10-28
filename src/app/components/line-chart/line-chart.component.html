@@ -1,6 +1,5 @@
 <div>
   <ngx-charts-line-chart
-    [view]="view"
     [xAxis]="xAxis"
     [yAxis]="yAxis"
     [xAxisTicks]="xAxisTicks"
@@ -8,11 +7,12 @@
     [yAxisLabel]="yAxisLabel"
     [showXAxisLabel]="showXAxisLabel"
     [showYAxisLabel]="showYAxisLabel"
+    [scheme]="scheme"
     [legend]="legend"
     [legendTitle]="legendTitle"
     [legendPosition]="legendPosition"
     [results]="sourceData"
-    [tooltipDisabled]="true"
+    [tooltipDisabled]="false"
   >
     <ng-template #tooltipTemplate let-model="model" class="tooltip">
       <div>

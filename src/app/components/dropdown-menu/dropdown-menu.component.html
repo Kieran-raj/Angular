@@ -1,24 +1,10 @@
-<div *ngIf="filterGroup" [formGroup]="filterGroup">
-  <label class="mb-1" for="category">Choose a category</label>
-  <select
-    class="form-control"
-    type="type"
-    id="category"
-    formControlName="category"
-  >
-    <option value="">Choose a category</option>
-    <option value="food">Food</option>
-    <option value="transport">Transport</option>
-    <option value="social">Social</option>
-    <option value="online">Online</option>
-    <option value="other">Other</option>
-  </select>
-</div>
-
-<div class="col" *ngIf="!hideGranularityDropDown">
+<div class="col">
   <div ngbDropdown>
     <button
       class="btn btn-outline-secondary"
+      data-toggle="tooltip"
+      data-placement="top"
+      [title]="toolTipTitle"
       id="dropdown"
       ngbDropdownToggle
       [ngStyle]="{ width: '190px' }"
