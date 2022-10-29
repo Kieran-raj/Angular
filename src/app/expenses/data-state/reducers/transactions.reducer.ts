@@ -1,5 +1,7 @@
+import { act } from '@ngrx/effects';
 import { createReducer, on } from '@ngrx/store';
 import {
+  addChosenExpenseToState,
   loadDailyTransactions,
   loadDailyTransactionsSuccess,
   loadHistoricalTransactions,
@@ -20,6 +22,7 @@ export const intitialTransactions: TransactionState = {
   monthlyTransactions: {
     monthlyTransactions: [],
   },
+  chosenExpense: null,
   isLoading: false,
 };
 
@@ -69,6 +72,12 @@ export const transactionsReducer = createReducer(
         transactions: action.transactions.historicalTranscations,
       },
       isLoading: false,
+    };
+  }),
+  on(addChosenExpenseToState, (state, action) => {
+    return {
+      ...state,
+      chosenExpense: action.expense,
     };
   })
 );

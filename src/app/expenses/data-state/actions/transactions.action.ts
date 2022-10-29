@@ -43,3 +43,10 @@ export const loadMonthlyTransactionsSuccess = createAction(
     };
   }>()
 );
+
+export const addChosenExpenseToState = createAction(
+  `${transacationsPrefix} Add Selected Expense To State`,
+  props<{
+    expense: DailyTransaction;
+  }>()
+);

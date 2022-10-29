@@ -27,6 +27,11 @@ export interface TransactionState {
   };
 
   /**
+   * Chosen expense
+   */
+  chosenExpense: DailyTransaction | null;
+
+  /**
    * IsLoading
    */
   isLoading: boolean;

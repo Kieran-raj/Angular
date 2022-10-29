@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AgGridAngular } from 'ag-grid-angular';
 import {
@@ -9,6 +15,7 @@ import {
 } from 'ag-grid-community';
 import { Observable, Subscription } from 'rxjs';
 import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
+import { addChosenExpenseToState } from '../data-state/actions/transactions.action';
 import {
   selectHistoricTransactions,
   selectTotalAmount,
@@ -44,15 +51,22 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       headerName: 'Amount (£)',
       field: 'amount',
       filter: 'agNumberColumnFilter',
+      sortable: true,
       valueFormatter: this.amountValueFormatter,
     },
     {
       headerName: 'Category',
       field: 'category',
       filter: 'agTextColumnFilter',
+      sortable: true,
       valueFormatter: this.categoryValueFormatter,
     },
-    { headerName: 'Date', field: 'date', filter: 'agDateColumnFilter' },
+    {
+      headerName: 'Date',
+      field: 'date',
+      filter: 'agDateColumnFilter',
+      sortable: true,
+    },
     { headerName: 'Description', field: 'description', sortable: false },
   ];
 
@@ -66,7 +80,11 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
   }
 
   onCellClicked(e: CellClickedEvent): void {
-    console.log('cellClicked', e);
+    this.transactionStore.dispatch(
+      addChosenExpenseToState({
+        expense: e.node.data,
+      })
+    );
   }
 
   clearSelection(): void {
@@ -78,7 +96,11 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       selectHistoricTransactions
     );
 
-    this.transactionStore.select(selectTotalAmount);
+    this.transactionStore.select(selectTotalAmount).subscribe((data) => {
+      if (data) {
+        this.amountTotal = data;
+      }
+    });
   }
 
   amountValueFormatter(params: ValueFormatterParams<number>) {
