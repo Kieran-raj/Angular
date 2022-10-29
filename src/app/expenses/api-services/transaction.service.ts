@@ -7,11 +7,11 @@ import { Transactions } from 'src/app/shared/models/transactions';
   providedIn: 'root',
 })
 export class TransactionsService {
-  url: string = 'http://192.168.1.61:5000/expenses';
+  url: string = 'http://192.168.1.21:5000//expenses';
 
   constructor(private http: HttpClient) {}
 
-  getAllTransactions(): Observable<Transactions> {
+  getHistoricalTransactions(): Observable<Transactions> {
     return this.http.get<Transactions>(`${this.url}/full_data`);
   }
 

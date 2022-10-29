@@ -4,7 +4,15 @@ import { Transactions } from 'src/app/shared/models/transactions';
 
 export interface TransactionState {
   /**
-   * All transactions
+   * Historical Transactions
+   */
+  historicalTransactions?: {
+    transactionTotal?: number;
+    transactions?: DailyTransaction[];
+  };
+
+  /**
+   * Daily Transactions
    */
   dailyTransactions?: {
     transactionTotal?: number;

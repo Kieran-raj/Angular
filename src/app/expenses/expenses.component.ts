@@ -10,6 +10,7 @@ import { LineData } from '../shared/models/line-data';
 import { MonthlyTransaction } from '../shared/models/monthly-transaction';
 import {
   loadDailyTransactions,
+  loadHistoricalTransactions,
   loadMonthlyTransactions,
 } from './data-state/actions/transactions.action';
 import {
@@ -83,21 +84,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private transactionStore: Store<TransactionState>,
     private chartHelper: ChartHelper
   ) {
-    this.transactionStore.dispatch(
-      loadDailyTransactions({
-        transactions: {
-          dailyTransactions: [],
-        },
-      })
-    );
+    this.transactionStore.dispatch(loadDailyTransactions());
 
-    this.transactionStore.dispatch(
-      loadMonthlyTransactions({
-        transactions: {
-          monthlyTransactions: [],
-        },
-      })
-    );
+    this.transactionStore.dispatch(loadMonthlyTransactions());
+
+    this.transactionStore.dispatch(loadHistoricalTransactions());
   }
 
   ngOnInit(): void {

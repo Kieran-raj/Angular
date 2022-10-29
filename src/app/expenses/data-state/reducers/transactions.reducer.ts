@@ -1,16 +1,20 @@
-import { act } from '@ngrx/effects';
 import { createReducer, on } from '@ngrx/store';
 import {
   loadDailyTransactions,
   loadDailyTransactionsSuccess,
+  loadHistoricalTransactions,
+  loadHistoricalTransactionsSucess,
   loadMonthlyTransactions,
   loadMonthlyTransactionsSuccess,
 } from '../actions/transactions.action';
 import { TransactionState } from '../states/transactions.state';
 
 export const intitialTransactions: TransactionState = {
-  dailyTransactions: {
+  historicalTransactions: {
     transactionTotal: 0,
+    transactions: [],
+  },
+  dailyTransactions: {
     transactions: [],
   },
   monthlyTransactions: {
@@ -21,12 +25,9 @@ export const intitialTransactions: TransactionState = {
 
 export const transactionsReducer = createReducer(
   intitialTransactions,
-  on(loadDailyTransactions, (state, action) => {
+  on(loadDailyTransactions, (state) => {
     return {
       ...state,
-      dailyTransactions: {
-        transactions: action.transactions.dailyTransactions,
-      },
       isLoading: true,
     };
   }),
@@ -39,12 +40,9 @@ export const transactionsReducer = createReducer(
       isLoading: false,
     };
   }),
-  on(loadMonthlyTransactions, (state, action) => {
+  on(loadMonthlyTransactions, (state) => {
     return {
       ...state,
-      monthlyTransactions: {
-        monthlyTransactions: action.transactions.monthlyTransactions,
-      },
       isLoading: true,
     };
   }),
@@ -53,6 +51,22 @@ export const transactionsReducer = createReducer(
       ...state,
       monthlyTransactions: {
         monthlyTransactions: action.transactions.monthlyTransactions,
+      },
+      isLoading: false,
+    };
+  }),
+  on(loadHistoricalTransactions, (state) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(loadHistoricalTransactionsSucess, (state, action) => {
+    return {
+      ...state,
+      historicalTransactions: {
+        transactionTotal: action.transactions.total,
+        transactions: action.transactions.historicalTranscations,
       },
       isLoading: false,
     };

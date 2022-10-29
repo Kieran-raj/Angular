@@ -17,9 +17,11 @@
 8. ~~Sort out models/types~~ &#x2611;
    - ~~Line data~~ &#x2611;
    - ~~Bar data~~ &#x2611;
-9. Improve the datePicker reset button and whole datePicker logic
+9. Improve the datePicker reset button and whole datePicker logic (Ignoring for now)
 10. ~~Make sidebar its own component~~ &#x2611;
 11. Look at add full history to ag-grid instead and display below the graphs
+12. Write some custom logic to dynamically change the size of the graph
+13. Refactor transaction and API types Daily and Historical
 
 ---
 

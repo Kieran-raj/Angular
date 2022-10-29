@@ -17,3 +17,13 @@ export const selectMonthlyTransactions = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.monthlyTransactions?.monthlyTransactions
 );
+
+export const selectHistoricTransactions = createSelector(
+  selectTransactionsState,
+  (state: TransactionState) => state.historicalTransactions?.transactions
+);
+
+export const selectTotalAmount = createSelector(
+  selectTransactionsState,
+  (state: TransactionState) => state.historicalTransactions?.transactionTotal
+);

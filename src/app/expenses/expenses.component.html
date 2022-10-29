@@ -1,12 +1,12 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <app-nav-bar></app-nav-bar>
-<div class="px-2">
-  <div class="card mt-2">
+<div class="px-2 col">
+  <div class="card mt-2 row">
     <div class="card-header">
       <h2 class="mb-0">Expenses Summary</h2>
     </div>
-    <div class="card-body">
-      <div class="row">
+    <div class="container-fluid">
+      <div class="row pt-2">
         <div class="col-7">
           <app-line-chart
             *ngIf="chartMode === 'Daily'"
@@ -28,9 +28,7 @@
         </div>
         <div class="col-3">Pie Chart Here</div>
       </div>
-      <div class="row">
-        <div class="col-7"><app-grid></app-grid></div>
-      </div>
     </div>
   </div>
 </div>
+<app-expenses-grid class="px-2"></app-expenses-grid>
