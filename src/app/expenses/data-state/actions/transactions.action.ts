@@ -4,13 +4,22 @@ import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
 
 const transacationsPrefix = '[Transactions] - ';
 
-export const loadDailyTransactions = createAction(
-  `${transacationsPrefix} Load All Daily Transactions`,
+export const loadHistoricalTransactions = createAction(
+  `${transacationsPrefix} Load Historical Transaction`
+);
+
+export const loadHistoricalTransactionsSucess = createAction(
+  `${transacationsPrefix} Load Historical Transaction Sucess`,
   props<{
     transactions: {
-      dailyTransactions: DailyTransaction[];
+      historicalTranscations?: DailyTransaction[];
+      total?: number;
     };
   }>()
+);
+
+export const loadDailyTransactions = createAction(
+  `${transacationsPrefix} Load All Daily Transactions`
 );
 
 export const loadDailyTransactionsSuccess = createAction(
@@ -23,12 +32,7 @@ export const loadDailyTransactionsSuccess = createAction(
 );
 
 export const loadMonthlyTransactions = createAction(
-  `${transacationsPrefix} Load All Monthly Transactions`,
-  props<{
-    transactions: {
-      monthlyTransactions: MonthlyTransaction[];
-    };
-  }>()
+  `${transacationsPrefix} Load All Monthly Transactions`
 );
 
 export const loadMonthlyTransactionsSuccess = createAction(
@@ -37,5 +41,12 @@ export const loadMonthlyTransactionsSuccess = createAction(
     transactions: {
       monthlyTransactions?: MonthlyTransaction[];
     };
+  }>()
+);
+
+export const addChosenExpenseToState = createAction(
+  `${transacationsPrefix} Add Selected Expense To State`,
+  props<{
+    expense: DailyTransaction;
   }>()
 );

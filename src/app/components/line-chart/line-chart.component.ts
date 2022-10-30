@@ -12,6 +12,8 @@ export class LineChartComponent implements OnInit {
   sourceData: any[] = [];
   @Input()
   xAxisTicks: any[] = [];
+  @Input()
+  activeEntries: any = [];
 
   view: any = [
     chartSettings.lineChart.xViewSize,
@@ -27,8 +29,6 @@ export class LineChartComponent implements OnInit {
   showXAxisLabel = chartSettings.lineChart.showXAxisLabel;
   showYAxisLabel = chartSettings.lineChart.showYAxisLabel;
   scheme = chartSettings.lineChart.scheme;
-
-  rangeFillOpacity = 10;
 
   constructor() {}
 

@@ -5,15 +5,35 @@ import { Transactions } from 'src/app/shared/models/transactions';
 import { TransactionsService } from '../../api-services/transaction.service';
 
 import {
+  loadHistoricalTransactions,
   loadDailyTransactions,
   loadDailyTransactionsSuccess,
   loadMonthlyTransactions,
   loadMonthlyTransactionsSuccess,
+  loadHistoricalTransactionsSucess,
 } from '../actions/transactions.action';
 
 @Injectable()
 export class TransactionsEffect {
-  loadTransactions$ = createEffect(() =>
+  private loadHistoricalTransactions$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadHistoricalTransactions),
+      mergeMap(() =>
+        this.transactionService.getHistoricalTransactions().pipe(
+          map((transactionData: Transactions) => {
+            return loadHistoricalTransactionsSucess({
+              transactions: {
+                total: transactionData.data.total,
+                historicalTranscations: transactionData.data.transactions,
+              },
+            });
+          })
+        )
+      )
+    )
+  );
+
+  loadDailyTransactions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadDailyTransactions),
       mergeMap(() =>

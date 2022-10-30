@@ -26,6 +26,8 @@ import { environment } from 'src/environments/environment';
 import { ExpensesSideBarComponent } from './expenses/expenses-side-bar/expenses-side-bar.component';
 import { GridComponent } from './components/grid/grid.component';
 import { ChartHelper } from './shared/helper-functions/chart-functions';
+import { ExpensesGridComponent } from './expenses/expenses-grid/expenses-grid.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -40,12 +42,14 @@ import { ChartHelper } from './shared/helper-functions/chart-functions';
     DateFilterComponent,
     ExpensesSideBarComponent,
     GridComponent,
+    ExpensesGridComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AgGridModule,
     RouterModule.forRoot([
       { path: 'home', component: HomePageComponent },
       { path: 'expenses', component: ExpensesComponent },

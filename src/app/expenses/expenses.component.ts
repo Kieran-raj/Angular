@@ -10,9 +10,11 @@ import { LineData } from '../shared/models/line-data';
 import { MonthlyTransaction } from '../shared/models/monthly-transaction';
 import {
   loadDailyTransactions,
+  loadHistoricalTransactions,
   loadMonthlyTransactions,
 } from './data-state/actions/transactions.action';
 import {
+  selectChosenExpense,
   selectDailyTransactions,
   selectMonthlyTransactions,
 } from './data-state/selectors/transactions.selectors';
@@ -73,6 +75,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public monthlyAmounts$: Observable<MonthlyTransaction[] | undefined>;
 
   /**
+   * Active (selected) expense.
+   */
+  public activeEntries: any;
+
+  /**
    * Subscriptions
    * @type {Subscription[]}
    */
@@ -83,21 +90,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private transactionStore: Store<TransactionState>,
     private chartHelper: ChartHelper
   ) {
-    this.transactionStore.dispatch(
-      loadDailyTransactions({
-        transactions: {
-          dailyTransactions: [],
-        },
-      })
-    );
+    this.transactionStore.dispatch(loadDailyTransactions());
 
-    this.transactionStore.dispatch(
-      loadMonthlyTransactions({
-        transactions: {
-          monthlyTransactions: [],
-        },
-      })
-    );
+    this.transactionStore.dispatch(loadMonthlyTransactions());
+
+    this.transactionStore.dispatch(loadHistoricalTransactions());
   }
 
   ngOnInit(): void {
@@ -118,6 +115,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
           series: mappedDailyAmountsToNgxCharts,
         },
       ];
+
       this.xAxisTicks = this.chartHelper.generateLineXTicks(
         5,
         mappedDailyAmountsToNgxCharts
@@ -142,6 +140,21 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
         }
         this.chartMode = newValue;
       })
+    );
+
+    this.subscriptions.push(
+      this.transactionStore
+        .select(selectChosenExpense)
+        .subscribe((expenses) => {
+          if (expenses) {
+            this.activeEntries = [
+              {
+                name: 'Transactions',
+                series: [expenses],
+              },
+            ];
+          }
+        })
     );
   }
 
