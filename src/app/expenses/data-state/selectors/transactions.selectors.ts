@@ -31,3 +31,8 @@ export const selectChosenExpense = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.chosenExpense
 );
+
+export const selectCategoricalAmounts = createSelector(
+  selectTransactionsState,
+  (state: TransactionState) => state.categoricalAmounts?.catergoricalAmounts
+);

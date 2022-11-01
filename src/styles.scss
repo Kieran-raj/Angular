@@ -48,3 +48,38 @@ body {
 
 @import "ag-grid-community/styles/ag-grid.min.css";
 @import "ag-grid-community/styles/ag-theme-alpine.min.css";
+
+ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
+  .tooltip-caret.position-top {
+    border-top-color: white;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .tooltip-caret.position-right {
+    border-right-color: white;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .vertical {
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    border-left: 4px solid #315594;
+    height: 40px;
+    text-align: left;
+  }
+
+  .verticalTwo {
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    border-left: 4px solid #fa532e;
+    height: 40px;
+    text-align: left;
+  }
+
+  background-color: white;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  padding: 0rem;
+  margin: 0rem;
+}

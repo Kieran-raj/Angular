@@ -1,3 +1,4 @@
+import { CategoricalAmounts } from './categorical-amounts';
 import { DailyTransaction } from './daily-transaction';
 import { MonthlyTransaction } from './monthly-transaction';
 
@@ -25,5 +26,10 @@ export interface Transactions {
      * Monthly Transactions
      */
     monthlyTransactions?: MonthlyTransaction[];
+
+    /**
+     * Categorical Amounts
+     */
+    categoricalAmounts: CategoricalAmounts[];
   };
 }
