@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!isLoading">
   <ngx-charts-line-chart
     [view]="view"
     [xAxis]="xAxis"
@@ -8,25 +8,64 @@
     [yAxisLabel]="yAxisLabel"
     [showXAxisLabel]="showXAxisLabel"
     [showYAxisLabel]="showYAxisLabel"
-    [scheme]="scheme"
+    [showGridLines]="false"
     [legend]="legend"
     [legendTitle]="legendTitle"
     [legendPosition]="legendPosition"
     [results]="sourceData"
     [tooltipDisabled]="false"
+    [customColors]="colors"
   >
     <ng-template #tooltipTemplate let-model="model" class="tooltip">
-      <div>
-        {{ model.series }}
-      </div>
-      <div>
-        Date: {{ model.name }} Amount: £{{ model.value | number: ".2" }}
+      <div class="col">
+        <div class="row mx-0 px-0">
+          <h4 class="my-0 mx-0 px-0 py-0" style="color: #233d53">
+            <strong>Transaction</strong>
+            <hr class="my-0 mx-0" style="color: #233d53" />
+          </h4>
+        </div>
+        <div class="row mx-0 px-0">
+          <div class="vertical col">
+            <h5
+              class="my-0 ml-0 mr-2 px-0"
+              style="color: #233d53; opacity: 0.3"
+            >
+              <strong>{{ formatDate(model.name) }}</strong>
+            </h5>
+            <h4 class="my-0 mx-0" style="color: #233d53">
+              <strong>£{{ model.value | number: ".2" }}</strong>
+            </h4>
+          </div>
+        </div>
       </div>
     </ng-template>
+
     <ng-template #seriesTooltipTemplate let-model="model">
-      <div>
-        <h5>Date: {{ model[0].name }}</h5>
-        <h5>Amount: £{{ model[0].value | number: ".2" }}</h5>
+      <div class="col">
+        <div class="row mx-0 px-0">
+          <h4 class="my-0 py-0" style="color: #233d53">
+            <strong>{{ formatDate(model[0].name) }}</strong>
+            <hr class="my-0 mx-0" style="color: #233d53" />
+          </h4>
+        </div>
+      </div>
+      <div class="row mx-0 px-0">
+        <div class="vertical col">
+          <h5 class="my-0 ml-0 mr-2 px-0" style="color: #233d53; opacity: 0.3">
+            <strong>Transaction</strong>
+          </h5>
+          <h4 class="my-0 mx-0" style="color: #233d53">
+            <strong>£{{ model[0].value | number: ".2" }}</strong>
+          </h4>
+        </div>
+      </div>
+
+      <div *ngIf="false" class="row mx-0 px-0">
+        <div class="verticalTwo col">
+          <h5 class="my-0 ml-0 mr-2 px-0" style="color: #233d53; opacity: 0.3">
+            <strong>Rolling Average</strong>
+          </h5>
+        </div>
       </div>
     </ng-template>
   </ngx-charts-line-chart>

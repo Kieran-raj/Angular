@@ -1,7 +1,8 @@
-import { act } from '@ngrx/effects';
 import { createReducer, on } from '@ngrx/store';
 import {
   addChosenExpenseToState,
+  loadCategoricalAmounts,
+  loadCategoricalAmountsSuccess,
   loadDailyTransactions,
   loadDailyTransactionsSuccess,
   loadHistoricalTransactions,
@@ -12,18 +13,11 @@ import {
 import { TransactionState } from '../states/transactions.state';
 
 export const intitialTransactions: TransactionState = {
-  historicalTransactions: {
-    transactionTotal: 0,
-    transactions: [],
-  },
-  dailyTransactions: {
-    transactions: [],
-  },
-  monthlyTransactions: {
-    monthlyTransactions: [],
-  },
+  historicalTransactions: null,
+  dailyTransactions: null,
+  monthlyTransactions: null,
+  categoricalAmounts: null,
   chosenExpense: null,
-  isLoading: false,
 };
 
 export const transactionsReducer = createReducer(
@@ -31,7 +25,6 @@ export const transactionsReducer = createReducer(
   on(loadDailyTransactions, (state) => {
     return {
       ...state,
-      isLoading: true,
     };
   }),
   on(loadDailyTransactionsSuccess, (state, action) => {
@@ -40,13 +33,11 @@ export const transactionsReducer = createReducer(
       dailyTransactions: {
         transactions: action.transactions.dailyTransactions,
       },
-      isLoading: false,
     };
   }),
   on(loadMonthlyTransactions, (state) => {
     return {
       ...state,
-      isLoading: true,
     };
   }),
   on(loadMonthlyTransactionsSuccess, (state, action) => {
@@ -55,13 +46,11 @@ export const transactionsReducer = createReducer(
       monthlyTransactions: {
         monthlyTransactions: action.transactions.monthlyTransactions,
       },
-      isLoading: false,
     };
   }),
   on(loadHistoricalTransactions, (state) => {
     return {
       ...state,
-      isLoading: true,
     };
   }),
   on(loadHistoricalTransactionsSucess, (state, action) => {
@@ -71,13 +60,25 @@ export const transactionsReducer = createReducer(
         transactionTotal: action.transactions.total,
         transactions: action.transactions.historicalTranscations,
       },
-      isLoading: false,
     };
   }),
   on(addChosenExpenseToState, (state, action) => {
     return {
       ...state,
       chosenExpense: action.expense,
+    };
+  }),
+  on(loadCategoricalAmounts, (state) => {
+    return {
+      ...state,
+    };
+  }),
+  on(loadCategoricalAmountsSuccess, (state, action) => {
+    return {
+      ...state,
+      categoricalAmounts: {
+        catergoricalAmounts: action.transactions.categoricalAmounts,
+      },
     };
   })
 );

@@ -28,6 +28,7 @@ import { GridComponent } from './components/grid/grid.component';
 import { ChartHelper } from './shared/helper-functions/chart-functions';
 import { ExpensesGridComponent } from './expenses/expenses-grid/expenses-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AgGridModule } from 'ag-grid-angular';
     ExpensesSideBarComponent,
     GridComponent,
     ExpensesGridComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,

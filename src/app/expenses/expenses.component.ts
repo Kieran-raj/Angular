@@ -9,11 +9,13 @@ import { DailyTransaction } from '../shared/models/daily-transaction';
 import { LineData } from '../shared/models/line-data';
 import { MonthlyTransaction } from '../shared/models/monthly-transaction';
 import {
+  loadCategoricalAmounts,
   loadDailyTransactions,
   loadHistoricalTransactions,
   loadMonthlyTransactions,
 } from './data-state/actions/transactions.action';
 import {
+  selectCategoricalAmounts,
   selectChosenExpense,
   selectDailyTransactions,
   selectMonthlyTransactions,
@@ -21,6 +23,8 @@ import {
 import { TransactionState } from './data-state/states/transactions.state';
 import { TransactionsService } from './api-services/transaction.service';
 import { ChartHelper } from '../shared/helper-functions/chart-functions';
+import { CategoricalAmounts } from '../shared/models/categorical-amounts';
+import { PieData } from '../shared/models/pie-data';
 
 @Component({
   selector: 'app-expenses',
@@ -37,12 +41,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public pageTitle: string = 'Expenses';
   public allData: LineData[];
   public lineData: LineData[];
+  public pieData: PieData[];
   public movingAverageData: any = [];
   public barData: BarData[] = [];
   public years: number[] = [];
   public xAxisTicks: string[] = [];
-
-  public isLoading: boolean;
+  public isLineDataLoading: boolean = true;
 
   /**
    * What is the chosen granularity for the chart.
@@ -75,6 +79,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public monthlyAmounts$: Observable<MonthlyTransaction[] | undefined>;
 
   /**
+   * Categorical amounts.
+   * @type {Observable<CategoricalAmounts[] | undefined>}
+   */
+  public categoricalAmounts$: Observable<CategoricalAmounts[] | undefined>;
+
+  /**
    * Active (selected) expense.
    */
   public activeEntries: any;
@@ -95,13 +105,34 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     this.transactionStore.dispatch(loadMonthlyTransactions());
 
     this.transactionStore.dispatch(loadHistoricalTransactions());
+
+    this.transactionStore.dispatch(loadCategoricalAmounts());
+
+    this.dailyAmounts$ = this.transactionStore.select(selectDailyTransactions);
   }
 
   ngOnInit(): void {
-    this.dailyAmounts$ = this.transactionStore.select(selectDailyTransactions);
     this.monthlyAmounts$ = this.transactionStore.select(
       selectMonthlyTransactions
     );
+    this.categoricalAmounts$ = this.transactionStore.select(
+      selectCategoricalAmounts
+    );
+
+    this.categoricalAmounts$.subscribe((data) => {
+      let formatedPieData: any[] = [];
+      let percentages: any = {};
+      data?.forEach((category) => {
+        formatedPieData.push({
+          name:
+            category.category[0].toUpperCase() +
+            category.category.substring(1).toLowerCase(),
+          value: category.amount,
+        });
+        percentages[category.category] = category.percentage;
+      });
+      this.pieData = formatedPieData;
+    });
 
     this.dailyAmounts$.subscribe((results: DailyTransaction[] | undefined) => {
       const mappedDailyAmountsToNgxCharts = results?.map(
@@ -109,12 +140,18 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
           return { value: dailyAmount.amount, name: dailyAmount.date };
         }
       );
+
       this.lineData = [
         {
           name: 'Transactions',
           series: mappedDailyAmountsToNgxCharts,
         },
       ];
+
+      if (mappedDailyAmountsToNgxCharts) {
+        this.isLineDataLoading =
+          mappedDailyAmountsToNgxCharts.length > 0 ? false : true;
+      }
 
       this.xAxisTicks = this.chartHelper.generateLineXTicks(
         5,

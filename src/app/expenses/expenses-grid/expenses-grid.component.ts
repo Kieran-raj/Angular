@@ -108,7 +108,9 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
   }
 
   categoryValueFormatter(params: ValueFormatterParams<string>) {
-    return params.value[0].toUpperCase() + params.value.substr(1).toLowerCase();
+    return (
+      params.value[0].toUpperCase() + params.value.substring(1).toLowerCase()
+    );
   }
 
   ngOnInit(): void {}

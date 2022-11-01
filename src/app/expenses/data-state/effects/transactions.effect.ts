@@ -11,6 +11,8 @@ import {
   loadMonthlyTransactions,
   loadMonthlyTransactionsSuccess,
   loadHistoricalTransactionsSucess,
+  loadCategoricalAmounts,
+  loadCategoricalAmountsSuccess,
 } from '../actions/transactions.action';
 
 @Injectable()
@@ -59,6 +61,23 @@ export class TransactionsEffect {
             loadMonthlyTransactionsSuccess({
               transactions: {
                 monthlyTransactions: transactionData.data.monthlyTransactions,
+              },
+            })
+          )
+        )
+      )
+    )
+  );
+
+  loadCategoricalAmounts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCategoricalAmounts),
+      mergeMap(() =>
+        this.transactionService.getCategoricalAmounts().pipe(
+          map((transactionData: Transactions) =>
+            loadCategoricalAmountsSuccess({
+              transactions: {
+                categoricalAmounts: transactionData.data.categoricalAmounts,
               },
             })
           )

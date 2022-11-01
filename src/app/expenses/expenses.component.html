@@ -5,14 +5,15 @@
     <div class="card-header">
       <h2 class="mb-0">Expenses Summary</h2>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid cardBody">
       <div class="row pt-2">
-        <div class="col-7">
+        <div class="col-8">
           <app-line-chart
             *ngIf="chartMode === 'Daily'"
             [sourceData]="lineData"
             [xAxisTicks]="xAxisTicks"
             [activeEntries]="activeEntries"
+            [isLoading]="isLineDataLoading"
           >
           </app-line-chart>
           <app-bar-chart
@@ -20,14 +21,16 @@
             [sourceData]="barData"
           ></app-bar-chart>
         </div>
-        <div class="col-2">
+        <div class="col-1">
           <app-expenses-side-bar
             [showDateSelection]="showDateSelection"
             (resetButton)="resetGraph()"
             (dropDownValue)="dropDownChange($event)"
           ></app-expenses-side-bar>
         </div>
-        <div class="col-3">Pie Chart Here</div>
+        <div class="col-3">
+          <app-pie-chart [sourceData]="pieData"></app-pie-chart>
+        </div>
       </div>
     </div>
   </div>

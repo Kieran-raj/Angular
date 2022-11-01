@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
 import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
 
@@ -40,6 +41,19 @@ export const loadMonthlyTransactionsSuccess = createAction(
   props<{
     transactions: {
       monthlyTransactions?: MonthlyTransaction[];
+    };
+  }>()
+);
+
+export const loadCategoricalAmounts = createAction(
+  `${transacationsPrefix} Load Categorical Amounts`
+);
+
+export const loadCategoricalAmountsSuccess = createAction(
+  `${transacationsPrefix} Load Categorical Amounts Success`,
+  props<{
+    transactions: {
+      categoricalAmounts?: CategoricalAmounts[];
     };
   }>()
 );
