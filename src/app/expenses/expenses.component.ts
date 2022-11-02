@@ -121,15 +121,14 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
     this.categoricalAmounts$.subscribe((data) => {
       let formatedPieData: any[] = [];
-      let percentages: any = {};
       data?.forEach((category) => {
         formatedPieData.push({
           name:
             category.category[0].toUpperCase() +
             category.category.substring(1).toLowerCase(),
           value: category.amount,
+          pctOfTotal: category.percentage,
         });
-        percentages[category.category] = category.percentage;
       });
       this.pieData = formatedPieData;
     });

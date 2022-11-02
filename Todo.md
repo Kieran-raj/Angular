@@ -26,9 +26,9 @@
 15. Improve isLoading to prevent console log errors
 16. Make app dynamically sized
 17. Make charts dynamic / generic as possible
-18. **RE-WORK PIE CHART CATEGORICAL DATA LOGIC (see below)**
-19. Get percentage change for bar chart
-20. Get percentage total working for pie chart
+18. ~~**RE-WORK PIE CHART CATEGORICAL DATA LOGIC (see below)**~~ &#x2611;
+19. ~~Get percentage change for bar chart~~ &#x2611;
+20. ~~Get percentage total working for pie chart~~ &#x2611;
 
 ---
 

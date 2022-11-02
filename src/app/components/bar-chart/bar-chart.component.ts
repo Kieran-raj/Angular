@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { YAxisTicksComponent } from '@swimlane/ngx-charts';
 import { BarData } from 'src/app/shared/models/bar-data';
 
 @Component({

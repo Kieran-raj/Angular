@@ -10,6 +10,11 @@ export interface MonthlyTransaction {
   month: string;
 
   /**
+   * Percentage Change.
+   */
+  pct_change: number;
+
+  /**
    * Year
    */
   year: number;

@@ -8,4 +8,9 @@ export interface PieData {
    * Series data.
    */
   value: number;
+
+  /**
+   * Percentage of total
+   */
+  pctOfTotal: number;
 }

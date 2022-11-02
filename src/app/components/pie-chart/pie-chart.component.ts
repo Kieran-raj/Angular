@@ -40,4 +40,12 @@ export class PieChartComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  getPercentage(category: string) {
+    const categoryData = this.sourceData.find((data) => {
+      return data.name === category;
+    });
+
+    return categoryData?.pctOfTotal;
+  }
 }
