@@ -32,6 +32,7 @@ export class ChartHelper {
             series.push({
               name: data[j].month,
               value: data[j].amount,
+              pctChange: data[j].pct_change,
             });
             newDataLayout[i].series = series;
           }

@@ -38,8 +38,14 @@
           <h5 class="my-0 ml-0 mr-2 px-0" style="color: #233d53; opacity: 0.3">
             <strong>Change</strong>
           </h5>
-          <h4 class="my-0 mx-0" style="color: #233d53">
-            <strong></strong>
+          <h4
+            class="my-0 mx-0"
+            [ngStyle]="{ color: model.pctChange < 0 ? 'green' : 'red' }"
+          >
+            <strong
+              >{{ model.pctChange !== null ? model.pctChange : "N/A"
+              }}<span *ngIf="model.pctChange">%</span></strong
+            >
           </h4>
         </div>
       </div>
