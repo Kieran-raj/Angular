@@ -29,6 +29,11 @@
 18. ~~**RE-WORK PIE CHART CATEGORICAL DATA LOGIC (see below)**~~ &#x2611;
 19. ~~Get percentage change for bar chart~~ &#x2611;
 20. ~~Get percentage total working for pie chart~~ &#x2611;
+21. Sort out styling into scss files
+22. Make tootitp common component
+23. Refactor modal
+24. ~~Add new category~~ &#x2611;
+25. ~~Render in action buttons~~ &#x2611; and get working
 
 ---
 

@@ -1,24 +1,22 @@
-<div class="col">
-  <div ngbDropdown>
+<div ngbDropdown>
+  <button
+    class="btn btn-outline-secondary dropDown"
+    data-toggle="tooltip"
+    data-placement="top"
+    [title]="toolTipTitle"
+    id="dropdown"
+    ngbDropdownToggle
+    [ngStyle]="{ width: '190px' }"
+  >
+    {{ dropDownValue }}
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdown">
     <button
-      class="btn btn-outline-secondary dropDown"
-      data-toggle="tooltip"
-      data-placement="top"
-      [title]="toolTipTitle"
-      id="dropdown"
-      ngbDropdownToggle
-      [ngStyle]="{ width: '190px' }"
+      ngbDropdownItem
+      *ngFor="let item of dropDownValues"
+      (click)="onGranularitySelection(item)"
     >
-      {{ dropDownValue }}
+      {{ item }}
     </button>
-    <div ngbDropdownMenu aria-labelledby="dropdown">
-      <button
-        ngbDropdownItem
-        *ngFor="let item of dropDownValues"
-        (click)="onGranularitySelection(item)"
-      >
-        {{ item }}
-      </button>
-    </div>
   </div>
 </div>
