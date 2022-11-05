@@ -16,7 +16,10 @@ import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { DateFilterComponent } from './components/date-filter/date-filter.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
 import { Store, StoreModule } from '@ngrx/store';
 import { transactionsReducer } from './expenses/data-state/reducers/transactions.reducer';
 import { EffectsModule } from '@ngrx/effects';
@@ -29,7 +32,9 @@ import { ChartHelper } from './shared/helper-functions/chart-functions';
 import { ExpensesGridComponent } from './expenses/expenses-grid/expenses-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
-
+import { UpdatesEffect } from './expenses/data-state/effects/updates.effect';
+import { updatesReducer } from './expenses/data-state/reducers/updates.reducer';
+import { GridActionsComponent } from './components/grid-actions/grid-actions.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +50,7 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     GridComponent,
     ExpensesGridComponent,
     PieChartComponent,
+    GridActionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,15 +67,21 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     NgbModule,
     NgxChartsModule,
     FontAwesomeModule,
-    StoreModule.forRoot({ transactions: transactionsReducer }),
+    StoreModule.forRoot({
+      transactions: transactionsReducer,
+      updates: updatesReducer,
+    }),
     StoreDevtoolsModule.instrument({
       name: 'Personal Project - State',
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([TransactionsEffect]),
+    EffectsModule.forRoot([TransactionsEffect, UpdatesEffect]),
   ],
-  providers: [ChartHelper],
+  providers: [
+    ChartHelper,
+    { provide: 'BASE_API_URL', useValue: 'http://127.0.0.1:5000' },
+  ],
   bootstrap: [AppComponent],
   exports: [ExpensesSideBarComponent],
 })

@@ -1,13 +1,13 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <app-nav-bar></app-nav-bar>
-<div class="px-2 col">
-  <div class="card mt-2 row">
+<div class="px-2 col" style="height: 100%">
+  <div class="card mt-2 mx-0 row">
     <div class="card-header">
       <h2 class="mb-0">Expenses Summary</h2>
     </div>
     <div class="container-fluid cardBody">
       <div class="row pt-2">
-        <div class="col-8">
+        <div class="col-7 pr-0">
           <app-line-chart
             *ngIf="chartMode === 'Daily'"
             [sourceData]="lineData"
@@ -21,18 +21,77 @@
             [sourceData]="barData"
           ></app-bar-chart>
         </div>
-        <div class="col-1">
+        <div class="col-1 pl-0">
           <app-expenses-side-bar
+            class="pl-0"
             [showDateSelection]="showDateSelection"
             (resetButton)="resetGraph()"
             (dropDownValue)="dropDownChange($event)"
           ></app-expenses-side-bar>
         </div>
-        <div class="col-3">
+        <div class="col-4">
           <app-pie-chart [sourceData]="pieData"></app-pie-chart>
         </div>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col">
+      <button
+        class="btn btn-secondary mt-2 crudButton"
+        (click)="openModal(modal, 'category-modal')"
+      >
+        New Category
+      </button>
+      <div *ngIf="false" style="color: green">{{ updateMessage }}</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <app-expenses-grid class="px-2 my-0 py-0"></app-expenses-grid>
+  </div>
 </div>
-<app-expenses-grid class="px-2"></app-expenses-grid>
+
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h2
+      class="modal-title my-0 mx-0"
+      style="color: #233d53"
+      id="category-modal"
+    >
+      Add Category
+    </h2>
+
+    <button
+      class="btn close border-0 shadow-none"
+      aria-label="Close"
+      (click)="dismissCallBack()"
+    >
+      <span aria-hidden="true"
+        ><fa-icon [icon]="faXmark" size="lg"></fa-icon
+      ></span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form class="form-floating" [formGroup]="formGroup">
+      <input
+        class="form-control"
+        id="floatingInputValue"
+        type="text"
+        formControlName="category"
+      />
+      <label for="floatingInputValue">New Category</label>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary crudButton"
+      (click)="okCallBack()"
+    >
+      Ok
+    </button>
+  </div>
+</ng-template>

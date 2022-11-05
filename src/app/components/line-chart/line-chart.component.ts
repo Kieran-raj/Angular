@@ -23,7 +23,7 @@ export class LineChartComponent implements OnInit {
   //   chartSettings.lineChart.yViewSize,
   // ];
 
-  view: any = [1250, 350];
+  view: any = [1100, 350];
   xAxisLabel = chartSettings.lineChart.xAxisLabel;
   yAxisLabel = chartSettings.lineChart.yAxisLabel;
   legend = chartSettings.lineChart.legend;

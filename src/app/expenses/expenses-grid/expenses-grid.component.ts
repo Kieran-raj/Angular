@@ -14,6 +14,7 @@ import {
   ValueFormatterParams,
 } from 'ag-grid-community';
 import { Observable, Subscription } from 'rxjs';
+import { GridActionsComponent } from 'src/app/components/grid-actions/grid-actions.component';
 import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
 import { addChosenExpenseToState } from '../data-state/actions/transactions.action';
 import {
@@ -68,6 +69,17 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       sortable: true,
     },
     { headerName: 'Description', field: 'description', sortable: false },
+    {
+      headerName: 'Actions',
+      headerClass: 'text-center',
+      cellStyle: {
+        textAlign: 'center',
+      },
+      field: '',
+      sortable: false,
+      maxWidth: 150,
+      cellRenderer: GridActionsComponent,
+    },
   ];
 
   public rowData$!: Observable<any[] | undefined>;

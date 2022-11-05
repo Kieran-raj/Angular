@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transactions } from 'src/app/shared/models/transactions';
@@ -7,9 +7,14 @@ import { Transactions } from 'src/app/shared/models/transactions';
   providedIn: 'root',
 })
 export class TransactionsService {
-  url: string = 'http://192.168.1.43:5000//expenses';
+  url: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject('BASE_API_URL') private baseUrl: string,
+    private http: HttpClient
+  ) {
+    this.url = `${baseUrl}/expenses`;
+  }
 
   getHistoricalTransactions(): Observable<Transactions> {
     return this.http.get<Transactions>(`${this.url}/full_data`);
@@ -17,16 +22,6 @@ export class TransactionsService {
 
   getYears(): Observable<any> {
     return this.http.get(`${this.url}/full_data/all_years`);
-  }
-
-  getFilteredTransactions(
-    startDate: string,
-    endDate: string,
-    category: string
-  ): Observable<Transactions> {
-    return this.http.get<Transactions>(
-      `${this.url}/filtered_data?startDate=${startDate}&endDate=${endDate}&category=${category}`
-    );
   }
 
   getAmountsOnly(): Observable<Transactions> {

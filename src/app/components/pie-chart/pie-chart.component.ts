@@ -13,6 +13,8 @@ export class PieChartComponent implements OnInit {
   customColors = {
     food: '#233D53',
     transport: '#064B73',
+    subscription: '#47B5FF',
+    shopping: '#256D85',
     other: '#FA532E',
   };
 
@@ -29,6 +31,12 @@ export class PieChartComponent implements OnInit {
       }
       case 'Transport': {
         return this.customColors.transport;
+      }
+      case 'Subscription': {
+        return this.customColors.subscription;
+      }
+      case 'Shopping': {
+        return this.customColors.shopping;
       }
       case 'Other': {
         return this.customColors.other;

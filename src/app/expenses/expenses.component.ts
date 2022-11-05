@@ -25,6 +25,12 @@ import { TransactionsService } from './api-services/transaction.service';
 import { ChartHelper } from '../shared/helper-functions/chart-functions';
 import { CategoricalAmounts } from '../shared/models/categorical-amounts';
 import { PieData } from '../shared/models/pie-data';
+import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup } from '@angular/forms';
+import { UpdateState } from './data-state/states/update.state';
+import { addNewCategory } from './data-state/actions/updates.action';
 
 @Component({
   selector: 'app-expenses',
@@ -47,6 +53,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public years: number[] = [];
   public xAxisTicks: string[] = [];
   public isLineDataLoading: boolean = true;
+
+  /**
+   * Icons
+   */
+  public faXmark: IconDefinition = faXmark;
 
   /**
    * What is the chosen granularity for the chart.
@@ -95,10 +106,30 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   public subscriptions: Subscription[] = [];
 
+  /**
+   * From Group
+   * @type {FormGroup}
+   */
+  formGroup = new FormGroup({
+    category: new FormControl(''),
+  });
+
+  /**
+   * Modal instance.
+   * @type {NgbModalRef}
+   */
+  private modal: NgbModalRef;
+
+  sucessfulUpdate: boolean;
+
+  updateMessage = 'Sucessfully added new cateogry';
+
   constructor(
     private transactionService: TransactionsService,
     private transactionStore: Store<TransactionState>,
-    private chartHelper: ChartHelper
+    private updatesStore: Store<UpdateState>,
+    private chartHelper: ChartHelper,
+    private modalService: NgbModal
   ) {
     this.transactionStore.dispatch(loadDailyTransactions());
 
@@ -215,5 +246,27 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  openModal(content: any, id: string) {
+    this.modal = this.modalService.open(content, {
+      ariaLabelledBy: id,
+    });
+  }
+
+  okCallBack() {
+    const newCategory = this.formGroup.controls['category'].value;
+    this.updatesStore.dispatch(addNewCategory({ category: newCategory }));
+    this.modal.close();
+    this.clearForm();
+  }
+
+  dismissCallBack() {
+    this.modal.dismiss();
+    this.clearForm();
+  }
+
+  private clearForm() {
+    this.formGroup.reset();
   }
 }
