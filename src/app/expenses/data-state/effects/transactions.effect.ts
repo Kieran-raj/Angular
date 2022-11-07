@@ -13,11 +13,13 @@ import {
   loadHistoricalTransactionsSucess,
   loadCategoricalAmounts,
   loadCategoricalAmountsSuccess,
+  loadMovingAverage,
+  loadMovingAverageSuccess,
 } from '../actions/transactions.action';
 
 @Injectable()
 export class TransactionsEffect {
-  private loadHistoricalTransactions$ = createEffect(() =>
+  loadHistoricalTransactions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadHistoricalTransactions),
       mergeMap(() =>
@@ -78,6 +80,23 @@ export class TransactionsEffect {
             loadCategoricalAmountsSuccess({
               transactions: {
                 categoricalAmounts: transactionData.data.categoricalAmounts,
+              },
+            })
+          )
+        )
+      )
+    )
+  );
+
+  loadMovingAverageAmounts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadMovingAverage),
+      mergeMap((action) =>
+        this.transactionService.getMovingAverage(action.window).pipe(
+          map((transactionData: Transactions) =>
+            loadMovingAverageSuccess({
+              transactions: {
+                movingAverageAmounts: transactionData.data.movingAverageAmounts,
               },
             })
           )

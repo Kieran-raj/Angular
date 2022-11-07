@@ -39,6 +39,9 @@ export class LineChartComponent implements OnInit {
       case 'Transactions': {
         return '#315594';
       }
+      case 'MovingAverage': {
+        return '#FA532E';
+      }
     }
     return '#F9F3E6';
   };

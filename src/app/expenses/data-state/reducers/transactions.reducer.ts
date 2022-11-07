@@ -9,6 +9,9 @@ import {
   loadHistoricalTransactionsSucess,
   loadMonthlyTransactions,
   loadMonthlyTransactionsSuccess,
+  loadMovingAverage,
+  loadMovingAverageSuccess,
+  resetMovingAverageState,
 } from '../actions/transactions.action';
 import { TransactionState } from '../states/transactions.state';
 
@@ -18,6 +21,7 @@ export const intitialTransactions: TransactionState = {
   monthlyTransactions: null,
   categoricalAmounts: null,
   chosenExpense: null,
+  movingAverageAmounts: null,
 };
 
 export const transactionsReducer = createReducer(
@@ -79,6 +83,25 @@ export const transactionsReducer = createReducer(
       categoricalAmounts: {
         catergoricalAmounts: action.transactions.categoricalAmounts,
       },
+    };
+  }),
+  on(loadMovingAverage, (state) => {
+    return {
+      ...state,
+    };
+  }),
+  on(loadMovingAverageSuccess, (state, action) => {
+    return {
+      ...state,
+      movingAverageAmounts: {
+        movingAverageAmounts: action.transactions.movingAverageAmounts,
+      },
+    };
+  }),
+  on(resetMovingAverageState, (state) => {
+    return {
+      ...state,
+      movingAverageAmounts: null,
     };
   })
 );

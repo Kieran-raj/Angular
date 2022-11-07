@@ -1,6 +1,7 @@
 import { CategoricalAmounts } from './categorical-amounts';
 import { DailyTransaction } from './daily-transaction';
 import { MonthlyTransaction } from './monthly-transaction';
+import { MovingAverageAmounts } from './moving-average-amounts';
 
 export interface Transactions {
   /**
@@ -18,7 +19,7 @@ export interface Transactions {
     transactions?: DailyTransaction[];
 
     /**
-     * Weekly Transactins
+     * Weekly Transactions
      */
     weeklyTransactions?: any[];
 
@@ -31,5 +32,10 @@ export interface Transactions {
      * Categorical Amounts
      */
     categoricalAmounts: CategoricalAmounts[];
+
+    /**
+     * Moving Average Amounts
+     */
+    movingAverageAmounts?: MovingAverageAmounts[];
   };
 }

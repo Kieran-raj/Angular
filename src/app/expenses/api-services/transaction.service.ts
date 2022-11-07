@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transactions } from 'src/app/shared/models/transactions';
 
@@ -13,7 +13,7 @@ export class TransactionsService {
     @Inject('BASE_API_URL') private baseUrl: string,
     private http: HttpClient
   ) {
-    this.url = `${baseUrl}/expenses`;
+    this.url = `${this.baseUrl}/expenses`;
   }
 
   getHistoricalTransactions(): Observable<Transactions> {
@@ -34,5 +34,13 @@ export class TransactionsService {
 
   getCategoricalAmounts(): Observable<any> {
     return this.http.get(`${this.url}/get_categorical_amounts`);
+  }
+
+  getMovingAverage(window: string = '2'): Observable<Transactions> {
+    const params = new HttpParams().set('window', window);
+    return this.http.get<Transactions>(
+      `${this.url}/get_daily_amounts/moving_average`,
+      { params }
+    );
   }
 }
