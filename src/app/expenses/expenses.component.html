@@ -26,6 +26,7 @@
             class="pl-0"
             [showDateSelection]="showDateSelection"
             (resetButton)="resetGraph()"
+            (toggleMovingAverage)="toggleMovingAverage($event)"
             (dropDownValue)="dropDownChange($event)"
           ></app-expenses-side-bar>
         </div>
@@ -36,7 +37,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-1">
       <button
         class="btn btn-secondary mt-2 crudButton"
         (click)="openModal(modal, 'category-modal')"
@@ -44,6 +45,11 @@
         New Category
       </button>
       <div *ngIf="false" style="color: green">{{ updateMessage }}</div>
+    </div>
+    <div class="col-2 px-0">
+      <button class="btn btn-secondary mt-2 crudButton" disabled>
+        New Transaction
+      </button>
     </div>
   </div>
 

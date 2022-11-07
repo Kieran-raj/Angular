@@ -1,7 +1,7 @@
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
 import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
-import { Transactions } from 'src/app/shared/models/transactions';
+import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 
 export interface TransactionState {
   /**
@@ -38,4 +38,11 @@ export interface TransactionState {
    * Chosen expense
    */
   chosenExpense: DailyTransaction | null;
+
+  /**
+   * Moving Average amounts
+   */
+  movingAverageAmounts: {
+    movingAverageAmounts?: MovingAverageAmounts[];
+  } | null;
 }

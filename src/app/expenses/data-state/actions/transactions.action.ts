@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
 import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
+import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 
 const transacationsPrefix = '[Transactions] - ';
 
@@ -63,4 +64,22 @@ export const addChosenExpenseToState = createAction(
   props<{
     expense: DailyTransaction;
   }>()
+);
+
+export const loadMovingAverage = createAction(
+  `${transacationsPrefix} Load Moving Average`,
+  props<{ window?: string }>()
+);
+
+export const loadMovingAverageSuccess = createAction(
+  `${transacationsPrefix} Load Moving Average Success`,
+  props<{
+    transactions: {
+      movingAverageAmounts?: MovingAverageAmounts[];
+    };
+  }>()
+);
+
+export const resetMovingAverageState = createAction(
+  `${transacationsPrefix} Reset Moving Average`
 );

@@ -1,5 +1,3 @@
-// TODO: NEED TO ADD TYPES TO ALL MISSING TYPES
-
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -19,6 +17,7 @@ import {
   selectChosenExpense,
   selectDailyTransactions,
   selectMonthlyTransactions,
+  selectMovingAverageAmounts,
 } from './data-state/selectors/transactions.selectors';
 import { TransactionState } from './data-state/states/transactions.state';
 import { TransactionsService } from './api-services/transaction.service';
@@ -28,9 +27,10 @@ import { PieData } from '../shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UpdateState } from './data-state/states/update.state';
 import { addNewCategory } from './data-state/actions/updates.action';
+import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 
 @Component({
   selector: 'app-expenses',
@@ -90,6 +90,13 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public monthlyAmounts$: Observable<MonthlyTransaction[] | undefined>;
 
   /**
+   * Moving average amounts.
+   * @type {Observable<MovingAverageAmounts[] | undefined>}
+   */
+  public movingAverageAmounts$: Observable<MovingAverageAmounts[] | undefined> =
+    this.transactionStore.select(selectMovingAverageAmounts);
+
+  /**
    * Categorical amounts.
    * @type {Observable<CategoricalAmounts[] | undefined>}
    */
@@ -107,7 +114,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public subscriptions: Subscription[] = [];
 
   /**
-   * From Group
+   * Form Group
    * @type {FormGroup}
    */
   formGroup = new FormGroup({
@@ -223,25 +230,37 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
           }
         })
     );
-  }
 
-  changeChart(value: string): void {
-    if (value === 'Monthly') {
-      this.subscriptions.push(
-        this.monthlyAmounts$.subscribe(
-          (results: MonthlyTransaction[] | undefined) => {
-            this.barData = this.chartHelper.formatMonthlyData(
-              this.years,
-              results
-            );
+    this.movingAverageAmounts$.subscribe(
+      (results: MovingAverageAmounts[] | undefined) => {
+        const mappedMovingAverageAmounts = results?.map(
+          (movingAverage: MovingAverageAmounts) => {
+            return {
+              value: movingAverage.moving_average,
+              name: movingAverage.date,
+            };
           }
-        )
-      );
-    }
+        );
+
+        this.lineData.push({
+          name: 'MovingAverage',
+          series: mappedMovingAverageAmounts,
+        });
+
+        this.lineData = [...this.lineData];
+      }
+    );
   }
 
   resetGraph() {
     this.dropDownCurrentValue.next('Daily');
+    this.reloadGraphData();
+  }
+
+  toggleMovingAverage(event: boolean) {
+    if (!event) {
+      this.reloadGraphData();
+    }
   }
 
   ngOnDestroy(): void {
@@ -264,6 +283,28 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   dismissCallBack() {
     this.modal.dismiss();
     this.clearForm();
+  }
+
+  private changeChart(value: string): void {
+    if (value === 'Monthly') {
+      this.subscriptions.push(
+        this.monthlyAmounts$.subscribe(
+          (results: MonthlyTransaction[] | undefined) => {
+            this.barData = this.chartHelper.formatMonthlyData(
+              this.years,
+              results
+            );
+          }
+        )
+      );
+    }
+  }
+
+  private reloadGraphData() {
+    const newLineData = this.lineData.filter(
+      (data) => data.name === 'Transactions'
+    );
+    this.lineData = newLineData;
   }
 
   private clearForm() {
