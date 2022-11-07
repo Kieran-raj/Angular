@@ -16,11 +16,8 @@ import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { DateFilterComponent } from './components/date-filter/date-filter.component';
-import {
-  FontAwesomeModule,
-  FaIconLibrary,
-} from '@fortawesome/angular-fontawesome';
-import { Store, StoreModule } from '@ngrx/store';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { StoreModule } from '@ngrx/store';
 import { transactionsReducer } from './expenses/data-state/reducers/transactions.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { TransactionsEffect } from './expenses/data-state/effects/transactions.effect';
@@ -35,6 +32,7 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { UpdatesEffect } from './expenses/data-state/effects/updates.effect';
 import { updatesReducer } from './expenses/data-state/reducers/updates.reducer';
 import { GridActionsComponent } from './components/grid-actions/grid-actions.component';
+import { ExpensesLineChartTooltipComponent } from './expenses/line-chart-tooltip/expenses-line-chart-tooltip.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +49,7 @@ import { GridActionsComponent } from './components/grid-actions/grid-actions.com
     ExpensesGridComponent,
     PieChartComponent,
     GridActionsComponent,
+    ExpensesLineChartTooltipComponent,
   ],
   imports: [
     BrowserModule,

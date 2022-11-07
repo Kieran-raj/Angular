@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
 import { LineData } from 'src/app/shared/models/line-data';
 import { chartSettings } from 'src/app/shared/settings/chart-settings';
 
@@ -17,6 +23,20 @@ export class LineChartComponent implements OnInit {
   activeEntries: any = [];
   @Input()
   isLoading: boolean;
+
+  /**
+   * Custom Tooltip template
+   * @type {TemplateRef<any>}
+   */
+  @Input()
+  public customToolTipTemplate: TemplateRef<any>;
+
+  /**
+   * Custom Tooltip template
+   * @type {TemplateRef<any>}
+   */
+  @Input()
+  public customSeriesTooltipTemplate: TemplateRef<any>;
 
   // view: any = [
   //   chartSettings.lineChart.xViewSize,
@@ -51,9 +71,4 @@ export class LineChartComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
-  formatDate(date: string): string {
-    const utc = new Date(Date.parse(date));
-    return utc.toDateString();
-  }
 }

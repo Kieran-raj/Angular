@@ -38,12 +38,11 @@
 
 ### Refactoring
 
-1. Refactor line chart tooltip (as generic as possible in html)
-2. Refactor tooltips into seperate component (will need config on series data)
-3. Refactor Modal (using ng templates and ViewChild || ContentChild) and validators
-4. Refactor transaction and API types Daily and Historical
-5. Refactor styling into scss files
-6. Question dependencies
+1. ~~Refactor line chart tooltip (as generic as possible in html)~~ &#x2611; -> Allow custom templates to be passed through
+2. Refactor Modal (using ng templates and ViewChild || ContentChild) and validators
+3. Refactor transaction and API types Daily and Historical
+4. Refactor styling into scss files
+5. Question dependencies
 
 ---
 
