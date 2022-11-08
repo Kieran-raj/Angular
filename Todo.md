@@ -43,13 +43,14 @@
 3. Refactor transaction and API types Daily and Historical
 4. Refactor styling into scss files
 5. Question dependencies
+6. ~~Refactor bar chart tooltip (custom component)~~&#x2611;
 
 ---
 
 ### Business Logic
 
 1. ~~Allow the ability to create new categories~~ &#x2611;
-2. Allow for updating a category (via context menu in ag grid)
+2. Allow for updating a category (maybe do drop down as context menu doesnt work)
 3. Allow for the creation of new records (should update grid and charts)
 4. All for the deletion of records (should update grid and charts)
 
