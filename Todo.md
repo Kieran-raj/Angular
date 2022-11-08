@@ -33,6 +33,7 @@
 22. When changing dates, have all values change in all components
 23. ~~Moving average~~ &#x2611;
 24. Route Guarding
+25. Show averages in the expenses side bar
 
 ---
 

@@ -115,5 +115,7 @@
 </ng-template>
 
 <ng-template #barChartToolTipRef let-model="model">
-  <app-expenses-bar-chart-tooltip></app-expenses-bar-chart-tooltip>
+  <app-expenses-bar-chart-tooltip
+    [model]="model"
+  ></app-expenses-bar-chart-tooltip>
 </ng-template>
