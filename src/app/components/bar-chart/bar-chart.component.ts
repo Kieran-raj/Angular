@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
 import { BarData } from 'src/app/shared/models/bar-data';
 
 @Component({
@@ -10,6 +16,13 @@ import { BarData } from 'src/app/shared/models/bar-data';
 export class BarChartComponent implements OnInit {
   @Input()
   sourceData: BarData[] = [];
+
+  /**
+   * Custom Tooltip template
+   * @type {TemplateRef<any>}
+   */
+  @Input()
+  public customToolTipTemplate: TemplateRef<any>;
 
   view: any = [1050, 350];
   showXAxis = true;

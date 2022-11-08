@@ -14,8 +14,8 @@
             [xAxisTicks]="xAxisTicks"
             [activeEntries]="activeEntries"
             [isLoading]="isLineDataLoading"
-            [customToolTipTemplate]="toolTipRef"
-            [customSeriesTooltipTemplate]="seriesToolTipRef"
+            [customToolTipTemplate]="lineChartToolTipRef"
+            [customSeriesTooltipTemplate]="lineChartSeriesToolTipRef"
           >
           </app-line-chart>
           <app-bar-chart
@@ -104,12 +104,16 @@
   </div>
 </ng-template>
 
-<ng-template #toolTipRef let-model="model">
+<ng-template #lineChartToolTipRef let-model="model">
   <app-expenses-line-chart-tooltip [model]="model">
   </app-expenses-line-chart-tooltip>
 </ng-template>
 
-<ng-template #seriesToolTipRef let-model="model">
+<ng-template #lineChartSeriesToolTipRef let-model="model">
   <app-expenses-line-chart-tooltip [model]="model" [isSeriesTooltip]="true">
   </app-expenses-line-chart-tooltip>
+</ng-template>
+
+<ng-template #barChartToolTipRef let-model="model">
+  <app-expenses-bar-chart-tooltip></app-expenses-bar-chart-tooltip>
 </ng-template>

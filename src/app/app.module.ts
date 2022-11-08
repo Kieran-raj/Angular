@@ -33,6 +33,7 @@ import { UpdatesEffect } from './expenses/data-state/effects/updates.effect';
 import { updatesReducer } from './expenses/data-state/reducers/updates.reducer';
 import { GridActionsComponent } from './components/grid-actions/grid-actions.component';
 import { ExpensesLineChartTooltipComponent } from './expenses/line-chart-tooltip/expenses-line-chart-tooltip.component';
+import { ExpensesBarChartTooltipComponent } from './expenses/expenses-bar-chart-tooltip/expenses-bar-chart-tooltip.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +51,7 @@ import { ExpensesLineChartTooltipComponent } from './expenses/line-chart-tooltip
     PieChartComponent,
     GridActionsComponent,
     ExpensesLineChartTooltipComponent,
+    ExpensesBarChartTooltipComponent,
   ],
   imports: [
     BrowserModule,
