@@ -114,18 +114,16 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public subscriptions: Subscription[] = [];
 
   /**
-   * Form Group
-   * @type {FormGroup}
+   * Modal title
+   * @type {string}
    */
-  formGroup = new FormGroup({
-    category: new FormControl(''),
-  });
+  public modalTitle: string;
 
   /**
    * Modal instance.
    * @type {NgbModalRef}
    */
-  private modal: NgbModalRef;
+  public modal: NgbModalRef;
 
   sucessfulUpdate: boolean;
 
@@ -268,21 +266,10 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   openModal(content: any, id: string) {
-    this.modal = this.modalService.open(content, {
-      ariaLabelledBy: id,
-    });
-  }
-
-  okCallBack() {
-    const newCategory = this.formGroup.controls['category'].value;
-    this.updatesStore.dispatch(addNewCategory({ category: newCategory }));
-    this.modal.close();
-    this.clearForm();
-  }
-
-  dismissCallBack() {
-    this.modal.dismiss();
-    this.clearForm();
+    this.modalTitle = id.toLowerCase().includes('transaction')
+      ? 'New Transaction'
+      : 'New Category';
+    this.modal = this.modalService.open(content);
   }
 
   private changeChart(value: string): void {
@@ -305,9 +292,5 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       (data) => data.name === 'Transactions'
     );
     this.lineData = newLineData;
-  }
-
-  private clearForm() {
-    this.formGroup.reset();
   }
 }

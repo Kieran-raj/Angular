@@ -21,6 +21,7 @@
           <app-bar-chart
             *ngIf="chartMode === 'Monthly'"
             [sourceData]="barData"
+            [customToolTipTemplate]="barChartToolTipRef"
           ></app-bar-chart>
         </div>
         <div class="col-1 pl-0">
@@ -42,14 +43,17 @@
     <div class="col-1">
       <button
         class="btn btn-secondary mt-2 crudButton"
-        (click)="openModal(modal, 'category-modal')"
+        (click)="openModal(categoryModal, 'category-modal')"
       >
         New Category
       </button>
       <div *ngIf="false" style="color: green">{{ updateMessage }}</div>
     </div>
     <div class="col-2 px-0">
-      <button class="btn btn-secondary mt-2 crudButton" disabled>
+      <button
+        class="btn btn-secondary mt-2 crudButton"
+        (click)="openModal(transactionModal, 'transaction-modal')"
+      >
         New Transaction
       </button>
     </div>
@@ -60,48 +64,18 @@
   </div>
 </div>
 
-<ng-template #modal let-modal>
-  <div class="modal-header">
-    <h2
-      class="modal-title my-0 mx-0"
-      style="color: #233d53"
-      id="category-modal"
-    >
-      Add Category
-    </h2>
+<ng-template #categoryModal>
+  <app-expenses-create-modal
+    [modal]="modal"
+    [modalTitle]="modalTitle"
+  ></app-expenses-create-modal>
+</ng-template>
 
-    <button
-      class="btn close border-0 shadow-none"
-      aria-label="Close"
-      (click)="dismissCallBack()"
-    >
-      <span aria-hidden="true"
-        ><fa-icon [icon]="faXmark" size="lg"></fa-icon
-      ></span>
-    </button>
-  </div>
-
-  <div class="modal-body">
-    <form class="form-floating" [formGroup]="formGroup">
-      <input
-        class="form-control"
-        id="floatingInputValue"
-        type="text"
-        formControlName="category"
-      />
-      <label for="floatingInputValue">New Category</label>
-    </form>
-  </div>
-
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-secondary crudButton"
-      (click)="okCallBack()"
-    >
-      Ok
-    </button>
-  </div>
+<ng-template #transactionModal>
+  <app-expenses-create-modal
+    [modal]="modal"
+    [modalTitle]="modalTitle"
+  ></app-expenses-create-modal>
 </ng-template>
 
 <ng-template #lineChartToolTipRef let-model="model">

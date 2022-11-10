@@ -34,15 +34,17 @@
 23. ~~Moving average~~ &#x2611;
 24. Route Guarding
 25. Show averages in the expenses side bar
+26. Validation for modal forms
+27. Either need a generic ok call back, or have it so then transactions and category updates are the same object essentially
 
 ---
 
 ### Refactoring
 
-1. ~~Refactor line chart tooltip (as generic as possible in html)~~ &#x2611; -> Allow custom templates to be passed through
-2. Refactor Modal (using ng templates and ViewChild || ContentChild) and validators
+1. ~~Refactor line chart tooltip (as generic as possible in html)~~ &#x2611; -> ~~Allow custom templates to be passed through~~ &#x2611;
+2. ~~Refactor Modal (using ng templates and ViewChild || ContentChild)~~ &#x2611;
 3. Refactor transaction and API types Daily and Historical
-4. Refactor styling into scss files
+4. Refactor styling into scss files (settings may make more sense in certain places)
 5. Question dependencies
 6. ~~Refactor bar chart tooltip (custom component)~~&#x2611;
 
@@ -50,7 +52,7 @@
 
 ### Business Logic
 
-1. ~~Allow the ability to create new categories~~ &#x2611;
+1. ~~Allow the ability to create new categories~~ &#x2611; (~~Python~~ &#x2611; ; .NET)
 2. Allow for updating a category (maybe do drop down as context menu doesnt work)
 3. Allow for the creation of new records (should update grid and charts)
 4. All for the deletion of records (should update grid and charts)
