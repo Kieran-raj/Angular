@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transactions } from 'src/app/shared/models/transactions';
+import { Category } from 'src/app/shared/models/category';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +43,9 @@ export class TransactionsService {
       `${this.url}/get_daily_amounts/moving_average`,
       { params }
     );
+  }
+
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.url}/categories`);
   }
 }

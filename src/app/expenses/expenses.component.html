@@ -7,7 +7,7 @@
     </div>
     <div class="container-fluid cardBody">
       <div class="row pt-2">
-        <div class="col-7 pr-0">
+        <div class="col-auto pr-0">
           <app-line-chart
             *ngIf="chartMode === 'Daily'"
             [sourceData]="lineData"
@@ -24,7 +24,7 @@
             [customToolTipTemplate]="barChartToolTipRef"
           ></app-bar-chart>
         </div>
-        <div class="col-1 pl-0">
+        <div class="col-1 pl-0" align="center">
           <app-expenses-side-bar
             class="pl-0"
             [showDateSelection]="showDateSelection"
@@ -33,14 +33,16 @@
             (dropDownValue)="dropDownChange($event)"
           ></app-expenses-side-bar>
         </div>
-        <div class="col-4">
+
+        <div class="col" align="center">
           <app-pie-chart [sourceData]="pieData"></app-pie-chart>
         </div>
+        <div class="col"></div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-1">
+    <div class="col-auto">
       <button
         class="btn btn-secondary mt-2 crudButton"
         (click)="openModal(categoryModal, 'category-modal')"
@@ -49,7 +51,7 @@
       </button>
       <div *ngIf="false" style="color: green">{{ updateMessage }}</div>
     </div>
-    <div class="col-2 px-0">
+    <div class="col-auto">
       <button
         class="btn btn-secondary mt-2 crudButton"
         (click)="openModal(transactionModal, 'transaction-modal')"

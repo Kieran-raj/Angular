@@ -2,3 +2,7 @@
   background-color: #063a5b;
   color: white;
 }
+
+input.ng-invalid.ng-touched {
+  border: red 2px solid;
+}

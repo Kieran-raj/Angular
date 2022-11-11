@@ -25,4 +25,14 @@ export class UpdatesService {
 
     return this.http.post<Category[]>(`${this.url}/categories`, body, options);
   }
+
+  updateCreateTransaction(body: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+    const options = { headers };
+
+    return this.http.post<any>(`${this.url}/transactions`, body, options);
+  }
 }

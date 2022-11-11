@@ -15,6 +15,8 @@ import {
   loadCategoricalAmountsSuccess,
   loadMovingAverage,
   loadMovingAverageSuccess,
+  loadCategories,
+  loadCategoriesSuccess,
 } from '../actions/transactions.action';
 
 @Injectable()
@@ -98,6 +100,21 @@ export class TransactionsEffect {
               transactions: {
                 movingAverageAmounts: transactionData.data.movingAverageAmounts,
               },
+            })
+          )
+        )
+      )
+    )
+  );
+
+  loadCategories$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCategories),
+      mergeMap(() =>
+        this.transactionService.getCategories().pipe(
+          map((categoryData: any) =>
+            loadCategoriesSuccess({
+              categories: categoryData['categories'],
             })
           )
         )

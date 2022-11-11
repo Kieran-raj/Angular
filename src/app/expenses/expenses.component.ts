@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
@@ -27,15 +33,14 @@ import { PieData } from '../shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UpdateState } from './data-state/states/update.state';
-import { addNewCategory } from './data-state/actions/updates.action';
 import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ExpensesComponent implements OnInit, AfterViewInit {
   @ViewChild(DateFilterComponent, { static: true })

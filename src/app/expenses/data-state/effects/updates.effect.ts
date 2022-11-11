@@ -6,11 +6,13 @@ import { UpdatesService } from '../../api-services/updates.service';
 import {
   addNewCategory,
   addNewCategorySuccess,
+  addNewTransaction,
+  addNewTransactionSuccess,
 } from '../actions/updates.action';
 
 @Injectable()
 export class UpdatesEffect {
-  private updateCategory$ = createEffect(() =>
+  updateCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addNewCategory),
       mergeMap((action) => {
@@ -26,6 +28,33 @@ export class UpdatesEffect {
       })
     )
   );
+
+  updateCreateTransaction$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addNewTransaction),
+      mergeMap((action) => {
+        const body = [action.updates];
+
+        return this.updateService
+          .updateCreateTransaction(body)
+          .pipe(map(() => addNewTransactionSuccess({ isUpdated: true })));
+      })
+    )
+  );
+
+  // updateCreateTransaction$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(addNewTransaction),
+  //     mergeMap((action) => {
+  //       const body = [action.updates];
+
+  //       return this.updateService
+  //         .updateCreateTransaction(body)
+  //         .pipe(map(() => addNewTransactionSuccess({ isUpdated: true })));
+  //     })
+  //   )
+  // );
+
   constructor(
     private actions$: Actions,
     private updateService: UpdatesService

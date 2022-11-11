@@ -41,3 +41,8 @@ export const selectMovingAverageAmounts = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.movingAverageAmounts?.movingAverageAmounts
 );
+
+export const selectCategories = createSelector(
+  selectTransactionsState,
+  (state: TransactionState) => state.categories
+);

@@ -36,6 +36,7 @@
 25. Show averages in the expenses side bar
 26. Validation for modal forms
 27. Either need a generic ok call back, or have it so then transactions and category updates are the same object essentially
+28. Change the type of pie chart shown
 
 ---
 
