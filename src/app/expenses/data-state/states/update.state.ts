@@ -3,4 +3,9 @@ export interface UpdateState {
     newCategory: string | null;
     isUpdated: boolean | null;
   } | null;
+
+  transactionCreateUpdate: {
+    newTransaction: any | null;
+    isUpdate: boolean | null;
+  } | null;
 }

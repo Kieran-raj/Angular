@@ -17,3 +17,8 @@
 .windowSizeInput {
   width: 190px;
 }
+
+.advanced-pie-legend .legend-items-container .legend-items {
+  white-space: nowrap;
+  overflow: none !important;
+}

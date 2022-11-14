@@ -34,6 +34,7 @@ import { updatesReducer } from './expenses/data-state/reducers/updates.reducer';
 import { GridActionsComponent } from './components/grid-actions/grid-actions.component';
 import { ExpensesLineChartTooltipComponent } from './expenses/line-chart-tooltip/expenses-line-chart-tooltip.component';
 import { ExpensesBarChartTooltipComponent } from './expenses/expenses-bar-chart-tooltip/expenses-bar-chart-tooltip.component';
+import { ExpensesCreateModalComponent } from './expenses/expenses-create-modal/expenses-create-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { ExpensesBarChartTooltipComponent } from './expenses/expenses-bar-chart-
     GridActionsComponent,
     ExpensesLineChartTooltipComponent,
     ExpensesBarChartTooltipComponent,
+    ExpensesCreateModalComponent,
   ],
   imports: [
     BrowserModule,

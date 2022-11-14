@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
@@ -27,15 +33,14 @@ import { PieData } from '../shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UpdateState } from './data-state/states/update.state';
-import { addNewCategory } from './data-state/actions/updates.action';
 import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ExpensesComponent implements OnInit, AfterViewInit {
   @ViewChild(DateFilterComponent, { static: true })
@@ -114,27 +119,23 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public subscriptions: Subscription[] = [];
 
   /**
-   * Form Group
-   * @type {FormGroup}
+   * Modal title
+   * @type {string}
    */
-  formGroup = new FormGroup({
-    category: new FormControl(''),
-  });
+  public modalTitle: string;
 
   /**
    * Modal instance.
    * @type {NgbModalRef}
    */
-  private modal: NgbModalRef;
+  public modal: NgbModalRef;
 
   sucessfulUpdate: boolean;
 
   updateMessage = 'Sucessfully added new cateogry';
 
   constructor(
-    private transactionService: TransactionsService,
     private transactionStore: Store<TransactionState>,
-    private updatesStore: Store<UpdateState>,
     private chartHelper: ChartHelper,
     private modalService: NgbModal
   ) {
@@ -196,7 +197,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       );
     });
 
-    this.years = [2021];
+    this.years = [2021, 2022];
     // this.transactionService.getYears().subscribe((results) => {
     //   this.years = results.data.years.sort();
     // });
@@ -268,21 +269,10 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   openModal(content: any, id: string) {
-    this.modal = this.modalService.open(content, {
-      ariaLabelledBy: id,
-    });
-  }
-
-  okCallBack() {
-    const newCategory = this.formGroup.controls['category'].value;
-    this.updatesStore.dispatch(addNewCategory({ category: newCategory }));
-    this.modal.close();
-    this.clearForm();
-  }
-
-  dismissCallBack() {
-    this.modal.dismiss();
-    this.clearForm();
+    this.modalTitle = id.toLowerCase().includes('transaction')
+      ? 'New Transaction'
+      : 'New Category';
+    this.modal = this.modalService.open(content);
   }
 
   private changeChart(value: string): void {
@@ -305,9 +295,5 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       (data) => data.name === 'Transactions'
     );
     this.lineData = newLineData;
-  }
-
-  private clearForm() {
-    this.formGroup.reset();
   }
 }

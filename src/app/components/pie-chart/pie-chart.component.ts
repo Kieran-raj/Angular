@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { PieData } from 'src/app/shared/models/pie-data';
 
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PieChartComponent implements OnInit {
   @Input()
@@ -18,7 +19,7 @@ export class PieChartComponent implements OnInit {
     other: '#FA532E',
   };
 
-  // view: any = [650, 600];
+  // view: any = [700, 550];
   view: any = [525, 400];
   gradient = false;
   showLegend = false;
@@ -49,7 +50,7 @@ export class PieChartComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getPercentage(category: string) {
+  public getPercentage(category: string) {
     const categoryData = this.sourceData.find((data) => {
       return data.name === category;
     });

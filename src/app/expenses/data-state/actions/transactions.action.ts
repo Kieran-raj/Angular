@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
+import { Category } from 'src/app/shared/models/category';
 import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
 import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
 import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
@@ -82,4 +83,13 @@ export const loadMovingAverageSuccess = createAction(
 
 export const resetMovingAverageState = createAction(
   `${transacationsPrefix} Reset Moving Average`
+);
+
+export const loadCategories = createAction(
+  `${transacationsPrefix} Load Categories`
+);
+
+export const loadCategoriesSuccess = createAction(
+  `${transacationsPrefix} Load Categories Success`,
+  props<{ categories: Category[] }>()
 );

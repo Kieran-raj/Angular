@@ -38,12 +38,12 @@ export class LineChartComponent implements OnInit {
   @Input()
   public customSeriesTooltipTemplate: TemplateRef<any>;
 
-  // view: any = [
-  //   chartSettings.lineChart.xViewSize,
-  //   chartSettings.lineChart.yViewSize,
-  // ];
+  view: any = [
+    chartSettings.lineChart.xViewSize,
+    chartSettings.lineChart.yViewSize,
+  ];
 
-  view: any = [1100, 350];
+  // view: any = [1350, 500];
   xAxisLabel = chartSettings.lineChart.xAxisLabel;
   yAxisLabel = chartSettings.lineChart.yAxisLabel;
   legend = chartSettings.lineChart.legend;

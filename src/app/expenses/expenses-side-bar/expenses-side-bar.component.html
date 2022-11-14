@@ -17,7 +17,7 @@
     data-toggle="tooltip"
     data-placement="top"
     title="Toggle Moving Average"
-    class="btn btn-secondary mt-2"
+    class="btn btn-secondary mt-2 shadow-none"
     [ngClass]="
       movingAverageToggled ? 'toggledMovingAverage' : 'unToggledMovingAverage'
     "
@@ -30,7 +30,7 @@
 <div *ngIf="movingAverageToggled" class="windowSizeInput mt-2">
   <form class="form-floating" [formGroup]="formGroup">
     <input
-      class="form-control"
+      class="form-control shadow-none"
       id="floatingInputValue"
       type="text"
       formControlName="movingAverageWindow"
@@ -42,7 +42,7 @@
 </div>
 <div>
   <button
-    class="btn btn-secondary mt-2 resetButton"
+    class="btn btn-secondary mt-2 resetButton shadow-none"
     (click)="resetButtonClick($event)"
   >
     {{ resetText }}

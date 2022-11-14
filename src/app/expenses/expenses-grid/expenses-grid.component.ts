@@ -67,6 +67,7 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       field: 'date',
       filter: 'agDateColumnFilter',
       sortable: true,
+      sort: 'desc',
     },
     { headerName: 'Description', field: 'description', sortable: false },
     {

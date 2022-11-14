@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { Category } from 'src/app/shared/models/category';
 import { UpdatesService } from '../../api-services/updates.service';
 import {
+  loadDailyTransactions,
+  loadHistoricalTransactions,
+  loadMonthlyTransactions,
+} from '../actions/transactions.action';
+import {
   addNewCategory,
   addNewCategorySuccess,
+  addNewTransaction,
+  addNewTransactionSuccess,
 } from '../actions/updates.action';
+import { TransactionState } from '../states/transactions.state';
 
 @Injectable()
 export class UpdatesEffect {
-  private updateCategory$ = createEffect(() =>
+  updateCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addNewCategory),
       mergeMap((action) => {
@@ -26,8 +35,31 @@ export class UpdatesEffect {
       })
     )
   );
+
+  updateCreateTransaction$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addNewTransaction),
+      mergeMap((action) => {
+        const body = [action.updates];
+
+        return this.updateService.updateCreateTransaction(body).pipe(
+          map(() => {
+            this.transactionStore.dispatch(loadDailyTransactions());
+
+            this.transactionStore.dispatch(loadMonthlyTransactions());
+
+            this.transactionStore.dispatch(loadHistoricalTransactions());
+
+            return addNewTransactionSuccess({ isUpdated: true });
+          })
+        );
+      })
+    )
+  );
+
   constructor(
     private actions$: Actions,
-    private updateService: UpdatesService
+    private updateService: UpdatesService,
+    private transactionStore: Store<TransactionState>
   ) {}
 }

@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h2 class="modal-title my-0 mx-0" style="color: #233d53">{{ modalTitle }}</h2>
+
+  <button
+    class="btn close border-0 shadow-none"
+    aria-label="Close"
+    (click)="dismissCallBack()"
+  >
+    <span aria-hidden="true"
+      ><fa-icon [icon]="faXmark" size="lg"></fa-icon
+    ></span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="formGroup">
+    <div class="form-floating mb-2" *ngIf="isNewTransaction">
+      <input
+        class="form-control shadow-none"
+        id="amountInput"
+        type="text"
+        formControlName="amount"
+      />
+      <label for="amountInput">Amount</label>
+    </div>
+    <div class="form-floating mb-2">
+      <input
+        class="form-control shadow-none"
+        id="floatingInputValue"
+        type="text"
+        formControlName="category"
+      />
+      <label for="floatingInputValue">New Category</label>
+    </div>
+    <div class="form-floating mb-2" *ngIf="isNewTransaction">
+      <input
+        class="form-control shadow-none"
+        id="dateInput"
+        type="date"
+        formControlName="date"
+      />
+      <label for="amountInput">Date</label>
+    </div>
+    <div class="form-floating mb-2" *ngIf="isNewTransaction">
+      <input
+        class="form-control shadow-none"
+        id="descriptionInput"
+        type="text"
+        formControlName="description"
+      />
+      <label for="descriptionInput">Description</label>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-secondary crudButton"
+    [disabled]="disableOKButton"
+    (click)="okCallBack()"
+  >
+    Add
+  </button>
+</div>
