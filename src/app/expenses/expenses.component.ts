@@ -135,9 +135,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   updateMessage = 'Sucessfully added new cateogry';
 
   constructor(
-    private transactionService: TransactionsService,
     private transactionStore: Store<TransactionState>,
-    private updatesStore: Store<UpdateState>,
     private chartHelper: ChartHelper,
     private modalService: NgbModal
   ) {
@@ -199,7 +197,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       );
     });
 
-    this.years = [2021];
+    this.years = [2021, 2022];
     // this.transactionService.getYears().subscribe((results) => {
     //   this.years = results.data.years.sort();
     // });

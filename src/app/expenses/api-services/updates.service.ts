@@ -13,7 +13,7 @@ export class UpdatesService {
     @Inject('BASE_API_URL') private baseUrl: string,
     private http: HttpClient
   ) {
-    this.url = `${this.baseUrl}/expenses`;
+    this.url = `${this.baseUrl}/api/expenses`;
   }
 
   updateCategory(body: Category[]): Observable<Category[]> {

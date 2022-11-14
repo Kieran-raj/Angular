@@ -14,7 +14,7 @@ export class TransactionsService {
     @Inject('BASE_API_URL') private baseUrl: string,
     private http: HttpClient
   ) {
-    this.url = `${this.baseUrl}/expenses`;
+    this.url = `${this.baseUrl}/api/expenses`;
   }
 
   getHistoricalTransactions(): Observable<Transactions> {

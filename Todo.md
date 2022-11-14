@@ -35,8 +35,9 @@
 24. Route Guarding
 25. Show averages in the expenses side bar
 26. Validation for modal forms
-27. Either need a generic ok call back, or have it so then transactions and category updates are the same object essentially
-28. Change the type of pie chart shown
+27. Make category choice a drop down
+28. Either need a generic ok call back, or have it so then transactions and category updates are the same object essentially
+29. Change the type of pie chart shown
 
 ---
 
@@ -48,6 +49,7 @@
 4. Refactor styling into scss files (settings may make more sense in certain places)
 5. Question dependencies
 6. ~~Refactor bar chart tooltip (custom component)~~&#x2611;
+7. **Point to C# API**
 
 ---
 
@@ -55,7 +57,7 @@
 
 1. ~~Allow the ability to create new categories~~ &#x2611; (~~Python~~ &#x2611; ; .NET)
 2. Allow for updating a category (maybe do drop down as context menu doesnt work)
-3. Allow for the creation of new records (should update grid and charts)
+3. ~~Allow for the creation of new records (should update grid and charts)~~ &#x2611;
 4. All for the deletion of records (should update grid and charts)
 
 ---

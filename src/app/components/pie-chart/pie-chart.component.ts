@@ -19,8 +19,8 @@ export class PieChartComponent implements OnInit {
     other: '#FA532E',
   };
 
-  view: any = [700, 550];
-  // view: any = [525, 400];
+  // view: any = [700, 550];
+  view: any = [525, 400];
   gradient = false;
   showLegend = false;
   legendPosition: any = 'below';

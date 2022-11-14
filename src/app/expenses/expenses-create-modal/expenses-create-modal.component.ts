@@ -91,15 +91,20 @@ export class ExpensesCreateModalComponent
    */
   public formGroup = new FormGroup({
     category: new FormControl(null, [Validators.required]),
-    amount: new FormControl(null, [Validators.required]),
+    amount: new FormControl(null, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
     date: new FormControl(null, [Validators.required]),
-    description: new FormControl(null, [Validators.required]),
+    description: new FormControl(null, [
+      Validators.required,
+      Validators.maxLength(50),
+    ]),
   });
 
   constructor(
     private transactionStore: Store<TransactionState>,
-    private updatesStore: Store<UpdateState>,
-    private service: UpdatesService
+    private updatesStore: Store<UpdateState>
   ) {
     this.transactionStore.dispatch(loadCategories());
   }
@@ -138,6 +143,12 @@ export class ExpensesCreateModalComponent
     let updates = {};
     if (!this.isNewTransaction) {
       const newCategory = this.formGroup.controls['category'].value;
+      updates = {
+        amount: null,
+        category: this.formGroup.controls['category'],
+        date: null,
+        description: null,
+      };
       this.updatesStore.dispatch(addNewCategory({ category: newCategory }));
     }
 
@@ -150,9 +161,6 @@ export class ExpensesCreateModalComponent
       };
 
       this.updatesStore.dispatch(addNewTransaction({ updates: updates }));
-    }
-
-    if (Object.keys(updates).length > 0) {
     }
 
     this.modal.close();
