@@ -1,11 +1,11 @@
 export interface DailyAmount {
   /**
-   * Amount
+   * Transaction amount
    */
   amount: number;
 
   /**
-   * Date
+   * Transaction date
    */
   date: string;
 }

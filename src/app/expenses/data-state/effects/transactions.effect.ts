@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs';
+import { DailyAmount } from 'src/app/shared/models/daily-expense';
+import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
 import { Transactions } from 'src/app/shared/models/transactions';
 import { TransactionsService } from '../../api-services/transaction.service';
 
@@ -43,14 +45,12 @@ export class TransactionsEffect {
     this.actions$.pipe(
       ofType(loadDailyTransactions),
       mergeMap(() =>
-        this.transactionService.getAmountsOnly().pipe(
-          map((transactionData: Transactions) => {
-            return loadDailyTransactionsSuccess({
-              transactions: {
-                dailyTransactions: transactionData.data.transactions,
-              },
-            });
-          })
+        this.transactionService.getDailyAmounts().pipe(
+          map((transactionData: DailyAmount[]) =>
+            loadDailyTransactionsSuccess({
+              transactions: transactionData,
+            })
+          )
         )
       )
     )
@@ -61,11 +61,9 @@ export class TransactionsEffect {
       ofType(loadMonthlyTransactions),
       mergeMap(() =>
         this.transactionService.getMonthlyAmounts().pipe(
-          map((transactionData: Transactions) =>
+          map((transactionData: MonthlyTransaction[]) =>
             loadMonthlyTransactionsSuccess({
-              transactions: {
-                monthlyTransactions: transactionData.data.monthlyTransactions,
-              },
+              monthlyTransactions: transactionData,
             })
           )
         )
@@ -114,7 +112,7 @@ export class TransactionsEffect {
         this.transactionService.getCategories().pipe(
           map((categoryData: any) =>
             loadCategoriesSuccess({
-              categories: categoryData['categories'],
+              categories: categoryData,
             })
           )
         )

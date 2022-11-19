@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { BarData } from '../shared/models/bar-data';
-import { DailyTransaction } from '../shared/models/daily-transaction';
 import { LineData } from '../shared/models/line-data';
 import { MonthlyTransaction } from '../shared/models/monthly-transaction';
 import {
@@ -26,15 +25,14 @@ import {
   selectMovingAverageAmounts,
 } from './data-state/selectors/transactions.selectors';
 import { TransactionState } from './data-state/states/transactions.state';
-import { TransactionsService } from './api-services/transaction.service';
 import { ChartHelper } from '../shared/helper-functions/chart-functions';
 import { CategoricalAmounts } from '../shared/models/categorical-amounts';
 import { PieData } from '../shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { UpdateState } from './data-state/states/update.state';
 import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
+import { DailyAmount } from '../shared/models/daily-expense';
 
 @Component({
   selector: 'app-expenses',
@@ -84,15 +82,14 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
   /**
    * Daily amounts.
-   * @type {Observable<DailyTransaction[] | undefined>}
+   * @type {Observable<DailyExpense[] | undefined>}
    */
-  public dailyAmounts$: Observable<DailyTransaction[] | undefined>;
-
+  public dailyAmounts$: Observable<DailyAmount[] | undefined | null>;
   /**
    * Monthly amounts.
    * @type {Observable<MonthlyTransaction[] | undefined>}
    */
-  public monthlyAmounts$: Observable<MonthlyTransaction[] | undefined>;
+  public monthlyAmounts$: Observable<MonthlyTransaction[] | undefined | null>;
 
   /**
    * Moving average amounts.
@@ -172,30 +169,32 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       this.pieData = formatedPieData;
     });
 
-    this.dailyAmounts$.subscribe((results: DailyTransaction[] | undefined) => {
-      const mappedDailyAmountsToNgxCharts = results?.map(
-        (dailyAmount: DailyTransaction) => {
-          return { value: dailyAmount.amount, name: dailyAmount.date };
+    this.dailyAmounts$.subscribe(
+      (results: DailyAmount[] | undefined | null) => {
+        const mappedDailyAmountsToNgxCharts = results?.map(
+          (dailyAmount: DailyAmount) => {
+            return { value: dailyAmount.amount, name: dailyAmount.date };
+          }
+        );
+
+        this.lineData = [
+          {
+            name: 'Transactions',
+            series: mappedDailyAmountsToNgxCharts,
+          },
+        ];
+
+        if (mappedDailyAmountsToNgxCharts) {
+          this.isLineDataLoading =
+            mappedDailyAmountsToNgxCharts.length > 0 ? false : true;
         }
-      );
 
-      this.lineData = [
-        {
-          name: 'Transactions',
-          series: mappedDailyAmountsToNgxCharts,
-        },
-      ];
-
-      if (mappedDailyAmountsToNgxCharts) {
-        this.isLineDataLoading =
-          mappedDailyAmountsToNgxCharts.length > 0 ? false : true;
+        this.xAxisTicks = this.chartHelper.generateLineXTicks(
+          5,
+          mappedDailyAmountsToNgxCharts
+        );
       }
-
-      this.xAxisTicks = this.chartHelper.generateLineXTicks(
-        5,
-        mappedDailyAmountsToNgxCharts
-      );
-    });
+    );
 
     this.years = [2021, 2022];
     // this.transactionService.getYears().subscribe((results) => {
@@ -279,7 +278,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     if (value === 'Monthly') {
       this.subscriptions.push(
         this.monthlyAmounts$.subscribe(
-          (results: MonthlyTransaction[] | undefined) => {
+          (results: MonthlyTransaction[] | undefined | null) => {
             this.barData = this.chartHelper.formatMonthlyData(
               this.years,
               results

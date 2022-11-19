@@ -37,9 +37,7 @@ export const transactionsReducer = createReducer(
   on(loadDailyTransactionsSuccess, (state, action) => {
     return {
       ...state,
-      dailyTransactions: {
-        transactions: action.transactions.dailyTransactions,
-      },
+      dailyTransactions: action.transactions,
     };
   }),
   on(loadMonthlyTransactions, (state) => {
@@ -50,9 +48,7 @@ export const transactionsReducer = createReducer(
   on(loadMonthlyTransactionsSuccess, (state, action) => {
     return {
       ...state,
-      monthlyTransactions: {
-        monthlyTransactions: action.transactions.monthlyTransactions,
-      },
+      monthlyTransactions: action.monthlyTransactions,
     };
   }),
   on(loadHistoricalTransactions, (state) => {

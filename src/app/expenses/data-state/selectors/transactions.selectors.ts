@@ -9,12 +9,12 @@ export const selectTransactionsState = createFeatureSelector<TransactionState>(
 
 export const selectDailyTransactions = createSelector(
   selectTransactionsState,
-  (state: TransactionState) => state.dailyTransactions?.transactions
+  (state: TransactionState) => state.dailyTransactions
 );
 
 export const selectMonthlyTransactions = createSelector(
   selectTransactionsState,
-  (state: TransactionState) => state.monthlyTransactions?.monthlyTransactions
+  (state: TransactionState) => state.monthlyTransactions
 );
 
 export const selectHistoricTransactions = createSelector(

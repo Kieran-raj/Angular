@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transactions } from 'src/app/shared/models/transactions';
 import { Category } from 'src/app/shared/models/category';
+import { DailyAmount } from 'src/app/shared/models/daily-expense';
+import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
 
 @Injectable({
   providedIn: 'root',
@@ -25,12 +27,14 @@ export class TransactionsService {
     return this.http.get(`${this.url}/full_data/all_years`);
   }
 
-  getAmountsOnly(): Observable<Transactions> {
-    return this.http.get<Transactions>(`${this.url}/get_daily_amounts`);
+  getDailyAmounts(): Observable<DailyAmount[]> {
+    return this.http.get<DailyAmount[]>(`${this.url}/get_daily_amounts`);
   }
 
-  getMonthlyAmounts(): Observable<Transactions> {
-    return this.http.get<Transactions>(`${this.url}/get_monthly_amounts`);
+  getMonthlyAmounts(): Observable<MonthlyTransaction[]> {
+    return this.http.get<MonthlyTransaction[]>(
+      `${this.url}/get_monthly_amounts`
+    );
   }
 
   getCategoricalAmounts(): Observable<any> {

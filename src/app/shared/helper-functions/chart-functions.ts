@@ -16,7 +16,10 @@ export class ChartHelper {
     return [];
   }
 
-  formatMonthlyData(years: number[], data?: MonthlyTransaction[]): BarData[] {
+  formatMonthlyData(
+    years: number[],
+    data?: MonthlyTransaction[] | null
+  ): BarData[] {
     let newDataLayout: BarData[] = [];
     for (let i = 0; i < years.length; i++) {
       newDataLayout.push({
