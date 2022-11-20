@@ -1,4 +1,4 @@
-export interface DailyTransaction {
+export interface Expense {
   /**
    * Transaction amount
    */

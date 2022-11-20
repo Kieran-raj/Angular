@@ -1,95 +1,71 @@
 import { createAction, props } from '@ngrx/store';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { Category } from 'src/app/shared/models/category';
-import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
-import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
+import { DailyAmount } from 'src/app/shared/models/daily-expense';
+import { Expense } from 'src/app/shared/models/expense';
+import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
 import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 
-const transacationsPrefix = '[Transactions] - ';
+const expensesPrefix = '[Expenses] - ';
 
-export const loadHistoricalTransactions = createAction(
-  `${transacationsPrefix} Load Historical Transaction`
+export const loadAllExpenses = createAction(
+  `${expensesPrefix} Load All Expenses`
 );
 
-export const loadHistoricalTransactionsSucess = createAction(
-  `${transacationsPrefix} Load Historical Transaction Sucess`,
-  props<{
-    transactions: {
-      historicalTranscations?: DailyTransaction[];
-      total?: number;
-    };
-  }>()
+export const loadAllExpensesSuccess = createAction(
+  `${expensesPrefix} Load All Expenses Success`,
+  props<{ expenses: Expense[] }>()
 );
 
-export const loadDailyTransactions = createAction(
-  `${transacationsPrefix} Load All Daily Transactions`
+export const loadDailyExpenses = createAction(
+  `${expensesPrefix} Load Daily Expenses`
 );
 
-export const loadDailyTransactionsSuccess = createAction(
-  `${transacationsPrefix} Load All Daily Transactions Success`,
-  props<{
-    transactions: {
-      dailyTransactions?: DailyTransaction[];
-    };
-  }>()
+export const loadDailyExpensesSuccess = createAction(
+  `${expensesPrefix} Load Daily Expenses Success`,
+  props<{ transactions: DailyAmount[] }>()
 );
 
-export const loadMonthlyTransactions = createAction(
-  `${transacationsPrefix} Load All Monthly Transactions`
+export const loadMonthlyExpense = createAction(
+  `${expensesPrefix} Load Monthly Expenses`
 );
 
-export const loadMonthlyTransactionsSuccess = createAction(
-  `${transacationsPrefix} Load All Monthly Transactions Success`,
-  props<{
-    transactions: {
-      monthlyTransactions?: MonthlyTransaction[];
-    };
-  }>()
+export const loadMonthlyExpenseSuccess = createAction(
+  `${expensesPrefix} Load Monthly Expenses Success`,
+  props<{ monthlyTransactions?: MonthlyExpense[] }>()
 );
 
 export const loadCategoricalAmounts = createAction(
-  `${transacationsPrefix} Load Categorical Amounts`
+  `${expensesPrefix} Load Categorical Amounts`
 );
 
 export const loadCategoricalAmountsSuccess = createAction(
-  `${transacationsPrefix} Load Categorical Amounts Success`,
-  props<{
-    transactions: {
-      categoricalAmounts?: CategoricalAmounts[];
-    };
-  }>()
+  `${expensesPrefix} Load Categorical Amounts Success`,
+  props<{ transactions: CategoricalAmounts[] }>()
 );
 
 export const addChosenExpenseToState = createAction(
-  `${transacationsPrefix} Add Selected Expense To State`,
-  props<{
-    expense: DailyTransaction;
-  }>()
+  `${expensesPrefix} Add Selected Expense To State`,
+  props<{ expense: Expense }>()
 );
 
 export const loadMovingAverage = createAction(
-  `${transacationsPrefix} Load Moving Average`,
+  `${expensesPrefix} Load Moving Average`,
   props<{ window?: string }>()
 );
 
 export const loadMovingAverageSuccess = createAction(
-  `${transacationsPrefix} Load Moving Average Success`,
-  props<{
-    transactions: {
-      movingAverageAmounts?: MovingAverageAmounts[];
-    };
-  }>()
+  `${expensesPrefix} Load Moving Average Success`,
+  props<{ movingAverage: MovingAverageAmounts[] }>()
 );
 
 export const resetMovingAverageState = createAction(
-  `${transacationsPrefix} Reset Moving Average`
+  `${expensesPrefix} Reset Moving Average`
 );
 
-export const loadCategories = createAction(
-  `${transacationsPrefix} Load Categories`
-);
+export const loadCategories = createAction(`${expensesPrefix} Load Categories`);
 
 export const loadCategoriesSuccess = createAction(
-  `${transacationsPrefix} Load Categories Success`,
+  `${expensesPrefix} Load Categories Success`,
   props<{ categories: Category[] }>()
 );

@@ -5,12 +5,12 @@ import {
   loadCategoricalAmountsSuccess,
   loadCategories,
   loadCategoriesSuccess,
-  loadDailyTransactions,
-  loadDailyTransactionsSuccess,
-  loadHistoricalTransactions,
-  loadHistoricalTransactionsSucess,
-  loadMonthlyTransactions,
-  loadMonthlyTransactionsSuccess,
+  loadDailyExpenses,
+  loadDailyExpensesSuccess,
+  loadAllExpenses,
+  loadAllExpensesSuccess,
+  loadMonthlyExpense,
+  loadMonthlyExpenseSuccess,
   loadMovingAverage,
   loadMovingAverageSuccess,
   resetMovingAverageState,
@@ -18,7 +18,7 @@ import {
 import { TransactionState } from '../states/transactions.state';
 
 export const intitialTransactions: TransactionState = {
-  historicalTransactions: null,
+  expenses: null,
   dailyTransactions: null,
   monthlyTransactions: null,
   categoricalAmounts: null,
@@ -29,44 +29,37 @@ export const intitialTransactions: TransactionState = {
 
 export const transactionsReducer = createReducer(
   intitialTransactions,
-  on(loadDailyTransactions, (state) => {
+  on(loadDailyExpenses, (state) => {
     return {
       ...state,
     };
   }),
-  on(loadDailyTransactionsSuccess, (state, action) => {
+  on(loadDailyExpensesSuccess, (state, action) => {
     return {
       ...state,
-      dailyTransactions: {
-        transactions: action.transactions.dailyTransactions,
-      },
+      dailyTransactions: action.transactions,
     };
   }),
-  on(loadMonthlyTransactions, (state) => {
-    return {
-      ...state,
-    };
-  }),
-  on(loadMonthlyTransactionsSuccess, (state, action) => {
-    return {
-      ...state,
-      monthlyTransactions: {
-        monthlyTransactions: action.transactions.monthlyTransactions,
-      },
-    };
-  }),
-  on(loadHistoricalTransactions, (state) => {
+  on(loadMonthlyExpense, (state) => {
     return {
       ...state,
     };
   }),
-  on(loadHistoricalTransactionsSucess, (state, action) => {
+  on(loadMonthlyExpenseSuccess, (state, action) => {
     return {
       ...state,
-      historicalTransactions: {
-        transactionTotal: action.transactions.total,
-        transactions: action.transactions.historicalTranscations,
-      },
+      monthlyTransactions: action.monthlyTransactions,
+    };
+  }),
+  on(loadAllExpenses, (state) => {
+    return {
+      ...state,
+    };
+  }),
+  on(loadAllExpensesSuccess, (state, action) => {
+    return {
+      ...state,
+      expenses: action.expenses,
     };
   }),
   on(addChosenExpenseToState, (state, action) => {
@@ -83,9 +76,7 @@ export const transactionsReducer = createReducer(
   on(loadCategoricalAmountsSuccess, (state, action) => {
     return {
       ...state,
-      categoricalAmounts: {
-        catergoricalAmounts: action.transactions.categoricalAmounts,
-      },
+      categoricalAmounts: action.transactions,
     };
   }),
   on(loadMovingAverage, (state) => {
@@ -96,9 +87,7 @@ export const transactionsReducer = createReducer(
   on(loadMovingAverageSuccess, (state, action) => {
     return {
       ...state,
-      movingAverageAmounts: {
-        movingAverageAmounts: action.transactions.movingAverageAmounts,
-      },
+      movingAverageAmounts: action.movingAverage,
     };
   }),
   on(resetMovingAverageState, (state) => {

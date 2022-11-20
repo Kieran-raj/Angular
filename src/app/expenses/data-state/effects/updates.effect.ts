@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
-import { Category } from 'src/app/shared/models/category';
+import { map, mergeMap } from 'rxjs';
 import { UpdatesService } from '../../api-services/updates.service';
 import {
-  loadDailyTransactions,
-  loadHistoricalTransactions,
-  loadMonthlyTransactions,
+  loadAllExpenses,
+  loadDailyExpenses,
+  loadMonthlyExpense,
 } from '../actions/transactions.action';
 import {
   addNewCategory,
@@ -23,12 +22,9 @@ export class UpdatesEffect {
     this.actions$.pipe(
       ofType(addNewCategory),
       mergeMap((action) => {
-        const body = [
-          {
-            category: action.category,
-          },
-        ];
-
+        const body = {
+          name: action.category,
+        };
         return this.updateService
           .updateCategory(body)
           .pipe(map(() => addNewCategorySuccess({ isUpdated: true })));
@@ -40,15 +36,15 @@ export class UpdatesEffect {
     this.actions$.pipe(
       ofType(addNewTransaction),
       mergeMap((action) => {
-        const body = [action.updates];
+        const body = action.updates;
 
         return this.updateService.updateCreateTransaction(body).pipe(
           map(() => {
-            this.transactionStore.dispatch(loadDailyTransactions());
+            this.transactionStore.dispatch(loadDailyExpenses());
 
-            this.transactionStore.dispatch(loadMonthlyTransactions());
+            this.transactionStore.dispatch(loadMonthlyExpense());
 
-            this.transactionStore.dispatch(loadHistoricalTransactions());
+            this.transactionStore.dispatch(loadAllExpenses());
 
             return addNewTransactionSuccess({ isUpdated: true });
           })

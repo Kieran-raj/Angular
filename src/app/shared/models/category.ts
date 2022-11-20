@@ -7,5 +7,5 @@ export interface Category {
   /**
    * Category
    */
-  category: string;
+  name: string;
 }

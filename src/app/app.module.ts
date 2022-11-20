@@ -83,7 +83,7 @@ import { ExpensesCreateModalComponent } from './expenses/expenses-create-modal/e
   ],
   providers: [
     ChartHelper,
-    { provide: 'BASE_API_URL', useValue: 'http://127.0.0.1:5000' },
+    { provide: 'BASE_API_URL', useValue: 'https://localhost:7271' },
   ],
   bootstrap: [AppComponent],
   exports: [ExpensesSideBarComponent],

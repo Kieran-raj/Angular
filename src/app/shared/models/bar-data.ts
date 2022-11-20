@@ -1,4 +1,4 @@
-import { MonthlyTransaction } from './monthly-transaction';
+import { MonthlyExpense } from './monthly-expense';
 
 export interface BarData {
   /**
@@ -9,5 +9,5 @@ export interface BarData {
   /**
    * Series data for the year
    */
-  series: MonthlyTransaction[];
+  series: MonthlyExpense[];
 }

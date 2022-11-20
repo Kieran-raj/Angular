@@ -1,6 +1,6 @@
 import { BarData } from '../models/bar-data';
 import { LineDataSeries } from '../models/line-data-series';
-import { MonthlyTransaction } from '../models/monthly-transaction';
+import { MonthlyExpense } from '../models/monthly-expense';
 
 export class ChartHelper {
   constructor() {}
@@ -16,7 +16,10 @@ export class ChartHelper {
     return [];
   }
 
-  formatMonthlyData(years: number[], data?: MonthlyTransaction[]): BarData[] {
+  formatMonthlyData(
+    years: number[],
+    data?: MonthlyExpense[] | null
+  ): BarData[] {
     let newDataLayout: BarData[] = [];
     for (let i = 0; i < years.length; i++) {
       newDataLayout.push({
@@ -30,9 +33,9 @@ export class ChartHelper {
         for (let j = 0; j < data.length; j++) {
           if (years[i] === data[j].year) {
             series.push({
-              name: data[j].month,
+              name: this.convertMonthIntToFullName(data[j].month),
               value: data[j].amount,
-              pctChange: data[j].pct_change,
+              pctChange: data[j].pct_change ? data[j].pct_change : 'N/A',
             });
             newDataLayout[i].series = series;
           }
@@ -40,5 +43,11 @@ export class ChartHelper {
       }
     }
     return newDataLayout;
+  }
+
+  private convertMonthIntToFullName(monthNum: string): string {
+    const date = new Date();
+    date.setMonth(Number(monthNum));
+    return date.toLocaleString('en-us', { month: 'long' });
   }
 }

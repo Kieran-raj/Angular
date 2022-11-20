@@ -12,15 +12,13 @@ import {
   ColDef,
   GridReadyEvent,
   ValueFormatterParams,
+  ValueGetterParams,
 } from 'ag-grid-community';
 import { Observable, Subscription } from 'rxjs';
 import { GridActionsComponent } from 'src/app/components/grid-actions/grid-actions.component';
-import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
+import { Expense } from 'src/app/shared/models/expense';
 import { addChosenExpenseToState } from '../data-state/actions/transactions.action';
-import {
-  selectHistoricTransactions,
-  selectTotalAmount,
-} from '../data-state/selectors/transactions.selectors';
+import { selectExpenses } from '../data-state/selectors/transactions.selectors';
 import { TransactionState } from '../data-state/states/transactions.state';
 
 @Component({
@@ -31,15 +29,11 @@ import { TransactionState } from '../data-state/states/transactions.state';
 export class ExpensesGridComponent implements OnInit, OnDestroy {
   /**
    * Transactional data.
-   * @type {Observable<DailyTransaction[]>}
+   * @type {Observable<Transaction[]>}
    */
-  public historicTransactions$: Observable<DailyTransaction[] | undefined>;
+  public expenses$: Observable<Expense[] | undefined | null>;
 
-  /**
-   * Total of all transactions.
-   * @type {number}
-   */
-  public amountTotal: number;
+  public rowData$!: Observable<any[] | undefined | null>;
 
   /**
    * Subscriptions.
@@ -68,6 +62,7 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       filter: 'agDateColumnFilter',
       sortable: true,
       sort: 'desc',
+      valueGetter: this.dataValueGetter,
     },
     { headerName: 'Description', field: 'description', sortable: false },
     {
@@ -83,12 +78,10 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
     },
   ];
 
-  public rowData$!: Observable<any[] | undefined>;
-
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
 
   onGridReady(params: GridReadyEvent) {
-    this.rowData$ = this.historicTransactions$;
+    this.rowData$ = this.expenses$;
     params.api.sizeColumnsToFit();
   }
 
@@ -105,15 +98,7 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
   }
 
   constructor(private transactionStore: Store<TransactionState>) {
-    this.historicTransactions$ = this.transactionStore.select(
-      selectHistoricTransactions
-    );
-
-    this.transactionStore.select(selectTotalAmount).subscribe((data) => {
-      if (data) {
-        this.amountTotal = data;
-      }
-    });
+    this.expenses$ = this.transactionStore.select(selectExpenses);
   }
 
   amountValueFormatter(params: ValueFormatterParams<number>) {
@@ -124,6 +109,10 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
     return (
       params.value[0].toUpperCase() + params.value.substring(1).toLowerCase()
     );
+  }
+
+  dataValueGetter(params: ValueGetterParams<Expense>) {
+    return params.data?.date.split('T')[0];
   }
 
   ngOnInit(): void {}

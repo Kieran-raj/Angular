@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnInit,
+  SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
