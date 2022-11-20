@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs';
+import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
-import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
-import { Transactions } from 'src/app/shared/models/transactions';
+import { Expense } from 'src/app/shared/models/expense';
+import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
+import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 import { TransactionsService } from '../../api-services/transaction.service';
 
 import {
-  loadHistoricalTransactions,
-  loadDailyTransactions,
-  loadDailyTransactionsSuccess,
-  loadMonthlyTransactions,
-  loadMonthlyTransactionsSuccess,
-  loadHistoricalTransactionsSucess,
+  loadAllExpenses,
+  loadDailyExpenses,
+  loadDailyExpensesSuccess,
+  loadMonthlyExpense,
+  loadMonthlyExpenseSuccess,
+  loadAllExpensesSuccess,
   loadCategoricalAmounts,
   loadCategoricalAmountsSuccess,
   loadMovingAverage,
@@ -23,17 +25,14 @@ import {
 
 @Injectable()
 export class TransactionsEffect {
-  loadHistoricalTransactions$ = createEffect(() =>
+  loadAllExpenses$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadHistoricalTransactions),
+      ofType(loadAllExpenses),
       mergeMap(() =>
-        this.transactionService.getHistoricalTransactions().pipe(
-          map((transactionData: Transactions) => {
-            return loadHistoricalTransactionsSucess({
-              transactions: {
-                total: transactionData.data.total,
-                historicalTranscations: transactionData.data.transactions,
-              },
+        this.transactionService.getAllExpenses().pipe(
+          map((expenses: Expense[]) => {
+            return loadAllExpensesSuccess({
+              expenses: expenses,
             });
           })
         )
@@ -41,14 +40,14 @@ export class TransactionsEffect {
     )
   );
 
-  loadDailyTransactions$ = createEffect(() =>
+  loadDailyExpense$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadDailyTransactions),
+      ofType(loadDailyExpenses),
       mergeMap(() =>
         this.transactionService.getDailyAmounts().pipe(
-          map((transactionData: DailyAmount[]) =>
-            loadDailyTransactionsSuccess({
-              transactions: transactionData,
+          map((dailyAmounts: DailyAmount[]) =>
+            loadDailyExpensesSuccess({
+              transactions: dailyAmounts,
             })
           )
         )
@@ -56,14 +55,14 @@ export class TransactionsEffect {
     )
   );
 
-  loadMonthlyTransactions$ = createEffect(() =>
+  loadMonthlyExpenses$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadMonthlyTransactions),
+      ofType(loadMonthlyExpense),
       mergeMap(() =>
         this.transactionService.getMonthlyAmounts().pipe(
-          map((transactionData: MonthlyTransaction[]) =>
-            loadMonthlyTransactionsSuccess({
-              monthlyTransactions: transactionData,
+          map((monthlyAmounts: MonthlyExpense[]) =>
+            loadMonthlyExpenseSuccess({
+              monthlyTransactions: monthlyAmounts,
             })
           )
         )
@@ -76,11 +75,9 @@ export class TransactionsEffect {
       ofType(loadCategoricalAmounts),
       mergeMap(() =>
         this.transactionService.getCategoricalAmounts().pipe(
-          map((transactionData: Transactions) =>
+          map((categoricalAmounts: CategoricalAmounts[]) =>
             loadCategoricalAmountsSuccess({
-              transactions: {
-                categoricalAmounts: transactionData.data.categoricalAmounts,
-              },
+              transactions: categoricalAmounts,
             })
           )
         )
@@ -93,11 +90,9 @@ export class TransactionsEffect {
       ofType(loadMovingAverage),
       mergeMap((action) =>
         this.transactionService.getMovingAverage(action.window).pipe(
-          map((transactionData: Transactions) =>
+          map((movingAverage: MovingAverageAmounts[]) =>
             loadMovingAverageSuccess({
-              transactions: {
-                movingAverageAmounts: transactionData.data.movingAverageAmounts,
-              },
+              movingAverage: movingAverage,
             })
           )
         )

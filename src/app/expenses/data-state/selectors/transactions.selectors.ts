@@ -17,14 +17,9 @@ export const selectMonthlyTransactions = createSelector(
   (state: TransactionState) => state.monthlyTransactions
 );
 
-export const selectHistoricTransactions = createSelector(
+export const selectExpenses = createSelector(
   selectTransactionsState,
-  (state: TransactionState) => state.historicalTransactions?.transactions
-);
-
-export const selectTotalAmount = createSelector(
-  selectTransactionsState,
-  (state: TransactionState) => state.historicalTransactions?.transactionTotal
+  (state: TransactionState) => state.expenses
 );
 
 export const selectChosenExpense = createSelector(
@@ -34,12 +29,12 @@ export const selectChosenExpense = createSelector(
 
 export const selectCategoricalAmounts = createSelector(
   selectTransactionsState,
-  (state: TransactionState) => state.categoricalAmounts?.catergoricalAmounts
+  (state: TransactionState) => state.categoricalAmounts
 );
 
 export const selectMovingAverageAmounts = createSelector(
   selectTransactionsState,
-  (state: TransactionState) => state.movingAverageAmounts?.movingAverageAmounts
+  (state: TransactionState) => state.movingAverageAmounts
 );
 
 export const selectCategories = createSelector(

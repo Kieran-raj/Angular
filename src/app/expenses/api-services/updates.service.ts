@@ -13,17 +13,21 @@ export class UpdatesService {
     @Inject('BASE_API_URL') private baseUrl: string,
     private http: HttpClient
   ) {
-    this.url = `${this.baseUrl}/api/expenses`;
+    this.url = `${this.baseUrl}/api`;
   }
 
-  updateCategory(body: Category[]): Observable<Category[]> {
+  updateCategory(body: Category): Observable<Category[]> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
     });
     const options = { headers };
 
-    return this.http.post<Category[]>(`${this.url}/categories`, body, options);
+    return this.http.post<Category[]>(
+      `${this.url}/categories/create-update`,
+      body,
+      options
+    );
   }
 
   updateCreateTransaction(body: any): Observable<any> {
@@ -33,6 +37,10 @@ export class UpdatesService {
     });
     const options = { headers };
 
-    return this.http.post<any>(`${this.url}/transactions`, body, options);
+    return this.http.post<any>(
+      `${this.url}/expense/create-update`,
+      body,
+      options
+    );
   }
 }

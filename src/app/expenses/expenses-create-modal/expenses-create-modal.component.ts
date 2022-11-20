@@ -122,7 +122,7 @@ export class ExpensesCreateModalComponent
 
     this.subscriptions.push(
       this.transactionStore.select(selectCategories).subscribe((data) => {
-        data?.forEach((category) => this.categories.push(category.category));
+        data?.forEach((category) => this.categories.push(category.name));
       })
     );
   }

@@ -10,12 +10,12 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { BarData } from '../shared/models/bar-data';
 import { LineData } from '../shared/models/line-data';
-import { MonthlyTransaction } from '../shared/models/monthly-transaction';
+import { MonthlyExpense } from '../shared/models/monthly-expense';
 import {
   loadCategoricalAmounts,
-  loadDailyTransactions,
-  loadHistoricalTransactions,
-  loadMonthlyTransactions,
+  loadDailyExpenses,
+  loadAllExpenses,
+  loadMonthlyExpense,
 } from './data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
@@ -33,6 +33,8 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 import { DailyAmount } from '../shared/models/daily-expense';
+import { formatISODate } from '../shared/helper-functions/date-functions';
+import { chartSettings } from '../shared/settings/chart-settings';
 
 @Component({
   selector: 'app-expenses',
@@ -89,20 +91,23 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Monthly amounts.
    * @type {Observable<MonthlyTransaction[] | undefined>}
    */
-  public monthlyAmounts$: Observable<MonthlyTransaction[] | undefined | null>;
+  public monthlyAmounts$: Observable<MonthlyExpense[] | undefined | null>;
 
   /**
    * Moving average amounts.
    * @type {Observable<MovingAverageAmounts[] | undefined>}
    */
-  public movingAverageAmounts$: Observable<MovingAverageAmounts[] | undefined> =
-    this.transactionStore.select(selectMovingAverageAmounts);
+  public movingAverageAmounts$: Observable<
+    MovingAverageAmounts[] | undefined | null
+  > = this.transactionStore.select(selectMovingAverageAmounts);
 
   /**
    * Categorical amounts.
-   * @type {Observable<CategoricalAmounts[] | undefined>}
+   * @type {Observable<CategoricalAmounts[] | undefined | null>}
    */
-  public categoricalAmounts$: Observable<CategoricalAmounts[] | undefined>;
+  public categoricalAmounts$: Observable<
+    CategoricalAmounts[] | undefined | null
+  >;
 
   /**
    * Active (selected) expense.
@@ -127,6 +132,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   public modal: NgbModalRef;
 
+  public view: any = [
+    chartSettings.lineChart.xViewSize,
+    chartSettings.lineChart.yViewSize,
+  ];
+
   sucessfulUpdate: boolean;
 
   updateMessage = 'Sucessfully added new cateogry';
@@ -136,11 +146,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private chartHelper: ChartHelper,
     private modalService: NgbModal
   ) {
-    this.transactionStore.dispatch(loadDailyTransactions());
+    this.transactionStore.dispatch(loadDailyExpenses());
 
-    this.transactionStore.dispatch(loadMonthlyTransactions());
+    this.transactionStore.dispatch(loadMonthlyExpense());
 
-    this.transactionStore.dispatch(loadHistoricalTransactions());
+    this.transactionStore.dispatch(loadAllExpenses());
 
     this.transactionStore.dispatch(loadCategoricalAmounts());
 
@@ -173,7 +183,10 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       (results: DailyAmount[] | undefined | null) => {
         const mappedDailyAmountsToNgxCharts = results?.map(
           (dailyAmount: DailyAmount) => {
-            return { value: dailyAmount.amount, name: dailyAmount.date };
+            return {
+              value: dailyAmount.amount,
+              name: dailyAmount.date.split('T')[0],
+            };
           }
         );
 
@@ -232,7 +245,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     );
 
     this.movingAverageAmounts$.subscribe(
-      (results: MovingAverageAmounts[] | undefined) => {
+      (results: MovingAverageAmounts[] | undefined | null) => {
         const mappedMovingAverageAmounts = results?.map(
           (movingAverage: MovingAverageAmounts) => {
             return {
@@ -278,7 +291,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     if (value === 'Monthly') {
       this.subscriptions.push(
         this.monthlyAmounts$.subscribe(
-          (results: MonthlyTransaction[] | undefined | null) => {
+          (results: MonthlyExpense[] | undefined | null) => {
             this.barData = this.chartHelper.formatMonthlyData(
               this.years,
               results

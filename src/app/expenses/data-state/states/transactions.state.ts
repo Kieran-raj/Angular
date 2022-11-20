@@ -1,18 +1,15 @@
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { Category } from 'src/app/shared/models/category';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
-import { DailyTransaction } from 'src/app/shared/models/daily-transaction';
-import { MonthlyTransaction } from 'src/app/shared/models/monthly-transaction';
+import { Expense } from 'src/app/shared/models/expense';
+import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
 import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 
 export interface TransactionState {
   /**
    * Historical Transactions
    */
-  historicalTransactions: {
-    transactionTotal?: number;
-    transactions?: DailyTransaction[];
-  } | null;
+  expenses: Expense[] | null;
 
   /**
    * Daily Transactions
@@ -22,26 +19,22 @@ export interface TransactionState {
   /**
    * Monthly Transactions
    */
-  monthlyTransactions: MonthlyTransaction[] | null | undefined;
+  monthlyTransactions: MonthlyExpense[] | null | undefined;
 
   /**
    * Categorical Amounts.
    */
-  categoricalAmounts: {
-    catergoricalAmounts?: CategoricalAmounts[];
-  } | null;
+  categoricalAmounts: CategoricalAmounts[] | null | undefined;
 
   /**
    * Chosen expense
    */
-  chosenExpense: DailyTransaction | null;
+  chosenExpense: Expense | null;
 
   /**
    * Moving Average amounts
    */
-  movingAverageAmounts: {
-    movingAverageAmounts?: MovingAverageAmounts[];
-  } | null;
+  movingAverageAmounts: MovingAverageAmounts[] | null | undefined;
 
   categories: Category[] | null;
 }
