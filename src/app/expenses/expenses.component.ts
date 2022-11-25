@@ -249,8 +249,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
         const mappedMovingAverageAmounts = results?.map(
           (movingAverage: MovingAverageAmounts) => {
             return {
-              value: movingAverage.moving_average,
-              name: movingAverage.date,
+              value: movingAverage.Amount,
+              name: movingAverage.Date.split('T')[0],
             };
           }
         );

@@ -2,20 +2,20 @@ export interface MonthlyExpense {
   /**
    * Monthly total amount
    */
-  amount: number;
+  Amount: number;
 
   /**
    * Month
    */
-  month: string;
+  Month: string;
 
   /**
    * Percentage Change.
    */
-  pct_change: number;
+  PercentageChange: number;
 
   /**
    * Year
    */
-  year: number;
+  Year: number;
 }

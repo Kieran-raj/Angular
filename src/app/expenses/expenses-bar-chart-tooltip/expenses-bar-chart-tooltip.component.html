@@ -26,7 +26,7 @@
       [ngStyle]="{ color: model.pctChange < 0 ? 'green' : 'red' }"
     >
       <strong
-        >{{ model.pctChange !== null ? model.pctChange : "N/A"
+        >{{ model.pctChange !== "NaN" ? model.pctChange.toFixed(2) : "N/A"
         }}<span *ngIf="model.pctChange">%</span></strong
       >
     </h4>

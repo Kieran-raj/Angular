@@ -31,11 +31,13 @@ export class ChartHelper {
       for (let i = 0; i < years.length; i++) {
         let series: any[] = [];
         for (let j = 0; j < data.length; j++) {
-          if (years[i] === data[j].year) {
+          if (years[i] === data[j].Year) {
             series.push({
-              name: this.convertMonthIntToFullName(data[j].month),
-              value: data[j].amount,
-              pctChange: data[j].pct_change ? data[j].pct_change : 'N/A',
+              name: this.convertMonthIntToFullName(data[j].Month),
+              value: data[j].Amount,
+              pctChange: data[j].PercentageChange
+                ? data[j].PercentageChange
+                : 'N/A',
             });
             newDataLayout[i].series = series;
           }

@@ -49,7 +49,7 @@
 4. Refactor styling into scss files (settings may make more sense in certain places)
 5. Question dependencies
 6. ~~Refactor bar chart tooltip (custom component)~~&#x2611;
-7. **Point to C# API**
+7. ~~**Point to C# API**~~&#x2611;
 
 ---
 

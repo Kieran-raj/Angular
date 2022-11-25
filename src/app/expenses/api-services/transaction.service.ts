@@ -48,8 +48,10 @@ export class TransactionsService {
   getMovingAverage(window: string = '2'): Observable<MovingAverageAmounts[]> {
     const params = new HttpParams().set('window', window);
     return this.http.get<MovingAverageAmounts[]>(
-      `http://127.0.0.1:5000/api/expenses/get_daily_amounts/moving_average`,
-      { params }
+      `${this.url}/expense/moving-average`,
+      {
+        params,
+      }
     );
   }
 

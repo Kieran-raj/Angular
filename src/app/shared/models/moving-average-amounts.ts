@@ -2,10 +2,10 @@ export interface MovingAverageAmounts {
   /**
    * Moving average amount.
    */
-  moving_average: number;
+  Amount: number;
 
   /**
    * Transaction date
    */
-  date: string;
+  Date: string;
 }
