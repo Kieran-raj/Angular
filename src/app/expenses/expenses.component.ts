@@ -35,6 +35,11 @@ import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 import { DailyAmount } from '../shared/models/daily-expense';
 import { formatISODate } from '../shared/helper-functions/date-functions';
 import { chartSettings } from '../shared/settings/chart-settings';
+import { Router } from '@angular/router';
+import { AuthService } from '../shared/auth/auth.service';
+import { UserState } from './data-state/states/user.state';
+import { selectUserInfo } from './data-state/selectors/user.selector';
+import { userLoginSuccess } from './data-state/actions/user.action';
 
 @Component({
   selector: 'app-expenses',
@@ -127,6 +132,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public modalTitle: string;
 
   /**
+   * Is logged in
+   */
+  isLoggedIn$ = this.authService.isloggedIn;
+
+  /**
    * Modal instance.
    * @type {NgbModalRef}
    */
@@ -143,8 +153,10 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
   constructor(
     private transactionStore: Store<TransactionState>,
+    private authService: AuthService,
     private chartHelper: ChartHelper,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) {
     this.transactionStore.dispatch(loadDailyExpenses());
 
@@ -158,6 +170,14 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    // this.subscriptions.push(
+    //   this.isLoggedIn$.subscribe((isLoggedIn) => {
+    //     if (!isLoggedIn) {
+    //       this.router.navigateByUrl('/home');
+    //     }
+    //   })
+    // );
+
     this.monthlyAmounts$ = this.transactionStore.select(
       selectMonthlyTransactions
     );
