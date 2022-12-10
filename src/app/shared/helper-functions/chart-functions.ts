@@ -49,7 +49,7 @@ export class ChartHelper {
 
   private convertMonthIntToFullName(monthNum: string): string {
     const date = new Date();
-    date.setMonth(Number(monthNum));
+    date.setMonth(Number(monthNum) - 1);
     return date.toLocaleString('en-us', { month: 'long' });
   }
 }

@@ -3,6 +3,10 @@ nav {
   a {
     color: black;
   }
+
+  fa-icon {
+    color: #063a5b;
+  }
 }
 
 .nav-link {
@@ -13,10 +17,40 @@ nav {
   background-color: white;
 }
 
+.col {
+  width: fit-content;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+#user-drop-down-menu-button {
+  width: max-content;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
 #expensesMenu {
   font-size: small;
 }
 
-.hideHomeLink {
-  display: none;
+#user-name-column {
+  font-size: medium;
+}
+
+#user-button {
+  padding: 0;
+  border: 0;
+}
+
+#userDropDownMenu {
+  position: absolute !important;
+  top: 40px !important;
+  left: -30px !important;
+  right: 0px !important;
+  bottom: -74px !important;
+  width: fit-content;
+  height: fit-content;
+  min-width: 0rem;
 }

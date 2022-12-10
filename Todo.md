@@ -32,12 +32,17 @@
 21. ~~Render in action buttons~~ &#x2611; and get working
 22. When changing dates, have all values change in all components
 23. ~~Moving average~~ &#x2611;
-24. Route Guarding
+24. Route Guarding:
+
+- ~~Add logged in user to state~~ &#x2611;
+- ~~Make sure state updates even when logged in (via token)~~ &#x2611;
+
 25. Show averages in the expenses side bar
 26. Validation for modal forms
 27. Make category choice a drop down
 28. Either need a generic ok call back, or have it so then transactions and category updates are the same object essentially
 29. Change the type of pie chart shown
+30. Make application response for ipad screen
 
 ---
 

@@ -39,7 +39,7 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
    * Subscriptions.
    * @type {Subscription[]}
    */
-  subscriptions: Subscription[];
+  subscriptions: Subscription[] = [];
 
   public columnDefs: ColDef[] = [
     {

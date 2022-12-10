@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="card justify-content-center" *ngIf="true">
+    <div class="card-header">
+      <div id="login-title-text">Login</div>
+      <div>Please enter your email and password</div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="formGroup">
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><fa-icon [icon]="faUser"></fa-icon
+            ></span>
+          </div>
+          <input
+            id="email-input"
+            type="text"
+            class="form-control"
+            placeholder="E-mail"
+            formControlName="email"
+          />
+        </div>
+        <div
+          id="valid-email-text"
+          *ngIf="
+            formGroup.controls['email'].invalid &&
+            formGroup.controls['email'].dirty &&
+            !formGroup.controls['email'].touched
+          "
+        >
+          <span> Enter a valid email address </span>
+        </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              ><fa-icon [icon]="faLock"></fa-icon
+            ></span>
+          </div>
+          <input
+            id="password-input"
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            formControlName="password"
+          />
+        </div>
+        <div id="forgot-password-text">
+          <a href="#"><em>Forgot password?</em></a>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <div>
+        <button
+          class="btn btn-secondary"
+          id="login-button"
+          [disabled]="disableLoginButton"
+          (click)="loginCallBack()"
+        >
+          Login
+        </button>
+      </div>
+      <div>
+        Don't have an account? <em><a href="#">Sign-up</a></em>
+      </div>
+    </div>
+  </div>
+</div>

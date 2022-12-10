@@ -1,34 +1,69 @@
-<div class="px-2">
+<div class="px-0">
   <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#">Finance</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item active">
-          <a class="nav-link" title="Home" [ngClass]="navLinkClass" href="#"
-            ><fa-icon [icon]="faHouse" size="lg"></fa-icon>
-            <span class="sr-only"></span
-          ></a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" title="Stocks"
-            ><fa-icon [icon]="faArrow" size="lg"></fa-icon
-          ></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" title="Log in"
-            ><fa-icon [icon]="faUser" size="lg"></fa-icon
-          ></a>
+          <div ngbDropdown>
+            <button class="btn shadow-none" id="user-button" ngbDropdownToggle>
+              <div class="row mx-0 px-1">
+                <div
+                  class="col-auto ps-0 mt-2"
+                  id="user-name-column"
+                  *ngIf="user"
+                >
+                  <fa-icon [icon]="faUser" size="lg"></fa-icon>
+                  {{ user.displayName }}
+                </div>
+              </div>
+            </button>
+            <div
+              ngbDropdownMenu
+              class="me-2"
+              id="userDropDownMenu"
+              *ngIf="user"
+            >
+              <button
+                ngbDropdownItem
+                id="user-drop-down-menu-button"
+                (click)="navigate('/home')"
+              >
+                <div class="row">
+                  <div class="col-11 px-0" style="width: fit-content">Home</div>
+                  <div class="col-1" style="width: fit-content">
+                    <fa-icon [icon]="faHome"></fa-icon>
+                  </div>
+                </div>
+              </button>
+              <button
+                ngbDropdownItem
+                id="user-drop-down-menu-button"
+                [disabled]="true"
+              >
+                <div class="row">
+                  <div class="col-11 px-0" style="width: fit-content">
+                    Settings
+                  </div>
+                  <div class="col-1" style="width: fit-content">
+                    <fa-icon [icon]="faSettingsIcon"></fa-icon>
+                  </div>
+                </div>
+              </button>
+              <button
+                ngbDropdownItem
+                id="user-drop-down-menu-button"
+                (click)="signOut()"
+              >
+                <div class="row">
+                  <div class="col-11 px-0" style="width: fit-content">
+                    Sign out
+                  </div>
+                  <div class="col-1" style="width: fit-content">
+                    <fa-icon [icon]="faSignOut"></fa-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
