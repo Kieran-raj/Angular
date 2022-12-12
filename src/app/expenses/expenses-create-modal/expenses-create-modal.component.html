@@ -23,7 +23,7 @@
       />
       <label for="amountInput">Amount</label>
     </div>
-    <div class="form-floating mb-2">
+    <div class="form-floating mb-2" *ngIf="!isNewTransaction">
       <input
         class="form-control shadow-none"
         id="floatingInputValue"
@@ -31,6 +31,26 @@
         formControlName="category"
       />
       <label for="floatingInputValue">New Category</label>
+    </div>
+    <div class="mb-2" *ngIf="isNewTransaction">
+      <label
+        class="ms-1"
+        for="select-category-dropdown"
+        style="font-size: smaller; opacity: 0.65"
+        >Choose Category</label
+      >
+      <select
+        class="form-control shadow-none"
+        formControlName="category"
+        id="select-category-dropdown"
+      >
+        <option
+          *ngFor="let category of categories$ | async"
+          [ngValue]="category"
+        >
+          {{ category.name | titlecase }}
+        </option>
+      </select>
     </div>
     <div class="form-floating mb-2" *ngIf="isNewTransaction">
       <input

@@ -39,7 +39,7 @@
 
 25. Show averages in the expenses side bar
 26. Validation for modal forms
-27. Make category choice a drop down
+27. ~~Make category choice a drop down~~ &#x2611;
 28. Either need a generic ok call back, or have it so then transactions and category updates are the same object essentially
 29. Change the type of pie chart shown
 30. Make application response for ipad screen

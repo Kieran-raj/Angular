@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dropdown-menu',
@@ -15,11 +13,24 @@ export class DropdownMenuComponent implements OnInit {
   @Input()
   public toolTipTitle: string;
 
+  /**
+   * Drop down values.
+   * @type {string[]}
+   */
   @Input()
   public dropDownValues: string[] = [];
+
+  /**
+   * Drop down value.
+   * @type {string}
+   */
   @Input()
   public dropDownValue: string;
 
+  /**
+   * New drop down value
+   * @type {EventEmitter<string>}
+   */
   @Output() newDropDownValue = new EventEmitter<string>();
 
   constructor() {}

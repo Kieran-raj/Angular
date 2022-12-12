@@ -6,3 +6,11 @@
 input.ng-invalid {
   border: red 2px solid;
 }
+
+select.ng-invalid {
+  border: red 2px solid;
+}
+
+option[value=""][disabled] {
+  display: none;
+}

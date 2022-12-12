@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { map, mergeMap } from 'rxjs';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
@@ -22,6 +23,7 @@ import {
   loadCategories,
   loadCategoriesSuccess,
 } from '../actions/transactions.action';
+import { UserState } from '../states/user.state';
 
 @Injectable()
 export class TransactionsEffect {
