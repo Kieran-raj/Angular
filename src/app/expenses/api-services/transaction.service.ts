@@ -25,6 +25,12 @@ export class TransactionsService {
     return this.http.get<Expense[]>(`${this.url}/expense/all-expenses`);
   }
 
+  getUserExpenses(userId: string): Observable<Expense[]> {
+    return this.http.get<Expense[]>(
+      `${this.url}/expense/all-expenses?userId=${userId}`
+    );
+  }
+
   // getYears(): Observable<any> {
   //   return this.http.get(`${this.url}/full_data/all_years`);
   // }

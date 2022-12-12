@@ -5,27 +5,25 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Category } from 'src/app/shared/models/category';
-import { UpdatesService } from '../api-services/updates.service';
+import { Expense } from 'src/app/shared/models/expense';
+import { User } from 'src/app/shared/models/user';
 import { loadCategories } from '../data-state/actions/transactions.action';
 import {
   addNewCategory,
   addNewTransaction,
 } from '../data-state/actions/updates.action';
 import { selectCategories } from '../data-state/selectors/transactions.selectors';
+import { selectUserInfo } from '../data-state/selectors/user.selector';
 import { TransactionState } from '../data-state/states/transactions.state';
 import { UpdateState } from '../data-state/states/update.state';
+import { UserState } from '../data-state/states/user.state';
 
 @Component({
   selector: 'app-expenses-create-modal',
@@ -80,6 +78,12 @@ export class ExpensesCreateModalComponent
   public categories: string[] = [];
 
   /**
+   * User
+   * @type {User}
+   */
+  public user: User | null;
+
+  /**
    * Subscriptions
    * @type {Subscription[]}
    */
@@ -104,8 +108,14 @@ export class ExpensesCreateModalComponent
 
   constructor(
     private transactionStore: Store<TransactionState>,
-    private updatesStore: Store<UpdateState>
+    private updatesStore: Store<UpdateState>,
+    private userStore: Store<UserState>
   ) {
+    this.subscriptions.push(
+      this.userStore.select(selectUserInfo).subscribe((user) => {
+        this.user = user;
+      })
+    );
     this.transactionStore.dispatch(loadCategories());
   }
 
@@ -148,6 +158,7 @@ export class ExpensesCreateModalComponent
         category: this.formGroup.controls['category'],
         date: null,
         description: null,
+        userId: null,
       };
       this.updatesStore.dispatch(addNewCategory({ category: newCategory }));
     }
@@ -155,10 +166,11 @@ export class ExpensesCreateModalComponent
     if (this.isNewTransaction) {
       updates = {
         amount: this.formGroup.controls['amount'].value,
-        category: this.formGroup.controls['category'].value.toLowerCase(),
+        category: this.formGroup.controls['category'].value.name.toLowerCase(),
         date: this.formGroup.controls['date'].value,
         description: this.formGroup.controls['description'].value,
-      };
+        userId: this.user?.id,
+      } as Expense;
 
       this.updatesStore.dispatch(addNewTransaction({ updates: updates }));
     }

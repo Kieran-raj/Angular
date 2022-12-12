@@ -1,5 +1,9 @@
 export interface Expense {
   /**
+   * Transaction id
+   */
+  id: number;
+  /**
    * Transaction amount
    */
   amount: number;
@@ -20,7 +24,7 @@ export interface Expense {
   description: string;
 
   /**
-   * Transaction id
+   * User id
    */
-  expense_id: number;
+  userId: number;
 }
