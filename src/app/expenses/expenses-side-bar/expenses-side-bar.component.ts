@@ -110,7 +110,6 @@ export class ExpensesSideBarComponent implements OnInit {
     this.initialDropDownValue = 'Daily';
     this.showMovingAverage = true;
     this.movingAverageToggled = false;
-    // this.formGroup.controls['movingAverageWindow'].setValue('2');
   }
 
   dropDownValueChange(value: string): void {

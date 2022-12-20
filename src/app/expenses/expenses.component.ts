@@ -142,11 +142,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   public modal: NgbModalRef;
 
-  public view: any = [
-    chartSettings.lineChart.xViewSize,
-    chartSettings.lineChart.yViewSize,
-  ];
-
   sucessfulUpdate: boolean;
 
   updateMessage = 'Sucessfully added new cateogry';
@@ -155,8 +150,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private transactionStore: Store<TransactionState>,
     private authService: AuthService,
     private chartHelper: ChartHelper,
-    private modalService: NgbModal,
-    private router: Router
+    private modalService: NgbModal
   ) {
     this.transactionStore.dispatch(loadDailyExpenses());
 
@@ -170,14 +164,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // this.subscriptions.push(
-    //   this.isLoggedIn$.subscribe((isLoggedIn) => {
-    //     if (!isLoggedIn) {
-    //       this.router.navigateByUrl('/home');
-    //     }
-    //   })
-    // );
-
     this.monthlyAmounts$ = this.transactionStore.select(
       selectMonthlyTransactions
     );

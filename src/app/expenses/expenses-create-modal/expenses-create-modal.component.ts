@@ -167,7 +167,7 @@ export class ExpensesCreateModalComponent
       updates = {
         amount: this.formGroup.controls['amount'].value,
         category: this.formGroup.controls['category'].value.name.toLowerCase(),
-        date: this.formGroup.controls['date'].value,
+        date: this.formatStringToUtc(this.formGroup.controls['date'].value),
         description: this.formGroup.controls['description'].value,
         userId: this.user?.id,
       } as Expense;
@@ -182,6 +182,12 @@ export class ExpensesCreateModalComponent
   dismissCallBack() {
     this.modal.dismiss();
     this.clearForm();
+  }
+
+  private formatStringToUtc(stringDate: string) {
+    const time = new Date().getTime();
+    const newDate = new Date(stringDate).setTime(time);
+    return new Date(newDate).toISOString();
   }
 
   private clearForm() {

@@ -26,6 +26,7 @@
         <div class="col-1 pl-0" align="center">
           <app-expenses-side-bar
             class="pl-0"
+            id="expenses-side-bar"
             [showDateSelection]="showDateSelection"
             (resetButton)="resetGraph()"
             (toggleMovingAverage)="toggleMovingAverage($event)"
@@ -33,7 +34,7 @@
           ></app-expenses-side-bar>
         </div>
 
-        <div class="col" align="center">
+        <div class="col" id="pie-chart" align="center">
           <app-pie-chart [sourceData]="pieData"></app-pie-chart>
         </div>
         <div class="col"></div>
