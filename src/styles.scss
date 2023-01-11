@@ -83,3 +83,11 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
   padding: 0rem;
   margin: 0rem;
 }
+
+/*Media Queries*/
+@media screen and (max-width: 1200px) {
+  body {
+    height: 100%;
+    overflow: scroll;
+  }
+}

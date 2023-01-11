@@ -45,7 +45,7 @@
     <div class="col-auto">
       <button
         class="btn btn-secondary mt-2 crudButton shadow-none"
-        (click)="openModal(categoryModal, 'category-modal')"
+        (click)="openModal(categoryModal, 'categoryModal')"
       >
         New Category
       </button>
@@ -54,7 +54,7 @@
     <div class="col-auto">
       <button
         class="btn btn-secondary mt-2 crudButton shadow-none"
-        (click)="openModal(transactionModal, 'transaction-modal')"
+        (click)="openModal(transactionModal, 'transactionModal')"
       >
         New Transaction
       </button>
@@ -79,6 +79,13 @@
     [modalTitle]="modalTitle"
   ></app-expenses-create-modal>
 </ng-template>
+
+<ng-template #editDeleteModal>
+  <app-expenses-create-modal
+    [modal]="modal"
+    [modalTitle]="modalTitle"
+  ></app-expenses-create-modal
+></ng-template>
 
 <ng-template #lineChartToolTipRef let-model="model">
   <app-expenses-line-chart-tooltip [model]="model">

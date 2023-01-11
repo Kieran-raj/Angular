@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnInit,
   ViewChild,
   ViewEncapsulation,
@@ -33,13 +34,9 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 import { DailyAmount } from '../shared/models/daily-expense';
-import { formatISODate } from '../shared/helper-functions/date-functions';
-import { chartSettings } from '../shared/settings/chart-settings';
-import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
-import { UserState } from './data-state/states/user.state';
-import { selectUserInfo } from './data-state/selectors/user.selector';
-import { userLoginSuccess } from './data-state/actions/user.action';
+import { UpdateState } from './data-state/states/update.state';
+import { selectModifiedExpense } from './data-state/selectors/updates.selectors';
 
 @Component({
   selector: 'app-expenses',
@@ -132,6 +129,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public modalTitle: string;
 
   /**
+   * Modal display rules
+   * @type {[key: string]: any}
+   */
+  modalDisplayRules: any;
+
+  /**
    * Is logged in
    */
   isLoggedIn$ = this.authService.isloggedIn;
@@ -142,12 +145,24 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   public modal: NgbModalRef;
 
+  /**
+   * Successful update
+   * @type {boolean}
+   */
   sucessfulUpdate: boolean;
 
+  /**
+   * Update message
+   * @type {string}
+   */
   updateMessage = 'Sucessfully added new cateogry';
+
+  @ViewChild('editDeleteModal', { static: true })
+  editDeleteModal: ElementRef;
 
   constructor(
     private transactionStore: Store<TransactionState>,
+    private updateStore: Store<UpdateState>,
     private authService: AuthService,
     private chartHelper: ChartHelper,
     private modalService: NgbModal
@@ -215,7 +230,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       }
     );
 
-    this.years = [2021, 2022];
+    this.years = [2021, 2022, 2023];
     // this.transactionService.getYears().subscribe((results) => {
     //   this.years = results.data.years.sort();
     // });
@@ -249,6 +264,22 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
           }
         })
     );
+
+    this.subscriptions.push(
+      this.updateStore
+        .select(selectModifiedExpense)
+        .subscribe((expenseObject) => {
+          if (expenseObject) {
+            this.openModal(this.editDeleteModal, expenseObject.action);
+          }
+        })
+    );
+
+    /**
+     * this.subsciptions.push(
+     * combineLatest([selectors])
+     * .subscribe(([mappedValues]) => {logic}))
+     */
 
     this.movingAverageAmounts$.subscribe(
       (results: MovingAverageAmounts[] | undefined | null) => {
@@ -286,8 +317,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  openModal(content: any, id: string) {
-    this.modalTitle = id.toLowerCase().includes('transaction')
+  openModal(content: any, id: string | null) {
+    this.modalTitle = id?.toLowerCase().includes('transaction')
       ? 'New Transaction'
       : 'New Category';
     this.modal = this.modalService.open(content);

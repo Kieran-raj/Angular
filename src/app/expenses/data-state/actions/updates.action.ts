@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Expense } from 'src/app/shared/models/expense';
 
 const updatesPrefix = `[Updates] - `;
 
@@ -26,4 +27,9 @@ export const addNewTransactionSuccess = createAction(
   props<{
     isUpdated: boolean;
   }>()
+);
+
+export const addSelectedExpenseToState = createAction(
+  `${updatesPrefix} Add Selected Transaction To State`,
+  props<{ expense: Expense; action: string }>()
 );

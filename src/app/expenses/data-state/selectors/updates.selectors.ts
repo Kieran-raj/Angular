@@ -10,3 +10,8 @@ export const selectIsCategoryUpdated = createSelector(
   selectUpdatesState,
   (state: UpdateState) => state.categoryUpdate?.isUpdated
 );
+
+export const selectModifiedExpense = createSelector(
+  selectUpdatesState,
+  (state: UpdateState) => state.modifiedExpense
+);

@@ -1,15 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
+import { addChosenExpenseToState } from '../actions/transactions.action';
 import {
   addNewCategory,
   addNewCategorySuccess,
   addNewTransaction,
   addNewTransactionSuccess,
+  addSelectedExpenseToState,
 } from '../actions/updates.action';
 import { UpdateState } from '../states/update.state';
 
 export const initialUpdates: UpdateState = {
   categoryUpdate: null,
   transactionCreateUpdate: null,
+  modifiedExpense: null,
 };
 
 export const updatesReducer = createReducer(
@@ -47,6 +50,15 @@ export const updatesReducer = createReducer(
       transactionCreateUpdate: {
         newTransaction: null,
         isUpdate: action.isUpdated,
+      },
+    };
+  }),
+  on(addSelectedExpenseToState, (state, action) => {
+    return {
+      ...state,
+      modifiedExpense: {
+        chosenExpense: action.expense,
+        action: action.action,
       },
     };
   })
