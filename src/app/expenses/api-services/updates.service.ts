@@ -43,4 +43,14 @@ export class UpdatesService {
       options
     );
   }
+
+  deleteTransaction(body: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+    const options = { headers: headers, body: body };
+
+    return this.http.delete<any>(`${this.url}/expense/delete-expense`, options);
+  }
 }

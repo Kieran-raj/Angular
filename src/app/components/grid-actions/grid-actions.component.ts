@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   faPenToSquare,
   faTrashCan,
@@ -7,12 +7,10 @@ import {
 import { Store } from '@ngrx/store';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { GridApi, ICellRendererParams } from 'ag-grid-community';
-import { Subscription, withLatestFrom } from 'rxjs';
-import { addSelectedExpenseToState } from 'src/app/expenses/data-state/actions/updates.action';
+import { Subscription } from 'rxjs';
+import { addModalAction } from 'src/app/expenses/data-state/actions/updates.action';
 import { selectChosenExpense } from 'src/app/expenses/data-state/selectors/transactions.selectors';
-import { ExpensesAppState } from 'src/app/expenses/data-state/states/expenses-app.state';
-import { AuthService } from 'src/app/shared/auth/auth.service';
-import { Expense } from 'src/app/shared/models/expense';
+import { UpdateState } from 'src/app/expenses/data-state/states/update.state';
 
 @Component({
   selector: 'app-grid-actions',
@@ -60,7 +58,7 @@ export class GridActionsComponent implements ICellRendererAngularComp {
    * Chosen expense
    * @type {Expense}
    */
-  chosenExpense$ = this.expenseStore.select(selectChosenExpense);
+  chosenExpense$ = this.updateStore.select(selectChosenExpense);
 
   /**
    * Subscriptions
@@ -68,7 +66,7 @@ export class GridActionsComponent implements ICellRendererAngularComp {
    */
   subscriptions: Subscription[] = [];
 
-  constructor(private expenseStore: Store<ExpensesAppState>) {}
+  constructor(private updateStore: Store<UpdateState>) {}
 
   agInit(params: ICellRendererParams<any, any>): void {
     this.gridAPI = params.api;
@@ -80,8 +78,6 @@ export class GridActionsComponent implements ICellRendererAngularComp {
   }
 
   updateDelete(action: string) {
-    this.expenseStore.dispatch(
-      addSelectedExpenseToState({ expense: this.params.data, action: action })
-    );
+    this.updateStore.dispatch(addModalAction({ action: action }));
   }
 }

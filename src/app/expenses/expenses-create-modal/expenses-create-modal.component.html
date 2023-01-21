@@ -1,5 +1,7 @@
 <div class="modal-header">
-  <h2 class="modal-title my-0 mx-0" style="color: #233d53">{{ modalTitle }}</h2>
+  <h2 class="modal-title my-0 mx-0" style="color: #233d53">
+    {{ actionSettings?.modalTitle }}
+  </h2>
 
   <button
     class="btn close border-0 shadow-none"
@@ -13,8 +15,8 @@
 </div>
 
 <div class="modal-body">
-  <form [formGroup]="formGroup">
-    <div class="form-floating mb-2" *ngIf="isNewTransaction">
+  <form [formGroup]="formGroup" *ngIf="actionSettings?.showForm">
+    <div class="form-floating mb-2" *ngIf="actionSettings?.showAmount">
       <input
         class="form-control shadow-none"
         id="amountInput"
@@ -23,7 +25,7 @@
       />
       <label for="amountInput">Amount</label>
     </div>
-    <div class="form-floating mb-2" *ngIf="!isNewTransaction">
+    <div class="form-floating mb-2" *ngIf="actionSettings?.showNewCategory">
       <input
         class="form-control shadow-none"
         id="floatingInputValue"
@@ -32,7 +34,7 @@
       />
       <label for="floatingInputValue">New Category</label>
     </div>
-    <div class="mb-2" *ngIf="isNewTransaction">
+    <div class="mb-2" *ngIf="actionSettings?.showCategoryDropdown">
       <label
         class="ms-1"
         for="select-category-dropdown"
@@ -52,7 +54,7 @@
         </option>
       </select>
     </div>
-    <div class="form-floating mb-2" *ngIf="isNewTransaction">
+    <div class="form-floating mb-2" *ngIf="actionSettings?.showDate">
       <input
         class="form-control shadow-none"
         id="dateInput"
@@ -61,7 +63,7 @@
       />
       <label for="amountInput">Date</label>
     </div>
-    <div class="form-floating mb-2" *ngIf="isNewTransaction">
+    <div class="form-floating mb-2" *ngIf="actionSettings?.showDescription">
       <input
         class="form-control shadow-none"
         id="descriptionInput"
@@ -71,6 +73,9 @@
       <label for="descriptionInput">Description</label>
     </div>
   </form>
+  <div id="modal-message-text" style="color: #233d53">
+    {{ actionSettings?.message }}
+  </div>
 </div>
 
 <div class="modal-footer">
@@ -80,6 +85,6 @@
     [disabled]="disableOKButton"
     (click)="okCallBack()"
   >
-    Add
+    {{ actionSettings?.okButtonText }}
   </button>
 </div>

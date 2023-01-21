@@ -7,6 +7,38 @@
     <div class="container-fluid cardBody">
       <div class="row pt-2">
         <div class="col-auto pr-0">
+          <div class="row" id="chart-buttons">
+            <div class="col-9 pl-0" id="chart-side-bar" align="center">
+              <app-expenses-side-bar
+                class="pl-0"
+                id="expenses-side-bar"
+                [showDateSelection]="showDateSelection"
+                (resetButton)="resetGraph()"
+                (toggleMovingAverage)="toggleMovingAverage($event)"
+                (dropDownValue)="dropDownChange($event)"
+              ></app-expenses-side-bar>
+            </div>
+            <div class="col-3" id="chart-new-buttons">
+              <div class="row">
+                <div class="col">
+                  <button
+                    class="btn btn-secondary crudButton shadow-none"
+                    (click)="setModalAction('newCategory')"
+                  >
+                    New Category
+                  </button>
+                </div>
+                <div class="col">
+                  <button
+                    class="btn btn-secondary crudButton shadow-none"
+                    (click)="setModalAction('newTransaction')"
+                  >
+                    New Transaction
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
           <app-line-chart
             *ngIf="chartMode === 'Daily'"
             [sourceData]="lineData"
@@ -23,41 +55,11 @@
             [customToolTipTemplate]="barChartToolTipRef"
           ></app-bar-chart>
         </div>
-        <div class="col-1 pl-0" align="center">
-          <app-expenses-side-bar
-            class="pl-0"
-            id="expenses-side-bar"
-            [showDateSelection]="showDateSelection"
-            (resetButton)="resetGraph()"
-            (toggleMovingAverage)="toggleMovingAverage($event)"
-            (dropDownValue)="dropDownChange($event)"
-          ></app-expenses-side-bar>
-        </div>
 
         <div class="col" id="pie-chart" align="center">
           <app-pie-chart [sourceData]="pieData"></app-pie-chart>
         </div>
-        <div class="col"></div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-auto">
-      <button
-        class="btn btn-secondary mt-2 crudButton shadow-none"
-        (click)="openModal(categoryModal, 'categoryModal')"
-      >
-        New Category
-      </button>
-      <div *ngIf="false" style="color: green">{{ updateMessage }}</div>
-    </div>
-    <div class="col-auto">
-      <button
-        class="btn btn-secondary mt-2 crudButton shadow-none"
-        (click)="openModal(transactionModal, 'transactionModal')"
-      >
-        New Transaction
-      </button>
     </div>
   </div>
 
@@ -66,26 +68,12 @@
   </div>
 </div>
 
-<ng-template #categoryModal>
+<ng-template #modal>
   <app-expenses-create-modal
-    [modal]="modal"
-    [modalTitle]="modalTitle"
+    [modal]="modalInstance"
+    [modalAction]="modalAction"
   ></app-expenses-create-modal>
 </ng-template>
-
-<ng-template #transactionModal>
-  <app-expenses-create-modal
-    [modal]="modal"
-    [modalTitle]="modalTitle"
-  ></app-expenses-create-modal>
-</ng-template>
-
-<ng-template #editDeleteModal>
-  <app-expenses-create-modal
-    [modal]="modal"
-    [modalTitle]="modalTitle"
-  ></app-expenses-create-modal
-></ng-template>
 
 <ng-template #lineChartToolTipRef let-model="model">
   <app-expenses-line-chart-tooltip [model]="model">

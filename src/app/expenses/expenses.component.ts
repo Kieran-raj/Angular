@@ -25,6 +25,7 @@ import {
   selectMonthlyTransactions,
   selectMovingAverageAmounts,
 } from './data-state/selectors/transactions.selectors';
+import { selectModalAction } from './data-state/selectors/updates.selectors';
 import { TransactionState } from './data-state/states/transactions.state';
 import { ChartHelper } from '../shared/helper-functions/chart-functions';
 import { CategoricalAmounts } from '../shared/models/categorical-amounts';
@@ -36,7 +37,7 @@ import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
-import { selectModifiedExpense } from './data-state/selectors/updates.selectors';
+import { addModalAction } from './data-state/actions/updates.action';
 
 @Component({
   selector: 'app-expenses',
@@ -143,7 +144,13 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Modal instance.
    * @type {NgbModalRef}
    */
-  public modal: NgbModalRef;
+  public modalInstance: NgbModalRef;
+
+  /**
+   * Modal action.
+   * @type {string}
+   */
+  public modalAction: string;
 
   /**
    * Successful update
@@ -159,6 +166,9 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
   @ViewChild('editDeleteModal', { static: true })
   editDeleteModal: ElementRef;
+
+  @ViewChild('modal', { static: true })
+  modal: ElementRef;
 
   constructor(
     private transactionStore: Store<TransactionState>,
@@ -266,20 +276,13 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     );
 
     this.subscriptions.push(
-      this.updateStore
-        .select(selectModifiedExpense)
-        .subscribe((expenseObject) => {
-          if (expenseObject) {
-            this.openModal(this.editDeleteModal, expenseObject.action);
-          }
-        })
+      this.updateStore.select(selectModalAction).subscribe((modalAction) => {
+        if (modalAction) {
+          this.modalAction = modalAction;
+          this.openModal(this.modal);
+        }
+      })
     );
-
-    /**
-     * this.subsciptions.push(
-     * combineLatest([selectors])
-     * .subscribe(([mappedValues]) => {logic}))
-     */
 
     this.movingAverageAmounts$.subscribe(
       (results: MovingAverageAmounts[] | undefined | null) => {
@@ -317,11 +320,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  openModal(content: any, id: string | null) {
-    this.modalTitle = id?.toLowerCase().includes('transaction')
-      ? 'New Transaction'
-      : 'New Category';
-    this.modal = this.modalService.open(content);
+  setModalAction(action: string | null) {
+    this.updateStore.dispatch(addModalAction({ action: action }));
+  }
+
+  private openModal(content: any) {
+    this.modalInstance = this.modalService.open(content);
   }
 
   private changeChart(value: string): void {

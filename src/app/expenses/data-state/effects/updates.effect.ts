@@ -11,8 +11,10 @@ import {
 import {
   addNewCategory,
   addNewCategorySuccess,
-  addNewTransaction,
-  addNewTransactionSuccess,
+  createUpdateTransaction,
+  createUpdateTransactionSuccess,
+  deleteTransaction,
+  deleteTransactionSuccess,
 } from '../actions/updates.action';
 import { TransactionState } from '../states/transactions.state';
 
@@ -34,7 +36,7 @@ export class UpdatesEffect {
 
   updateCreateTransaction$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(addNewTransaction),
+      ofType(createUpdateTransaction),
       mergeMap((action) => {
         const body = action.updates;
 
@@ -46,7 +48,26 @@ export class UpdatesEffect {
 
             this.transactionStore.dispatch(loadAllExpenses());
 
-            return addNewTransactionSuccess({ isUpdated: true });
+            return createUpdateTransactionSuccess({ isUpdated: true });
+          })
+        );
+      })
+    )
+  );
+
+  deleteTransactions$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteTransaction),
+      mergeMap((action) => {
+        return this.updateService.deleteTransaction(action.expense).pipe(
+          map(() => {
+            this.transactionStore.dispatch(loadDailyExpenses());
+
+            this.transactionStore.dispatch(loadMonthlyExpense());
+
+            this.transactionStore.dispatch(loadAllExpenses());
+
+            return deleteTransactionSuccess();
           })
         );
       })

@@ -14,12 +14,18 @@ import { Observable, Subscription } from 'rxjs';
 import { Category } from 'src/app/shared/models/category';
 import { Expense } from 'src/app/shared/models/expense';
 import { User } from 'src/app/shared/models/user';
+import { modalSettings } from 'src/app/shared/settings/modal-settings';
 import { loadCategories } from '../data-state/actions/transactions.action';
 import {
   addNewCategory,
-  addNewTransaction,
+  createUpdateTransaction,
+  deleteTransaction,
+  resetUpdateState,
 } from '../data-state/actions/updates.action';
-import { selectCategories } from '../data-state/selectors/transactions.selectors';
+import {
+  selectCategories,
+  selectChosenExpense,
+} from '../data-state/selectors/transactions.selectors';
 import { selectUserInfo } from '../data-state/selectors/user.selector';
 import { TransactionState } from '../data-state/states/transactions.state';
 import { UpdateState } from '../data-state/states/update.state';
@@ -41,10 +47,11 @@ export class ExpensesCreateModalComponent
   public modal: NgbModalRef;
 
   /**
-   * Modal title.
+   * Modal action.
+   * @type {string}
    */
   @Input()
-  public modalTitle: string;
+  public modalAction: string = '';
 
   /**
    * Categories
@@ -54,10 +61,17 @@ export class ExpensesCreateModalComponent
   public categories$: Observable<Category[] | null> | null;
 
   /**
-   * Is new transaction.
-   * @type {boolean}
+   * Chosen Expense
+   * @type {Observable<Expense | null>}
    */
-  public isNewTransaction: boolean;
+  public chosenExpense$: Observable<Expense | null> =
+    this.transactionStore.select(selectChosenExpense);
+
+  /**
+   * Action settings
+   * @type {any}
+   */
+  public actionSettings: any;
 
   /**
    * Icons
@@ -120,15 +134,13 @@ export class ExpensesCreateModalComponent
   }
 
   ngOnInit(): void {
-    this.isNewTransaction = this.modalTitle
-      .toLowerCase()
-      .includes('transaction')
-      ? true
-      : false;
+    this.actionSettings = modalSettings[this.modalAction];
 
-    this.categories$ = this.isNewTransaction
-      ? this.transactionStore.select(selectCategories)
-      : null;
+    if (this.modalAction === 'deleteTransaction') {
+      this.disableOKButton = false;
+    }
+
+    this.categories$ = this.transactionStore.select(selectCategories);
 
     this.subscriptions.push(
       this.transactionStore.select(selectCategories).subscribe((data) => {
@@ -147,11 +159,12 @@ export class ExpensesCreateModalComponent
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe);
+    this.updatesStore.dispatch(resetUpdateState());
   }
 
   okCallBack() {
     let updates = {};
-    if (!this.isNewTransaction) {
+    if (this.modalAction === 'newCategory') {
       const newCategory = this.formGroup.controls['category'].value;
       updates = {
         amount: null,
@@ -163,7 +176,10 @@ export class ExpensesCreateModalComponent
       this.updatesStore.dispatch(addNewCategory({ category: newCategory }));
     }
 
-    if (this.isNewTransaction) {
+    if (
+      this.modalAction === 'newTransaction' ||
+      this.modalAction === 'editTransaction'
+    ) {
       updates = {
         amount: this.formGroup.controls['amount'].value,
         category: this.formGroup.controls['category'].value.name.toLowerCase(),
@@ -172,7 +188,15 @@ export class ExpensesCreateModalComponent
         userId: this.user?.id,
       } as Expense;
 
-      this.updatesStore.dispatch(addNewTransaction({ updates: updates }));
+      this.updatesStore.dispatch(
+        createUpdateTransaction({ updates: updates, action: this.modalAction })
+      );
+    }
+
+    if (this.modalAction === 'deleteTransaction') {
+      this.chosenExpense$.subscribe((expense) => {
+        this.updatesStore.dispatch(deleteTransaction({ expense: expense }));
+      });
     }
 
     this.modal.close();

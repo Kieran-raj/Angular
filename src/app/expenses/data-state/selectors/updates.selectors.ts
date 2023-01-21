@@ -11,7 +11,7 @@ export const selectIsCategoryUpdated = createSelector(
   (state: UpdateState) => state.categoryUpdate?.isUpdated
 );
 
-export const selectModifiedExpense = createSelector(
+export const selectModalAction = createSelector(
   selectUpdatesState,
-  (state: UpdateState) => state.modifiedExpense
+  (state: UpdateState) => state.modalAction
 );

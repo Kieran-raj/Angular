@@ -1,18 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
-import { addChosenExpenseToState } from '../actions/transactions.action';
 import {
   addNewCategory,
   addNewCategorySuccess,
-  addNewTransaction,
-  addNewTransactionSuccess,
-  addSelectedExpenseToState,
+  createUpdateTransaction,
+  createUpdateTransactionSuccess,
+  resetUpdateState,
+  addModalAction,
 } from '../actions/updates.action';
 import { UpdateState } from '../states/update.state';
 
 export const initialUpdates: UpdateState = {
   categoryUpdate: null,
   transactionCreateUpdate: null,
-  modifiedExpense: null,
+  modalAction: null,
 };
 
 export const updatesReducer = createReducer(
@@ -23,6 +23,7 @@ export const updatesReducer = createReducer(
       categoryUpdate: {
         newCategory: action.category,
         isUpdated: false,
+        action: 'new',
       },
     };
   }),
@@ -32,34 +33,41 @@ export const updatesReducer = createReducer(
       categoryUpdate: {
         newCategory: null,
         isUpdated: action.isUpdated,
+        action: null,
       },
     };
   }),
-  on(addNewTransaction, (state, action) => {
+  on(createUpdateTransaction, (state, action) => {
     return {
       ...state,
       transactionCreateUpdate: {
-        newTransaction: action.updates,
-        isUpdate: false,
+        transaction: action.updates,
+        isUpdated: false,
+        action: 'new',
       },
     };
   }),
-  on(addNewTransactionSuccess, (state, action) => {
+  on(createUpdateTransactionSuccess, (state, action) => {
     return {
       ...state,
       transactionCreateUpdate: {
-        newTransaction: null,
-        isUpdate: action.isUpdated,
+        transaction: null,
+        isUpdated: action.isUpdated,
+        action: null,
       },
     };
   }),
-  on(addSelectedExpenseToState, (state, action) => {
+  on(addModalAction, (state, action) => {
     return {
       ...state,
-      modifiedExpense: {
-        chosenExpense: action.expense,
-        action: action.action,
-      },
+      modalAction: action.action,
+    };
+  }),
+  on(resetUpdateState, (_, __) => {
+    return {
+      categoryUpdate: null,
+      transactionCreateUpdate: null,
+      modalAction: null,
     };
   })
 );
