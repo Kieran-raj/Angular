@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnInit,
   ViewChild,
   ViewEncapsulation,
@@ -24,22 +25,24 @@ import {
   selectMonthlyTransactions,
   selectMovingAverageAmounts,
 } from './data-state/selectors/transactions.selectors';
+import { selectModalAction } from './data-state/selectors/updates.selectors';
 import { TransactionState } from './data-state/states/transactions.state';
 import { ChartHelper } from '../shared/helper-functions/chart-functions';
 import { CategoricalAmounts } from '../shared/models/categorical-amounts';
 import { PieData } from '../shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowsRotate,
+  faChartLine,
+  faPlus,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 import { DailyAmount } from '../shared/models/daily-expense';
-import { formatISODate } from '../shared/helper-functions/date-functions';
-import { chartSettings } from '../shared/settings/chart-settings';
-import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
-import { UserState } from './data-state/states/user.state';
-import { selectUserInfo } from './data-state/selectors/user.selector';
-import { userLoginSuccess } from './data-state/actions/user.action';
+import { UpdateState } from './data-state/states/update.state';
+import { addModalAction } from './data-state/actions/updates.action';
 
 @Component({
   selector: 'app-expenses',
@@ -68,24 +71,21 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Icons
    */
   public faXmark: IconDefinition = faXmark;
+  public faPlus: IconDefinition = faPlus;
+  public faArrows: IconDefinition = faArrowsRotate;
+  public faChartLine: IconDefinition = faChartLine;
 
   /**
    * What is the chosen granularity for the chart.
    * @type {string}
    */
-  public chartMode = 'Daily';
+  public chartMode = 'Default';
 
   /**
-   * Current drop down value.
+   * Current chart period.
    * @type {BehaviorSubject<string>}
    */
-  public dropDownCurrentValue = new BehaviorSubject(this.chartMode);
-
-  /**
-   * Whether to show date selection.
-   * @type {boolean}
-   */
-  public showDateSelection = true;
+  public currentChartPeriod = new BehaviorSubject(this.chartMode);
 
   /**
    * Daily amounts.
@@ -132,6 +132,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public modalTitle: string;
 
   /**
+   * Modal display rules
+   * @type {[key: string]: any}
+   */
+  modalDisplayRules: any;
+
+  /**
    * Is logged in
    */
   isLoggedIn$ = this.authService.isloggedIn;
@@ -140,14 +146,35 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Modal instance.
    * @type {NgbModalRef}
    */
-  public modal: NgbModalRef;
+  public modalInstance: NgbModalRef;
 
+  /**
+   * Modal action.
+   * @type {string}
+   */
+  public modalAction: string;
+
+  /**
+   * Successful update
+   * @type {boolean}
+   */
   sucessfulUpdate: boolean;
 
+  /**
+   * Update message
+   * @type {string}
+   */
   updateMessage = 'Sucessfully added new cateogry';
+
+  @ViewChild('editDeleteModal', { static: true })
+  editDeleteModal: ElementRef;
+
+  @ViewChild('modal', { static: true })
+  modal: ElementRef;
 
   constructor(
     private transactionStore: Store<TransactionState>,
+    private updateStore: Store<UpdateState>,
     private authService: AuthService,
     private chartHelper: ChartHelper,
     private modalService: NgbModal
@@ -215,19 +242,19 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       }
     );
 
-    this.years = [2021, 2022];
+    this.years = [2021, 2022, 2023];
     // this.transactionService.getYears().subscribe((results) => {
     //   this.years = results.data.years.sort();
     // });
   }
 
-  dropDownChange(value: string): void {
-    this.dropDownCurrentValue.next(value);
+  chartPeriodChange(value: string): void {
+    this.currentChartPeriod.next(value);
   }
 
   ngAfterViewInit() {
     this.subscriptions.push(
-      this.dropDownCurrentValue.subscribe((newValue) => {
+      this.currentChartPeriod.subscribe((newValue) => {
         if (this.chartMode !== newValue) {
           this.changeChart(newValue);
         }
@@ -248,6 +275,15 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
             ];
           }
         })
+    );
+
+    this.subscriptions.push(
+      this.updateStore.select(selectModalAction).subscribe((modalAction) => {
+        if (modalAction) {
+          this.modalAction = modalAction;
+          this.openModal(this.modal);
+        }
+      })
     );
 
     this.movingAverageAmounts$.subscribe(
@@ -272,7 +308,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   resetGraph() {
-    this.dropDownCurrentValue.next('Daily');
+    this.currentChartPeriod.next('Default');
     this.reloadGraphData();
   }
 
@@ -286,15 +322,16 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  openModal(content: any, id: string) {
-    this.modalTitle = id.toLowerCase().includes('transaction')
-      ? 'New Transaction'
-      : 'New Category';
-    this.modal = this.modalService.open(content);
+  setModalAction(action: string | null) {
+    this.updateStore.dispatch(addModalAction({ action: action }));
+  }
+
+  private openModal(content: any) {
+    this.modalInstance = this.modalService.open(content);
   }
 
   private changeChart(value: string): void {
-    if (value === 'Monthly') {
+    if (value === '1m') {
       this.subscriptions.push(
         this.monthlyAmounts$.subscribe(
           (results: MonthlyExpense[] | undefined | null) => {

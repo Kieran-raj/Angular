@@ -13,6 +13,35 @@
   outline: none;
 }
 
+.cardBody {
+  height: fit-content;
+}
+
 .grid {
-  height: 100%;
+  height: 80%;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  padding-top: 0.5rem;
+}
+
+#pie-chart-body {
+  width: fit-content !important;
+}
+
+#chart-side-ba {
+  grid-column-end: span 4;
+}
+
+#chart-nav-new-dropdown-menu {
+  transform: translate(0em, 2em) !important;
+}
+
+#chart-nav-new-dropdown-item:hover {
+  background-color: #063a5b;
+  color: white;
+}
+
+#drop-down-chart-header {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }

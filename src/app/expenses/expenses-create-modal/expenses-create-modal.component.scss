@@ -14,3 +14,8 @@ select.ng-invalid {
 option[value=""][disabled] {
   display: none;
 }
+
+#modal-message-text {
+  font-size: large;
+  text-align: center;
+}

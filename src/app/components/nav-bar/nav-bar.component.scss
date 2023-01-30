@@ -1,20 +1,31 @@
-nav {
-  background-color: white;
-  a {
-    color: black;
-  }
-
-  fa-icon {
-    color: #063a5b;
-  }
+a {
 }
 
-.nav-link {
-  text-decoration: none;
-  color: black;
+.row {
+  width: 100%;
+}
+
+.nav-link-selected {
+  color: white;
   box-shadow: none;
-  border: none;
-  background-color: white;
+  background-color: #063a5b;
+  width: 100%;
+  border-radius: 14px;
+  padding-right: 0px !important;
+}
+
+.nav-link-unselected {
+  color: black;
+  opacity: 0.4;
+  box-shadow: none;
+  width: 100%;
+  padding-right: 0px !important;
+}
+
+.side-nav-bar {
+  background-color: #f8f9fd;
+  // background-color: red;
+  color: black;
 }
 
 .col {
@@ -23,6 +34,14 @@ nav {
 
 .dropdown-toggle::after {
   display: none;
+}
+
+#nav-bar-header-text {
+  color: #063a5b;
+  font-size: x-large;
+  font-family: fantasy;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
 }
 
 #user-drop-down-menu-button {
@@ -53,4 +72,31 @@ nav {
   width: fit-content;
   height: fit-content;
   min-width: 0rem;
+}
+
+#nav-bar-item-button {
+  margin-left: 2.3rem;
+  width: 75%;
+}
+
+#nav-bar-sign-out-button {
+  background-color: white;
+  color: #063a5b;
+  padding-right: 0px !important;
+  margin-left: 0.7rem;
+}
+
+#nav-bar-item-text {
+  font-size: large;
+  margin-top: 0.2rem;
+}
+
+#nav-bar-item-icon-div {
+  padding-left: 0%;
+  padding-right: 0%;
+}
+
+#nav-bar-sign-out-button-div {
+  display: inline-block;
+  vertical-align: bottom;
 }

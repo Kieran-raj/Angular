@@ -73,12 +73,22 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       },
       field: '',
       sortable: false,
-      maxWidth: 150,
+      maxWidth: 130,
       cellRenderer: GridActionsComponent,
     },
   ];
 
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
+
+  constructor(private transactionStore: Store<TransactionState>) {
+    this.expenses$ = this.transactionStore.select(selectExpenses);
+  }
+
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
 
   onGridReady(params: GridReadyEvent) {
     this.rowData$ = this.expenses$;
@@ -97,10 +107,6 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
     this.agGrid.api.deselectAll();
   }
 
-  constructor(private transactionStore: Store<TransactionState>) {
-    this.expenses$ = this.transactionStore.select(selectExpenses);
-  }
-
   amountValueFormatter(params: ValueFormatterParams<number>) {
     return `£ ${params.value.toFixed(2)}`;
   }
@@ -113,11 +119,5 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
 
   dataValueGetter(params: ValueGetterParams<Expense>) {
     return params.data?.date.split('T')[0];
-  }
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

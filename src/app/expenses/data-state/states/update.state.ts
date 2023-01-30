@@ -2,10 +2,14 @@ export interface UpdateState {
   categoryUpdate: {
     newCategory: string | null;
     isUpdated: boolean | null;
+    action: string | null;
   } | null;
 
   transactionCreateUpdate: {
-    newTransaction: any | null;
-    isUpdate: boolean | null;
+    transaction: any | null;
+    isUpdated: boolean | null;
+    action: string | null;
   } | null;
+
+  modalAction: string | null;
 }

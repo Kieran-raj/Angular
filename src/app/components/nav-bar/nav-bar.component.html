@@ -1,71 +1,73 @@
-<div class="px-0">
-  <nav class="navbar navbar-expand-lg">
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <div ngbDropdown>
-            <button class="btn shadow-none" id="user-button" ngbDropdownToggle>
-              <div class="row mx-0 px-1">
-                <div
-                  class="col-auto ps-0 mt-2"
-                  id="user-name-column"
-                  *ngIf="user"
-                >
-                  <fa-icon [icon]="faUser" size="lg"></fa-icon>
-                  {{ user.displayName }}
-                </div>
-              </div>
-            </button>
-            <div
-              ngbDropdownMenu
-              class="me-2"
-              id="userDropDownMenu"
-              *ngIf="user"
-            >
-              <button
-                ngbDropdownItem
-                id="user-drop-down-menu-button"
-                (click)="navigate('/home')"
-              >
-                <div class="row">
-                  <div class="col-11 px-0" style="width: fit-content">Home</div>
-                  <div class="col-1" style="width: fit-content">
-                    <fa-icon [icon]="faHome"></fa-icon>
-                  </div>
-                </div>
-              </button>
-              <button
-                ngbDropdownItem
-                id="user-drop-down-menu-button"
-                [disabled]="true"
-              >
-                <div class="row">
-                  <div class="col-11 px-0" style="width: fit-content">
-                    Settings
-                  </div>
-                  <div class="col-1" style="width: fit-content">
-                    <fa-icon [icon]="faSettingsIcon"></fa-icon>
-                  </div>
-                </div>
-              </button>
-              <button
-                ngbDropdownItem
-                id="user-drop-down-menu-button"
-                (click)="signOut()"
-              >
-                <div class="row">
-                  <div class="col-11 px-0" style="width: fit-content">
-                    Sign out
-                  </div>
-                  <div class="col-1" style="width: fit-content">
-                    <fa-icon [icon]="faSignOut"></fa-icon>
-                  </div>
-                </div>
-              </button>
+<div class="min-vh-100 side-nav-bar d-flex justify-content-center" *ngIf="user">
+  <div class="col">
+    <div class="row">
+      <div id="nav-bar-header-text">Hi, Kieran</div>
+    </div>
+
+    <div class="row" id="nav-bar-item-button">
+      <div class="mb-2">
+        <button
+          class="btn"
+          [ngClass]="
+            getRoute().includes('expenses')
+              ? 'nav-link-selected'
+              : 'nav-link-unselected'
+          "
+          (click)="navigate('/expenses')"
+        >
+          <div class="row">
+            <div class="col-5" id="nav-bar-item-icon-div" align="center">
+              <fa-icon
+                id="nav-bar-item-icon"
+                [icon]="faGrid"
+                size="2x"
+              ></fa-icon>
+            </div>
+            <div class="col-7" id="nav-bar-item-text">
+              <span>Dashboard</span>
             </div>
           </div>
-        </li>
-      </ul>
+        </button>
+      </div>
     </div>
-  </nav>
+    <div class="row" id="nav-bar-item-button">
+      <div class="mb-2">
+        <button
+          class="btn"
+          [ngClass]="
+            getRoute().includes('home')
+              ? 'nav-link-selected'
+              : 'nav-link-unselected'
+          "
+          (click)="navigate('/home')"
+        >
+          <div class="row">
+            <div class="col-5" id="nav-bar-item-icon-div" align="center">
+              <fa-icon
+                id="nav-bar-item-icon"
+                [icon]="faChart"
+                size="2x"
+              ></fa-icon>
+            </div>
+            <div class="col-7" id="nav-bar-item-text">
+              <span>Stocks</span>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="row" id="nav-bar-sign-out-button-div">
+      <div class="mb-2">
+        <button
+          class="btn btn-secondary btn-lg rounded-pill"
+          style="width: 100%"
+          id="nav-bar-sign-out-button"
+          (click)="signOut()"
+        >
+          Sign Out <fa-icon [icon]="faSignOut" class="ps-2"> </fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -2,14 +2,17 @@ import { createReducer, on } from '@ngrx/store';
 import {
   addNewCategory,
   addNewCategorySuccess,
-  addNewTransaction,
-  addNewTransactionSuccess,
+  createUpdateTransaction,
+  createUpdateTransactionSuccess,
+  resetUpdateState,
+  addModalAction,
 } from '../actions/updates.action';
 import { UpdateState } from '../states/update.state';
 
 export const initialUpdates: UpdateState = {
   categoryUpdate: null,
   transactionCreateUpdate: null,
+  modalAction: null,
 };
 
 export const updatesReducer = createReducer(
@@ -20,6 +23,7 @@ export const updatesReducer = createReducer(
       categoryUpdate: {
         newCategory: action.category,
         isUpdated: false,
+        action: 'new',
       },
     };
   }),
@@ -29,25 +33,41 @@ export const updatesReducer = createReducer(
       categoryUpdate: {
         newCategory: null,
         isUpdated: action.isUpdated,
+        action: null,
       },
     };
   }),
-  on(addNewTransaction, (state, action) => {
+  on(createUpdateTransaction, (state, action) => {
     return {
       ...state,
       transactionCreateUpdate: {
-        newTransaction: action.updates,
-        isUpdate: false,
+        transaction: action.updates,
+        isUpdated: false,
+        action: 'new',
       },
     };
   }),
-  on(addNewTransactionSuccess, (state, action) => {
+  on(createUpdateTransactionSuccess, (state, action) => {
     return {
       ...state,
       transactionCreateUpdate: {
-        newTransaction: null,
-        isUpdate: action.isUpdated,
+        transaction: null,
+        isUpdated: action.isUpdated,
+        action: null,
       },
+    };
+  }),
+  on(addModalAction, (state, action) => {
+    return {
+      ...state,
+      modalAction: action.action,
+    };
+  }),
+  on(resetUpdateState, (_, __) => {
+    return {
+      categoryUpdate: null,
+      transactionCreateUpdate: null,
+      modalAction: null,
     };
   })
 );

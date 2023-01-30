@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { loadMovingAverage } from '../data-state/actions/transactions.action';
 import { TransactionState } from '../data-state/states/transactions.state';
@@ -11,39 +13,10 @@ import { TransactionState } from '../data-state/states/transactions.state';
 })
 export class ExpensesSideBarComponent implements OnInit {
   /**
-   * Whether or not to show the date selection.
-   * @type {boolean}
-   */
-  @Input()
-  public showDateSelection: boolean = true;
-
-  /**
-   * Label for the checkbox
-   * @type {string}
-   */
-  @Input()
-  public checkBoxLabel: string;
-
-  /**
-   * Reset button text.
-   * @type {string}
-   */
-  @Input()
-  public resetText = 'Reset Graph';
-
-  /**
-   * Event emmiter for dropdown menu.
-   * @type {EventEmitter<string>}
+   * Event emit for chart period choice.
    */
   @Output()
-  public dropDownValue = new EventEmitter<string>();
-
-  /**
-   * Event for reset button.
-   * @type  {EventEmitter<string>}
-   */
-  @Output()
-  resetButton = new EventEmitter();
+  public chartPeriod = new EventEmitter<string>();
 
   /**
    * Event for toggling moving average.
@@ -51,6 +24,24 @@ export class ExpensesSideBarComponent implements OnInit {
    */
   @Output()
   toggleMovingAverage = new EventEmitter<boolean>();
+
+  /**
+   * Plus icon
+   * @type {IconDefinition}
+   */
+  public faPlus = faPlus;
+
+  /**
+   * Chart Period Choices
+   * @type {string[]}
+   */
+  public periodChoices = ['Default', '1m', '6m', '1y'];
+
+  /**
+   * Period choice
+   * @type {string}
+   */
+  public chartPeriodChoice = 'Default';
 
   /**
    * Flag to keep track of the toggle value.
@@ -63,23 +54,12 @@ export class ExpensesSideBarComponent implements OnInit {
    * @type {string}
    */
   public toggleLabel = 'Display moving average';
+
   /**
    * Date labels
    * @type {string[]}
    */
   public dateLabels: ['Start Date', 'End Date'];
-
-  /**
-   * Drop down values
-   * @type {string[]}
-   */
-  public dropDownValues = ['Daily', 'Monthly'];
-
-  /**
-   * Initial drop down value
-   * @type {string}
-   */
-  public initialDropDownValue = 'Daily';
 
   /**
    * Moving Average toggled
@@ -105,27 +85,14 @@ export class ExpensesSideBarComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  resetButtonClick(event: Event): void {
-    this.resetButton.emit(event);
-    this.initialDropDownValue = 'Daily';
-    this.showMovingAverage = true;
-    this.movingAverageToggled = false;
-  }
-
-  dropDownValueChange(value: string): void {
-    this.initialDropDownValue = value;
-    this.dropDownValue.emit(value);
-    this.showMovingAverage = value === 'Daily' ? true : false;
-  }
-
-  movingAverageButtonClick(): void {
-    this.movingAverageToggled = !this.movingAverageToggled;
-    if (this.movingAverageToggled) {
-      this.loadMovingAverageData();
-    } else {
-      this.toggleMovingAverage.emit(false);
-    }
-  }
+  // movingAverageButtonClick(): void {
+  //   this.movingAverageToggled = !this.movingAverageToggled;
+  //   if (this.movingAverageToggled) {
+  //     this.loadMovingAverageData();
+  //   } else {
+  //     this.toggleMovingAverage.emit(false);
+  //   }
+  // }
 
   onWindowSizeChange(): void {
     const newWindow = this.formGroup.controls['movingAverageWindow'].value;
@@ -133,6 +100,11 @@ export class ExpensesSideBarComponent implements OnInit {
       this.toggleMovingAverage.emit(false);
       this.loadMovingAverageData(newWindow.toString());
     }
+  }
+
+  onChangePeriodChoice(period: string) {
+    this.chartPeriodChoice = period;
+    this.chartPeriod.emit(period);
   }
 
   private loadMovingAverageData(window: string = '2'): void {

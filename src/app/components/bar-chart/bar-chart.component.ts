@@ -24,11 +24,11 @@ export class BarChartComponent implements OnInit {
   @Input()
   public customToolTipTemplate: TemplateRef<any>;
 
-  view: any = [1050, 350];
+  view: any = [1150, 350];
   showXAxis = true;
   showYAxis = true;
   gradient = false;
-  showLegend = true;
+  showLegend = false;
   legendPosition: any = 'below';
   legendTitle = '';
   showXAxisLabel = true;
