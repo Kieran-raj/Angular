@@ -1,53 +1,22 @@
-<div class="row">
-  <div class="col">
-    <app-dropdown-menu
-      [toolTipTitle]="'Select Granularity'"
-      [dropDownValues]="dropDownValues"
-      [dropDownValue]="initialDropDownValue"
-      (newDropDownValue)="dropDownValueChange($event)"
-    >
-    </app-dropdown-menu>
+<div class="row mb-2" id="period-nav-buttons">
+  <div *ngFor="let choice of periodChoices" class="col-auto">
+    <div class="row">
+      <button
+        type="button"
+        class="btn side-bar-button shadow-none"
+        id="side-bar-default-button"
+        (click)="onChangePeriodChoice(choice)"
+      >
+        {{ choice }}
+      </button>
+    </div>
+    <div
+      class="row"
+      id="toggle-indicator"
+      *ngIf="chartPeriodChoice === choice"
+    ></div>
   </div>
-
-  <div class="col" *ngIf="false">
-    <app-date-filter [labelName]="'Start Date'"></app-date-filter>
-    <app-date-filter [labelName]="'End Date'"></app-date-filter>
-  </div>
-  <div class="col" *ngIf="showMovingAverage">
-    <button
-      type="button"
-      data-toggle="tooltip"
-      data-placement="top"
-      title="Toggle Moving Average"
-      class="btn btn-secondary shadow-none"
-      [ngClass]="
-        movingAverageToggled ? 'toggledMovingAverage' : 'unToggledMovingAverage'
-      "
-      aria-pressed="false"
-      (click)="movingAverageButtonClick()"
-    >
-      Moving Average
-    </button>
-  </div>
-  <div *ngIf="movingAverageToggled" class="col windowSizeInput mt-2">
-    <form class="form-floating" [formGroup]="formGroup">
-      <input
-        class="form-control shadow-none"
-        id="floatingInputValue"
-        type="text"
-        formControlName="movingAverageWindow"
-        value="2"
-        (ngModelChange)="onWindowSizeChange()"
-      />
-      <label for="floatingInputValue">Window Size (Days)</label>
-    </form>
-  </div>
-  <div class="col">
-    <button
-      class="btn btn-secondary resetButton shadow-none"
-      (click)="resetButtonClick($event)"
-    >
-      {{ resetText }}
-    </button>
+  <div class="col-auto">
+    <div class="mt-2" style="font-size: small; opacity: 0.4">Av.</div>
   </div>
 </div>

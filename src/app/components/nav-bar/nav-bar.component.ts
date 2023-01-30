@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  faArrowTrendUp,
+  faChartLine,
+  faChartSimple,
   faGear,
+  faGrip,
   faHome,
   faSignOut,
   faUser,
@@ -55,6 +59,18 @@ export class NavBarComponent implements OnInit, OnDestroy {
    * @type {IconDefinition}
    */
   faHome = faHome;
+
+  /**
+   * Dashboard grid icon
+   * @type {IconDefinition}
+   */
+  faGrid = faGrip;
+
+  /**
+   * Stocks icon
+   * @type {IconDefinition}
+   */
+  faChart = faArrowTrendUp;
 
   /**
    * Auth Token
@@ -112,5 +128,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   public navigate(path: string) {
     this.router.navigate([path]);
+  }
+
+  public getRoute(): string {
+    return this.router.url;
   }
 }

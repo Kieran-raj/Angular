@@ -1,70 +1,122 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
-<div class="px-2 col" style="height: 100%">
-  <div class="card mt-2 mx-0 row" id="chart-columm">
-    <div class="card-header">
-      <h2 class="mb-0">Expenses Summary</h2>
-    </div>
-    <div class="container-fluid cardBody">
-      <div class="row pt-2">
-        <div class="col-auto pr-0">
-          <div class="row" id="chart-buttons">
-            <div class="col-9 pl-0" id="chart-side-bar" align="center">
-              <app-expenses-side-bar
-                class="pl-0"
-                id="expenses-side-bar"
-                [showDateSelection]="showDateSelection"
-                (resetButton)="resetGraph()"
-                (toggleMovingAverage)="toggleMovingAverage($event)"
-                (dropDownValue)="dropDownChange($event)"
-              ></app-expenses-side-bar>
-            </div>
-            <div class="col-3" id="chart-new-buttons">
-              <div class="row">
-                <div class="col">
-                  <button
-                    class="btn btn-secondary crudButton shadow-none"
-                    (click)="setModalAction('newCategory')"
-                  >
-                    New Category
-                  </button>
+<div class="px-2 col-12" style="height: 100%">
+  <div class="row">
+    <div class="col-7">
+      <div class="card mt-2 mx-0 row" id="chart-columm">
+        <div class="card-header border-0">Transaction overview</div>
+        <div class="container-fluid card-body cardBody shadow">
+          <div class="row pt-2">
+            <div class="col-12 pr-0">
+              <div class="row" id="chart-buttons">
+                <div class="col-10 pl-0" id="chart-side-bar" align="center">
+                  <app-expenses-side-bar
+                    class="pl-0"
+                    id="expenses-side-bar"
+                    (resetButton)="resetGraph()"
+                    (toggleMovingAverage)="toggleMovingAverage($event)"
+                    (chartPeriod)="chartPeriodChange($event)"
+                  ></app-expenses-side-bar>
                 </div>
-                <div class="col">
-                  <button
-                    class="btn btn-secondary crudButton shadow-none"
-                    (click)="setModalAction('newTransaction')"
-                  >
-                    New Transaction
-                  </button>
+                <div class="col-2 text-end" id="extra-button-col">
+                  <div ngbDropdown>
+                    <button
+                      type="button"
+                      class="btn shadow-none"
+                      id="chart-nav-new-dropdown-button"
+                      ngbDropdownToggle
+                    >
+                      <fa-icon [icon]="faPlus" size="lg"></fa-icon>
+                    </button>
+                    <div ngbDropdownMenu id="chart-nav-new-dropdown-menu">
+                      <h5 class="dropdown-header" id="drop-down-chart-header">
+                        Chart Options
+                      </h5>
+                      <button
+                        class="btn shadow-none"
+                        id="chart-nav-new-dropdown-item"
+                        ngbDropdownItem
+                      >
+                        Moving Average
+                      </button>
+                      <button
+                        class="btn shadow-none"
+                        id="chart-nav-new-dropdown-item"
+                        ngbDropdownItem
+                      >
+                        Reset Graph
+                      </button>
+                      <div class="dropdown-divider"></div>
+                      <h5 class="dropdown-header" id="drop-down-chart-header">
+                        Add Data
+                      </h5>
+                      <button
+                        class="btn shadow-none"
+                        id="chart-nav-new-dropdown-item"
+                        ngbDropdownItem
+                        (click)="setModalAction('newCategory')"
+                      >
+                        New Category
+                      </button>
+                      <button
+                        class="btn shadow-none"
+                        id="chart-nav-new-dropdown-item"
+                        ngbDropdownItem
+                        (click)="setModalAction('newTransaction')"
+                      >
+                        New Transaction
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <app-line-chart
+                *ngIf="chartMode === 'Default'"
+                [sourceData]="lineData"
+                [xAxisTicks]="xAxisTicks"
+                [activeEntries]="activeEntries"
+                [isLoading]="isLineDataLoading"
+                [customToolTipTemplate]="lineChartToolTipRef"
+                [customSeriesTooltipTemplate]="lineChartSeriesToolTipRef"
+              >
+              </app-line-chart>
+
+              <app-bar-chart
+                *ngIf="chartMode === '1m'"
+                [sourceData]="barData"
+                [customToolTipTemplate]="barChartToolTipRef"
+              ></app-bar-chart>
+              <app-bar-chart
+                *ngIf="chartMode === '6m'"
+                [sourceData]="[]"
+                [customToolTipTemplate]="barChartToolTipRef"
+              ></app-bar-chart>
+              <app-bar-chart
+                *ngIf="chartMode === '1y'"
+                [sourceData]="[]"
+                [customToolTipTemplate]="barChartToolTipRef"
+              ></app-bar-chart>
             </div>
           </div>
-          <app-line-chart
-            *ngIf="chartMode === 'Daily'"
-            [sourceData]="lineData"
-            [xAxisTicks]="xAxisTicks"
-            [activeEntries]="activeEntries"
-            [isLoading]="isLineDataLoading"
-            [customToolTipTemplate]="lineChartToolTipRef"
-            [customSeriesTooltipTemplate]="lineChartSeriesToolTipRef"
-          >
-          </app-line-chart>
-          <app-bar-chart
-            *ngIf="chartMode === 'Monthly'"
-            [sourceData]="barData"
-            [customToolTipTemplate]="barChartToolTipRef"
-          ></app-bar-chart>
-        </div>
-
-        <div class="col" id="pie-chart" align="center">
-          <app-pie-chart [sourceData]="pieData"></app-pie-chart>
         </div>
       </div>
+      <div class="grid row">
+        <app-expenses-grid class="px-2"></app-expenses-grid>
+      </div>
     </div>
-  </div>
-
-  <div class="grid">
-    <app-expenses-grid class="px-2 my-0 py-0"></app-expenses-grid>
+    <div class="col-5">
+      <div class="card mt-2 mx-0 row" id="chart-columm">
+        <div class="card-header border-0">Breakdown</div>
+        <div class="container-fluid card-body cardBody shadow">
+          <div class="col-4" id="pie-chart" align="center">
+            <app-pie-chart [sourceData]="pieData"></app-pie-chart>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-2 mx-0 row" id="chart-columm">
+        <div class="card-header border-0">Recent expenses</div>
+        <div class="container-fluid card-body cardBody shadow"></div>
+      </div>
+    </div>
   </div>
 </div>
 

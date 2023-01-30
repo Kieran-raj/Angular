@@ -26,6 +26,6 @@ export const chartSettings = {
     yAxis: true,
     legendPosition: 'below',
     legendTitle: '',
-    legend: true,
+    legend: false,
   },
 };

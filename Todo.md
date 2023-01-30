@@ -41,17 +41,18 @@
 26. Improve validation for modal forms
 27. ~~Make category choice a drop down~~ &#x2611;
 28. Either need a generic ok call back, or have it so then transactions and category updates are the same object essentially
-29. Change the type of pie chart shown
+29. ~~Change the type of pie chart shown~~ &#x2611;
 30. Make application response for ipad screen
 31. Have separate modal for category creation. But have the same modal for create, update and delete
-32. Make the graph responsive
-33. Put charts in their own card
-34. Maybe place buttons elsewhere
+32. ~~Make the graph responsive~~ &#x2611;
+33. ~~Put charts in their own card~~ &#x2611;
+34. ~~Maybe place buttons elsewhere~~ &#x2611;
 35. ~~Clear state when modal closes~~ &#x2611;
 36. On successfully adding transaction, then send the action to update the grid
 37. Handle login failure and general error handling
-38. change buttons to icons and have at the top of the grid (eg 1d, 1m, 3m, 6m, 1y etc)
+38. ~~change buttons to icons and have at the top of the grid (eg 1d, 1m, 3m, 6m, 1y etc)~~ &#x2611;
 39. Make sure transaction and expense are used in the right context
+40. Editing a transaction needs some work
 
 ---
 
@@ -70,9 +71,9 @@
 ### Business Logic
 
 1. ~~Allow the ability to create new categories~~ &#x2611; (~~Python~~ &#x2611; ; .NET)
-2. Allow for updating a record
+2. ~~Allow for updating a record~~ &#x2611;
 3. ~~Allow for the creation of new records (should update grid and charts)~~ &#x2611;
-4. All for the deletion of records (should update grid and charts)
+4. ~~All for the deletion of records (should update grid and charts)~~ &#x2611;
 5. Allow the creation of new users
 
 ---

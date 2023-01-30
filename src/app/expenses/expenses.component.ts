@@ -31,7 +31,12 @@ import { ChartHelper } from '../shared/helper-functions/chart-functions';
 import { CategoricalAmounts } from '../shared/models/categorical-amounts';
 import { PieData } from '../shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowsRotate,
+  faChartLine,
+  faPlus,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 import { DailyAmount } from '../shared/models/daily-expense';
@@ -66,24 +71,21 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Icons
    */
   public faXmark: IconDefinition = faXmark;
+  public faPlus: IconDefinition = faPlus;
+  public faArrows: IconDefinition = faArrowsRotate;
+  public faChartLine: IconDefinition = faChartLine;
 
   /**
    * What is the chosen granularity for the chart.
    * @type {string}
    */
-  public chartMode = 'Daily';
+  public chartMode = 'Default';
 
   /**
-   * Current drop down value.
+   * Current chart period.
    * @type {BehaviorSubject<string>}
    */
-  public dropDownCurrentValue = new BehaviorSubject(this.chartMode);
-
-  /**
-   * Whether to show date selection.
-   * @type {boolean}
-   */
-  public showDateSelection = true;
+  public currentChartPeriod = new BehaviorSubject(this.chartMode);
 
   /**
    * Daily amounts.
@@ -246,13 +248,13 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     // });
   }
 
-  dropDownChange(value: string): void {
-    this.dropDownCurrentValue.next(value);
+  chartPeriodChange(value: string): void {
+    this.currentChartPeriod.next(value);
   }
 
   ngAfterViewInit() {
     this.subscriptions.push(
-      this.dropDownCurrentValue.subscribe((newValue) => {
+      this.currentChartPeriod.subscribe((newValue) => {
         if (this.chartMode !== newValue) {
           this.changeChart(newValue);
         }
@@ -306,7 +308,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   resetGraph() {
-    this.dropDownCurrentValue.next('Daily');
+    this.currentChartPeriod.next('Default');
     this.reloadGraphData();
   }
 
@@ -329,7 +331,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   private changeChart(value: string): void {
-    if (value === 'Monthly') {
+    if (value === '1m') {
       this.subscriptions.push(
         this.monthlyAmounts$.subscribe(
           (results: MonthlyExpense[] | undefined | null) => {
