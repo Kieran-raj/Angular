@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, filter, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { BarData } from '../shared/models/bar-data';
 import { LineData } from '../shared/models/line-data';
@@ -57,15 +57,15 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   /**
    * Graph Properties
    */
-  public pageTitle: string = 'Expenses';
+  public pageTitle = 'Expenses';
   public allData: LineData[];
   public lineData: LineData[];
   public pieData: PieData[];
   public movingAverageData: any = [];
   public barData: BarData[] = [];
-  public years: number[] = [];
+  public years = [2021, 2022, 2023];
   public xAxisTicks: string[] = [];
-  public isLineDataLoading: boolean = true;
+  public isLineDataLoading = true;
 
   /**
    * Icons
@@ -91,12 +91,14 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Daily amounts.
    * @type {Observable<DailyExpense[] | undefined>}
    */
-  public dailyAmounts$: Observable<DailyAmount[] | undefined | null>;
+  public dailyAmounts$ = this.transactionStore.select(selectDailyTransactions);
   /**
    * Monthly amounts.
    * @type {Observable<MonthlyTransaction[] | undefined>}
    */
-  public monthlyAmounts$: Observable<MonthlyExpense[] | undefined | null>;
+  public monthlyAmounts$ = this.transactionStore.select(
+    selectMonthlyTransactions
+  );
 
   /**
    * Moving average amounts.
@@ -110,9 +112,9 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Categorical amounts.
    * @type {Observable<CategoricalAmounts[] | undefined | null>}
    */
-  public categoricalAmounts$: Observable<
-    CategoricalAmounts[] | undefined | null
-  >;
+  public categoricalAmounts$ = this.transactionStore.select(
+    selectCategoricalAmounts
+  );
 
   /**
    * Active (selected) expense.
@@ -186,66 +188,58 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     this.transactionStore.dispatch(loadAllExpenses());
 
     this.transactionStore.dispatch(loadCategoricalAmounts());
-
-    this.dailyAmounts$ = this.transactionStore.select(selectDailyTransactions);
   }
 
   ngOnInit(): void {
-    this.monthlyAmounts$ = this.transactionStore.select(
-      selectMonthlyTransactions
-    );
-    this.categoricalAmounts$ = this.transactionStore.select(
-      selectCategoricalAmounts
-    );
-
-    this.categoricalAmounts$.subscribe((data) => {
-      let formatedPieData: any[] = [];
-      data?.forEach((category) => {
-        formatedPieData.push({
-          name:
-            category.category[0].toUpperCase() +
-            category.category.substring(1).toLowerCase(),
-          value: category.amount,
-          pctOfTotal: category.percentage,
+    this.subscriptions.push(
+      this.categoricalAmounts$.subscribe((data) => {
+        let formatedPieData: any[] = [];
+        data?.forEach((category) => {
+          formatedPieData.push({
+            name:
+              category.category[0].toUpperCase() +
+              category.category.substring(1).toLowerCase(),
+            value: category.amount,
+            pctOfTotal: category.percentage,
+          });
         });
-      });
-      this.pieData = formatedPieData;
-    });
+        this.pieData = formatedPieData;
+      })
+    );
 
-    this.dailyAmounts$.subscribe(
-      (results: DailyAmount[] | undefined | null) => {
-        const mappedDailyAmountsToNgxCharts = results?.map(
-          (dailyAmount: DailyAmount) => {
-            return {
-              value: dailyAmount.amount,
-              name: dailyAmount.date.split('T')[0],
-            };
+    this.subscriptions.push(
+      this.dailyAmounts$.subscribe(
+        (results: DailyAmount[] | undefined | null) => {
+          const mappedDailyAmountsToNgxCharts = results?.map(
+            (dailyAmount: DailyAmount) => {
+              return {
+                value: dailyAmount.amount,
+                name: dailyAmount.date.split('T')[0],
+              };
+            }
+          );
+
+          this.lineData = [
+            {
+              name: 'Transactions',
+              series: mappedDailyAmountsToNgxCharts,
+            },
+          ];
+
+          if (mappedDailyAmountsToNgxCharts) {
+            this.isLineDataLoading =
+              mappedDailyAmountsToNgxCharts.length > 0 ? false : true;
           }
-        );
 
-        this.lineData = [
-          {
-            name: 'Transactions',
-            series: mappedDailyAmountsToNgxCharts,
-          },
-        ];
-
-        if (mappedDailyAmountsToNgxCharts) {
-          this.isLineDataLoading =
-            mappedDailyAmountsToNgxCharts.length > 0 ? false : true;
+          this.xAxisTicks = this.chartHelper.generateLineXTicks(
+            12,
+            mappedDailyAmountsToNgxCharts
+          );
         }
-
-        this.xAxisTicks = this.chartHelper.generateLineXTicks(
-          5,
-          mappedDailyAmountsToNgxCharts
-        );
-      }
+      )
     );
 
     this.years = [2021, 2022, 2023];
-    // this.transactionService.getYears().subscribe((results) => {
-    //   this.years = results.data.years.sort();
-    // });
   }
 
   chartPeriodChange(value: string): void {
@@ -286,25 +280,26 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       })
     );
 
-    this.movingAverageAmounts$.subscribe(
-      (results: MovingAverageAmounts[] | undefined | null) => {
-        const mappedMovingAverageAmounts = results?.map(
-          (movingAverage: MovingAverageAmounts) => {
-            return {
-              value: movingAverage.Amount,
-              name: movingAverage.Date.split('T')[0],
-            };
-          }
-        );
+    // TODO: Dont know if this will be done!! keeping just incase.
+    // this.movingAverageAmounts$.subscribe(
+    //   (results: MovingAverageAmounts[] | undefined | null) => {
+    //     const mappedMovingAverageAmounts = results?.map(
+    //       (movingAverage: MovingAverageAmounts) => {
+    //         return {
+    //           value: movingAverage.Amount,
+    //           name: movingAverage.Date.split('T')[0],
+    //         };
+    //       }
+    //     );
 
-        this.lineData.push({
-          name: 'MovingAverage',
-          series: mappedMovingAverageAmounts,
-        });
+    //     this.lineData.push({
+    //       name: 'MovingAverage',
+    //       series: mappedMovingAverageAmounts,
+    //     });
 
-        this.lineData = [...this.lineData];
-      }
-    );
+    //     this.lineData = [...this.lineData];
+    //   }
+    // );
   }
 
   resetGraph() {

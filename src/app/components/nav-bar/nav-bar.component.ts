@@ -5,6 +5,7 @@ import {
   faChartLine,
   faChartSimple,
   faGear,
+  faGears,
   faGrip,
   faHome,
   faSignOut,
@@ -71,6 +72,12 @@ export class NavBarComponent implements OnInit, OnDestroy {
    * @type {IconDefinition}
    */
   faChart = faArrowTrendUp;
+
+  /**
+   * Settings icon
+   * @type {IconDefinition}
+   */
+  faGear = faGear;
 
   /**
    * Auth Token
