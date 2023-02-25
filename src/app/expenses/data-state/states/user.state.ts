@@ -16,4 +16,12 @@ export interface UserState {
    * Is logging in.
    */
   isLoggingIn: boolean | null;
+
+  /**
+   * Error.
+   */
+  error: {
+    message: string | null;
+    statusCode: number | null;
+  } | null;
 }

@@ -14,6 +14,13 @@ export const userLoginSuccess = createAction(
   props<{ authToken: AuthToken }>()
 );
 
+export const userLoginFailure = createAction(
+  `${userPrefix} Log in failure`,
+  props<{ message: string; statusCode: number }>()
+);
+
+export const resetError = createAction(`${userPrefix} Reset error`);
+
 export const setUserInfo = createAction(
   `${userPrefix} Set User Info`,
   props<{ user: User }>()

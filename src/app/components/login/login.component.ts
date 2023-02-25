@@ -3,7 +3,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { userLogin } from 'src/app/expenses/data-state/actions/user.action';
+import {
+  resetError,
+  userLogin,
+} from 'src/app/expenses/data-state/actions/user.action';
+import { selectUserError } from 'src/app/expenses/data-state/selectors/user.selectors';
 import { UserState } from 'src/app/expenses/data-state/states/user.state';
 
 @Component({
@@ -45,6 +49,11 @@ export class LoginComponent implements OnInit {
   });
 
   /**
+   * Error
+   */
+  public error$ = this.userStore.select(selectUserError);
+
+  /**
    * Subscriptions
    * @type {Subscription[]}
    */
@@ -75,6 +84,10 @@ export class LoginComponent implements OnInit {
       userLogin({ email: email, password: password, isloggingIn: true })
     );
     this.clearForm();
+  }
+
+  public closeError() {
+    this.userStore.dispatch(resetError());
   }
 
   private clearForm(): void {
