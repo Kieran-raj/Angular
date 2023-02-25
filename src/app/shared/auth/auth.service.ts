@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import jwtDecode from 'jwt-decode';
 import { BehaviorSubject, first, Observable, Subscription, take } from 'rxjs';
-import { selectUserToken } from 'src/app/expenses/data-state/selectors/user.selector';
+import { selectUserToken } from 'src/app/expenses/data-state/selectors/user.selectors';
 import { UserState } from 'src/app/expenses/data-state/states/user.state';
 import { AuthToken } from '../models/auth-models/auth-token';
 

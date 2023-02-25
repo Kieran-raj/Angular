@@ -5,6 +5,21 @@
       <div>Please enter your email and password</div>
     </div>
     <div class="card-body">
+      <div *ngIf="error$ | async; let error">
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          {{ error?.message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            (click)="closeError()"
+          ></button>
+        </div>
+      </div>
+
       <form [formGroup]="formGroup">
         <div class="input-group mb-2">
           <div class="input-group-prepend">

@@ -1,10 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import {
   userLogin,
   userLoginSuccess,
   setUserInfo,
   userLogOut,
+  userLoginFailure,
+  resetError,
 } from '../actions/user.action';
 import { UserState } from '../states/user.state';
 
@@ -12,6 +13,7 @@ export const initialUser: UserState = {
   userToken: null,
   userInfo: null,
   isLoggingIn: null,
+  error: null,
 };
 
 export const userReducer = createReducer(
@@ -27,6 +29,24 @@ export const userReducer = createReducer(
       ...state,
       userToken: action.authToken,
       isLoggingIn: false,
+    };
+  }),
+  on(userLoginFailure, (state, action) => {
+    return {
+      ...state,
+      userInfo: null,
+      userToken: null,
+      isLoggingIn: false,
+      error: {
+        message: action.message,
+        statusCode: action.statusCode,
+      },
+    };
+  }),
+  on(resetError, (state, action) => {
+    return {
+      ...state,
+      error: null,
     };
   }),
   on(setUserInfo, (state, action) => {

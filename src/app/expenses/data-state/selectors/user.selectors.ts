@@ -20,3 +20,8 @@ export const selectIsLoggingIn = createSelector(
   selectUserState,
   (state: UserState) => state.isLoggingIn
 );
+
+export const selectUserError = createSelector(
+  selectUserState,
+  (state: UserState) => state.error
+);

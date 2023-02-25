@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectIsLoggingIn } from '../expenses/data-state/selectors/user.selector';
+import { selectIsLoggingIn } from '../expenses/data-state/selectors/user.selectors';
 import { UserState } from '../expenses/data-state/states/user.state';
 import { AuthService } from '../shared/auth/auth.service';
 

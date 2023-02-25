@@ -26,7 +26,7 @@ import {
   selectCategories,
   selectChosenExpense,
 } from '../data-state/selectors/transactions.selectors';
-import { selectUserInfo } from '../data-state/selectors/user.selector';
+import { selectUserInfo } from '../data-state/selectors/user.selectors';
 import { TransactionState } from '../data-state/states/transactions.state';
 import { UpdateState } from '../data-state/states/update.state';
 import { UserState } from '../data-state/states/user.state';
