@@ -1,18 +1,5 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <div class="container">
-  <div class="row h-100" *ngIf="isLoggedIn$ | async">
-    <div class="col-sm-4 my-auto text-center">
-      <button class="btn btn-secondary btn-lg mb-5"><a>About me</a></button>
-    </div>
-    <div class="col-sm-4 my-auto text-center">
-      <button class="btn btn-secondary btn-lg mb-5">
-        <a [routerLink]="['/expenses']">Expenses</a>
-      </button>
-    </div>
-    <div class="col-sm-4 my-auto text-center">
-      <button class="btn btn-secondary btn-lg mb-5"><a>Stocks</a></button>
-    </div>
-  </div>
   <div
     *ngIf="!(isLoggedIn$ | async) && !(isLoggingIn$ | async)"
     class="text-center"

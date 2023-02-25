@@ -84,6 +84,11 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
   margin: 0rem;
 }
 
+/* Font awesome icon style overrides*/
+.fa-grip {
+  vertical-align: middle;
+}
+
 /*Media Queries*/
 @media screen and (max-width: 1200px) {
   body {

@@ -35,6 +35,7 @@
                         class="btn shadow-none"
                         id="chart-nav-new-dropdown-item"
                         ngbDropdownItem
+                        [disabled]="true"
                       >
                         Moving Average
                       </button>
@@ -42,6 +43,7 @@
                         class="btn shadow-none"
                         id="chart-nav-new-dropdown-item"
                         ngbDropdownItem
+                        (click)="resetGraph()"
                       >
                         Reset Graph
                       </button>
@@ -70,7 +72,7 @@
                 </div>
               </div>
               <app-line-chart
-                *ngIf="chartMode === 'Default'"
+                *ngIf="chartMode === 'Default' && lineData"
                 [sourceData]="lineData"
                 [xAxisTicks]="xAxisTicks"
                 [activeEntries]="activeEntries"
@@ -113,7 +115,7 @@
         </div>
       </div>
       <div class="card mt-2 mx-0 row" id="chart-columm">
-        <div class="card-header border-0">Recent expenses</div>
+        <div class="card-header border-0">In vs Out</div>
         <div class="container-fluid card-body cardBody shadow"></div>
       </div>
     </div>

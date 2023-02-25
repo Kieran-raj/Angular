@@ -53,6 +53,7 @@
 38. ~~change buttons to icons and have at the top of the grid (eg 1d, 1m, 3m, 6m, 1y etc)~~ &#x2611;
 39. Make sure transaction and expense are used in the right context
 40. Editing a transaction needs some work
+41. ~~Handle errors when navigating from stocks to dashboard~~ &#x2611;
 
 ---
 
@@ -65,6 +66,8 @@
 5. Question dependencies
 6. ~~Refactor bar chart tooltip (custom component)~~&#x2611;
 7. ~~**Point to C# API**~~&#x2611;
+8. Nav bar using config to determine nav bar config
+9. Clean up styling in nav bar
 
 ---
 
@@ -75,6 +78,8 @@
 3. ~~Allow for the creation of new records (should update grid and charts)~~ &#x2611;
 4. ~~All for the deletion of records (should update grid and charts)~~ &#x2611;
 5. Allow the creation of new users
+6. Allow the users to edit any monthly subscriptions that they want
+7. Make all graphs line graphs, with different ticks for monthly values
 
 ---
 
