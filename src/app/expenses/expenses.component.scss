@@ -22,6 +22,7 @@
   padding-left: 0.3rem;
   padding-right: 0.3rem;
   padding-top: 0.5rem;
+  padding-bottom: 16rem;
 }
 
 #pie-chart-body {
@@ -33,7 +34,7 @@
 }
 
 #chart-nav-new-dropdown-menu {
-  transform: translate(0em, 2em) !important;
+  transform: translate(-1em, 2em) !important;
 }
 
 #chart-nav-new-dropdown-item:hover {
@@ -44,4 +45,8 @@
 #drop-down-chart-header {
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+#dashboard-panels {
+  height: 100%;
 }

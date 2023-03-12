@@ -1,4 +1,4 @@
-import { LineDataSeries } from './line-data-series';
+import { DataSeries } from './line-data-series';
 
 export interface LineData {
   /**
@@ -9,5 +9,5 @@ export interface LineData {
   /**
    * Series data
    */
-  series?: LineDataSeries[];
+  series?: DataSeries[];
 }

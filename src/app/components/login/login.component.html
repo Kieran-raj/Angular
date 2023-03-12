@@ -33,6 +33,7 @@
             class="form-control"
             placeholder="E-mail"
             formControlName="email"
+            (keydown.enter)="loginCallBack()"
           />
         </div>
         <div
@@ -57,6 +58,7 @@
             class="form-control"
             placeholder="Password"
             formControlName="password"
+            (keydown.enter)="loginCallBack()"
           />
         </div>
         <div id="forgot-password-text">

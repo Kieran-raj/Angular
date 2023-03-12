@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { map, mergeMap } from 'rxjs';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
+import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
 import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 import { TransactionsService } from '../../api-services/transaction.service';
 
@@ -22,8 +22,9 @@ import {
   loadMovingAverageSuccess,
   loadCategories,
   loadCategoriesSuccess,
+  loadMonthlyInsAndOuts,
+  loadMonthlyInsAndOutsSuccess,
 } from '../actions/transactions.action';
-import { UserState } from '../states/user.state';
 
 @Injectable()
 export class TransactionsEffect {
@@ -110,6 +111,21 @@ export class TransactionsEffect {
           map((categoryData: any) =>
             loadCategoriesSuccess({
               categories: categoryData,
+            })
+          )
+        )
+      )
+    )
+  );
+
+  loadMonthlyInsAndOuts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadMonthlyInsAndOuts),
+      mergeMap(() =>
+        this.transactionService.getMonthlyInOuts(1).pipe(
+          map((data: MonthlyInOut[]) =>
+            loadMonthlyInsAndOutsSuccess({
+              monthlyInsAndOuts: data,
             })
           )
         )

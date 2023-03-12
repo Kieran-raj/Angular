@@ -73,7 +73,7 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       },
       field: '',
       sortable: false,
-      maxWidth: 130,
+      maxWidth: 150,
       cellRenderer: GridActionsComponent,
     },
   ];

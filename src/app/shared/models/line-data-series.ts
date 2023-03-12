@@ -1,4 +1,4 @@
-export interface LineDataSeries {
+export interface DataSeries {
   /**
    * Date
    */

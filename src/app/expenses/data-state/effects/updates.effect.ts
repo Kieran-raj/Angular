@@ -7,6 +7,7 @@ import {
   loadAllExpenses,
   loadDailyExpenses,
   loadMonthlyExpense,
+  loadMonthlyInsAndOuts,
 } from '../actions/transactions.action';
 import {
   addNewCategory,
@@ -47,6 +48,8 @@ export class UpdatesEffect {
             this.transactionStore.dispatch(loadMonthlyExpense());
 
             this.transactionStore.dispatch(loadAllExpenses());
+
+            this.transactionStore.dispatch(loadMonthlyInsAndOuts());
 
             return createUpdateTransactionSuccess({ isUpdated: true });
           })

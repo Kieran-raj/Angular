@@ -41,6 +41,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { userReducer } from './expenses/data-state/reducers/user.reducer';
 import { UserEffect } from './expenses/data-state/effects/user.effect';
+import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow-bar-chart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +62,7 @@ import { UserEffect } from './expenses/data-state/effects/user.effect';
     ExpensesBarChartTooltipComponent,
     ExpensesCreateModalComponent,
     LoginComponent,
+    NetFlowBarChartComponent,
   ],
   imports: [
     BrowserModule,

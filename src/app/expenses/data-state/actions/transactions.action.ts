@@ -4,6 +4,7 @@ import { Category } from 'src/app/shared/models/category';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
+import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
 import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 
 const expensesPrefix = '[Expenses] - ';
@@ -33,6 +34,15 @@ export const loadMonthlyExpense = createAction(
 export const loadMonthlyExpenseSuccess = createAction(
   `${expensesPrefix} Load Monthly Expenses Success`,
   props<{ monthlyTransactions?: MonthlyExpense[] }>()
+);
+
+export const loadMonthlyInsAndOuts = createAction(
+  `${expensesPrefix} Load Monthly Ins and Outs`
+);
+
+export const loadMonthlyInsAndOutsSuccess = createAction(
+  `${expensesPrefix} Load Monthly Ins and Outs Success`,
+  props<{ monthlyInsAndOuts: MonthlyInOut[] }>()
 );
 
 export const loadCategoricalAmounts = createAction(

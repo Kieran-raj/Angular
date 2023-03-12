@@ -91,6 +91,7 @@ export class LoginComponent implements OnInit {
   }
 
   private clearForm(): void {
+    this.closeError();
     this.formGroup.reset();
   }
 
