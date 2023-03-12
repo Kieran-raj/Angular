@@ -5,7 +5,6 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { BarData } from 'src/app/shared/models/bar-data';
 
 @Component({
   selector: 'app-bar-chart',
@@ -14,28 +13,71 @@ import { BarData } from 'src/app/shared/models/bar-data';
   encapsulation: ViewEncapsulation.None,
 })
 export class BarChartComponent implements OnInit {
+  /**
+   * Source data
+   * @type {any}
+   */
   @Input()
-  sourceData: BarData[] = [];
+  public sourceData: any = [];
 
   /**
-   * Custom Tooltip template
+   * Custome tooltip template
    * @type {TemplateRef<any>}
    */
   @Input()
   public customToolTipTemplate: TemplateRef<any>;
 
+  /**
+   * Show x-axis
+   * @type {boolean}
+   */
+  @Input()
+  public showXAxis = true;
+
+  /**
+   * Show y-axis
+   * @type {boolean}
+   */
+  @Input()
+  public showYAxis = true;
+
+  /**
+   * Show x-axis label
+   * @type {boolean}
+   */
+  @Input()
+  public showXAxisLabel = true;
+
+  /**
+   * Show y-axis label
+   * @type {boolean}
+   */
+  @Input()
+  public showYAxisLabel = true;
+
+  /**
+   * Color callback funciton
+   */
+  @Input()
+  public colorsCallback: (args: any) => string;
+
+  /**
+   * Color scheme
+   * @type {string}
+   */
+  @Input()
+  public scheme = 'vivid';
+
   view: any = [1150, 350];
-  showXAxis = true;
-  showYAxis = true;
+
+  xAxisLabel = 'Year';
+
   gradient = false;
   showLegend = false;
   legendPosition: any = 'below';
   legendTitle = '';
-  showXAxisLabel = true;
-  xAxisLabel = 'Year';
-  showYAxisLabel = true;
+
   yAxisLabel = 'Amount (£)';
-  scheme = 'vivid';
 
   constructor() {}
 

@@ -1,11 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faArrowTrendUp,
-  faChartLine,
-  faChartSimple,
   faGear,
-  faGears,
   faGrip,
   faHome,
   faSignOut,

@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, filter, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { BarData } from '../shared/models/bar-data';
 import { LineData } from '../shared/models/line-data';
@@ -17,6 +17,7 @@ import {
   loadDailyExpenses,
   loadAllExpenses,
   loadMonthlyExpense,
+  loadMonthlyInsAndOuts,
 } from './data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
@@ -28,7 +29,6 @@ import {
 import { selectModalAction } from './data-state/selectors/updates.selectors';
 import { TransactionState } from './data-state/states/transactions.state';
 import { ChartHelper } from '../shared/helper-functions/chart-functions';
-import { CategoricalAmounts } from '../shared/models/categorical-amounts';
 import { PieData } from '../shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -188,6 +188,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     this.transactionStore.dispatch(loadAllExpenses());
 
     this.transactionStore.dispatch(loadCategoricalAmounts());
+
+    this.transactionStore.dispatch(loadMonthlyInsAndOuts());
   }
 
   ngOnInit(): void {

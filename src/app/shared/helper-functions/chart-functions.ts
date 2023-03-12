@@ -1,11 +1,11 @@
 import { BarData } from '../models/bar-data';
-import { LineDataSeries } from '../models/line-data-series';
+import { DataSeries } from '../models/line-data-series';
 import { MonthlyExpense } from '../models/monthly-expense';
 
 export class ChartHelper {
   constructor() {}
 
-  generateLineXTicks(interval: number, data?: LineDataSeries[]): string[] {
+  generateLineXTicks(interval: number, data?: DataSeries[]): string[] {
     let dates: string[] = [];
     if (data) {
       for (let i = 0; i < data.length; i = i + interval) {

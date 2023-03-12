@@ -1,7 +1,7 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <div class="px-2 col-12" style="height: 100%">
-  <div class="row">
-    <div class="col-7">
+  <div class="row" id="dashboard-panels">
+    <div class="col-7" style="overflow-y: hidden">
       <div class="card mt-2 mx-0 row" id="chart-columm">
         <div class="card-header border-0">Transaction overview</div>
         <div class="container-fluid card-body cardBody shadow">
@@ -102,45 +102,55 @@
         </div>
       </div>
       <div class="grid row">
-        <app-expenses-grid class="px-2"></app-expenses-grid>
+        <app-expenses-grid class="px-2 pb-3"></app-expenses-grid>
       </div>
     </div>
     <div class="col-5">
       <div class="card mt-2 mx-0 row" id="chart-columm">
         <div class="card-header border-0">Breakdown</div>
         <div class="container-fluid card-body cardBody shadow">
-          <div class="col-4" id="pie-chart" align="center">
+          <div class="col-12" id="pie-chart" align="center">
             <app-pie-chart [sourceData]="pieData"></app-pie-chart>
           </div>
         </div>
       </div>
       <div class="card mt-2 mx-0 row" id="chart-columm">
-        <div class="card-header border-0">In vs Out</div>
-        <div class="container-fluid card-body cardBody shadow"></div>
+        <div class="card-header border-0">Recent Monthly In vs Out</div>
+        <div class="container-fluid card-body cardBody shadow">
+          <div class="col-12" id="monthly-flow-chart">
+            <app-net-flow-bar-chart></app-net-flow-bar-chart>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-2 mx-0 row" id="chart-columm">
+        <div class="card-header border-0">Upcoming transactions</div>
+        <div class="container-fluid card-body cardBody shadow">
+          <div class="col-12" id="file-input" align="center">Transactions</div>
+        </div>
       </div>
     </div>
   </div>
+
+  <ng-template #modal>
+    <app-expenses-create-modal
+      [modal]="modalInstance"
+      [modalAction]="modalAction"
+    ></app-expenses-create-modal>
+  </ng-template>
+
+  <ng-template #lineChartToolTipRef let-model="model">
+    <app-expenses-line-chart-tooltip [model]="model">
+    </app-expenses-line-chart-tooltip>
+  </ng-template>
+
+  <ng-template #lineChartSeriesToolTipRef let-model="model">
+    <app-expenses-line-chart-tooltip [model]="model" [isSeriesTooltip]="true">
+    </app-expenses-line-chart-tooltip>
+  </ng-template>
+
+  <ng-template #barChartToolTipRef let-model="model">
+    <app-expenses-bar-chart-tooltip
+      [model]="model"
+    ></app-expenses-bar-chart-tooltip>
+  </ng-template>
 </div>
-
-<ng-template #modal>
-  <app-expenses-create-modal
-    [modal]="modalInstance"
-    [modalAction]="modalAction"
-  ></app-expenses-create-modal>
-</ng-template>
-
-<ng-template #lineChartToolTipRef let-model="model">
-  <app-expenses-line-chart-tooltip [model]="model">
-  </app-expenses-line-chart-tooltip>
-</ng-template>
-
-<ng-template #lineChartSeriesToolTipRef let-model="model">
-  <app-expenses-line-chart-tooltip [model]="model" [isSeriesTooltip]="true">
-  </app-expenses-line-chart-tooltip>
-</ng-template>
-
-<ng-template #barChartToolTipRef let-model="model">
-  <app-expenses-bar-chart-tooltip
-    [model]="model"
-  ></app-expenses-bar-chart-tooltip>
-</ng-template>

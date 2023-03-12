@@ -20,7 +20,7 @@ export class PieChartComponent implements OnInit {
   };
 
   // view: any = [700, 550];
-  view: any = [525, 400];
+  view: any = [625, 270];
   gradient = false;
   showLegend = false;
   legendPosition: any = 'below';

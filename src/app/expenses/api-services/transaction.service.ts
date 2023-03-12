@@ -7,6 +7,7 @@ import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { Expense } from 'src/app/shared/models/expense';
 import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
+import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
 
 @Injectable({
   providedIn: 'root',
@@ -63,5 +64,11 @@ export class TransactionsService {
 
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.url}/categories/all-categories`);
+  }
+
+  getMonthlyInOuts(userId: Number): Observable<MonthlyInOut[]> {
+    return this.http.get<MonthlyInOut[]>(
+      `${this.url}/expense/in-out-amounts?userId=${userId}`
+    );
   }
 }

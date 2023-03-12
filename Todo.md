@@ -54,6 +54,7 @@
 39. Make sure transaction and expense are used in the right context
 40. Editing a transaction needs some work
 41. ~~Handle errors when navigating from stocks to dashboard~~ &#x2611;
+42. ~~Make ins and outs a bit smaller~~ &#x2611;
 
 ---
 
@@ -80,6 +81,7 @@
 5. Allow the creation of new users
 6. Allow the users to edit any monthly subscriptions that they want
 7. Make all graphs line graphs, with different ticks for monthly values
+8. Upcoming transactions
 
 ---
 

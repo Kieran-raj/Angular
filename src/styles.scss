@@ -39,7 +39,8 @@ $Angular-theme: mat.define-light-theme(
 html,
 body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 body {
   margin: 0;
@@ -89,10 +90,37 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
   vertical-align: middle;
 }
 
+.ag-body-horizontal-scroll {
+  display: none !important;
+}
+
+.ag-body-vertical-scroll {
+  display: none !important;
+}
+
+.ag-root ::-webkit-scrollbar {
+  background-color: transparent !important;
+  width: 0.5rem;
+}
+
+.ag-root ::-webkit-scrollbar-thumb {
+  background-color: #d6dee1 !important;
+  border-radius: 20px !important;
+  height: 8rem;
+}
+
+.ag-root ::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf !important;
+}
+
 /*Media Queries*/
 @media screen and (max-width: 1200px) {
   body {
     height: 100%;
     overflow: scroll;
+  }
+
+  .ag-body-horizontal-scroll {
+    display: flex !important;
   }
 }

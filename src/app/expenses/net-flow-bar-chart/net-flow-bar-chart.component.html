@@ -1,0 +1,24 @@
+<div *ngIf="monthlyInAndOuts$ | async; let data">
+  <app-bar-chart
+    [sourceData]="sourceData"
+    [showYAxis]="false"
+    [showYAxisLabel]="false"
+    [showXAxisLabel]="false"
+    [customToolTipTemplate]="barChartToolTipRef"
+    [colorsCallback]="colors"
+  ></app-bar-chart>
+</div>
+
+<ng-template #barChartToolTipRef let-model="model">
+  <div class="row mx-0 px-0 my-1">
+    <div class="vertical col">
+      <h4 class="my-0 ml-0 mr-2 px-0" style="color: #233d53; opacity: 0.4">
+        <strong>{{ model.name }}</strong>
+      </h4>
+
+      <h4 class="my-0 mx-0" style="color: #233d53">
+        <strong>£{{ model.value | number : ".2" }}</strong>
+      </h4>
+    </div>
+  </div>
+</ng-template>

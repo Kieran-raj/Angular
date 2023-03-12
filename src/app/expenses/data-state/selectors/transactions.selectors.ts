@@ -41,3 +41,8 @@ export const selectCategories = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.categories
 );
+
+export const selectMonthlyInsAndOuts = createSelector(
+  selectTransactionsState,
+  (state: TransactionState) => state.monthlyInsAndOuts
+);
