@@ -17,7 +17,7 @@ import { chartSettings } from 'src/app/shared/settings/chart-settings';
 })
 export class LineChartComponent implements OnInit {
   @Input()
-  sourceData: LineData[] = [];
+  sourceData: LineData[] | null = [];
   @Input()
   xAxisTicks: any[] = [];
   @Input()

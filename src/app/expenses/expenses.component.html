@@ -72,8 +72,8 @@
                 </div>
               </div>
               <app-line-chart
-                *ngIf="chartMode === 'Default' && lineData"
-                [sourceData]="lineData"
+                *ngIf="chartData$ | async"
+                [sourceData]="chartData$ | async"
                 [xAxisTicks]="xAxisTicks"
                 [activeEntries]="activeEntries"
                 [isLoading]="isLineDataLoading"
@@ -82,7 +82,7 @@
               >
               </app-line-chart>
 
-              <app-bar-chart
+              <!-- <app-bar-chart
                 *ngIf="chartMode === '1m'"
                 [sourceData]="barData"
                 [customToolTipTemplate]="barChartToolTipRef"
@@ -96,7 +96,7 @@
                 *ngIf="chartMode === '1y'"
                 [sourceData]="[]"
                 [customToolTipTemplate]="barChartToolTipRef"
-              ></app-bar-chart>
+              ></app-bar-chart> -->
             </div>
           </div>
         </div>

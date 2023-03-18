@@ -11,7 +11,6 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { BarData } from '../shared/models/bar-data';
 import { LineData } from '../shared/models/line-data';
-import { MonthlyExpense } from '../shared/models/monthly-expense';
 import {
   loadCategoricalAmounts,
   loadDailyExpenses,
@@ -115,6 +114,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public categoricalAmounts$ = this.transactionStore.select(
     selectCategoricalAmounts
   );
+
+  /**
+   * Chart data
+   * @type {BehaviorSubject<LineData[] | null>}
+   */
+  public chartData$ = new BehaviorSubject<LineData[] | null>(null);
 
   /**
    * Active (selected) expense.
@@ -228,6 +233,13 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
             },
           ];
 
+          this.chartData$.next([
+            {
+              name: 'Transactions',
+              series: mappedDailyAmountsToNgxCharts,
+            },
+          ]);
+
           if (mappedDailyAmountsToNgxCharts) {
             this.isLineDataLoading =
               mappedDailyAmountsToNgxCharts.length > 0 ? false : true;
@@ -256,21 +268,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
         }
         this.chartMode = newValue;
       })
-    );
-
-    this.subscriptions.push(
-      this.transactionStore
-        .select(selectChosenExpense)
-        .subscribe((expenses) => {
-          if (expenses) {
-            this.activeEntries = [
-              {
-                name: 'Transactions',
-                series: [expenses],
-              },
-            ];
-          }
-        })
     );
 
     this.subscriptions.push(
@@ -329,16 +326,22 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
   private changeChart(value: string): void {
     if (value === '1m') {
-      this.subscriptions.push(
-        this.monthlyAmounts$.subscribe(
-          (results: MonthlyExpense[] | undefined | null) => {
-            this.barData = this.chartHelper.formatMonthlyData(
-              this.years,
-              results
-            );
-          }
-        )
+      const data = this.lineData[0].series?.slice(
+        Math.max(this.lineData[0].series.length - 30, 0)
       );
+
+      console.log(this.lineData);
+
+      console.log(data);
+
+      this.lineData = [
+        {
+          name: 'Transactions',
+          series: data,
+        },
+      ];
+
+      this.xAxisTicks = this.chartHelper.generateLineXTicks(3, data);
     }
   }
 
