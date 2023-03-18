@@ -55,6 +55,7 @@
 40. Editing a transaction needs some work
 41. ~~Handle errors when navigating from stocks to dashboard~~ &#x2611;
 42. ~~Make ins and outs a bit smaller~~ &#x2611;
+43. When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category
 
 ---
 
@@ -80,7 +81,7 @@
 4. ~~All for the deletion of records (should update grid and charts)~~ &#x2611;
 5. Allow the creation of new users
 6. Allow the users to edit any monthly subscriptions that they want
-7. Make all graphs line graphs, with different ticks for monthly values
+7. Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)
 8. Upcoming transactions
 
 ---
