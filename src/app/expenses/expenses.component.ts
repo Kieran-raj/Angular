@@ -42,6 +42,7 @@ import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
 import { addModalAction } from './data-state/actions/updates.action';
+import { DataSeries } from '../shared/models/line-data-series';
 
 @Component({
   selector: 'app-expenses',
@@ -58,11 +59,9 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   public pageTitle = 'Expenses';
   public allData: LineData[];
-  public lineData: LineData[];
+  public dailyData: LineData[];
   public pieData: PieData[];
   public movingAverageData: any = [];
-  public barData: BarData[] = [];
-  public years = [2021, 2022, 2023];
   public xAxisTicks: string[] = [];
   public isLineDataLoading = true;
 
@@ -226,19 +225,16 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
             }
           );
 
-          this.lineData = [
+          const lineData = [
             {
               name: 'Transactions',
               series: mappedDailyAmountsToNgxCharts,
             },
           ];
 
-          this.chartData$.next([
-            {
-              name: 'Transactions',
-              series: mappedDailyAmountsToNgxCharts,
-            },
-          ]);
+          this.dailyData = lineData;
+
+          this.chartData$.next(lineData);
 
           if (mappedDailyAmountsToNgxCharts) {
             this.isLineDataLoading =
@@ -252,8 +248,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
         }
       )
     );
-
-    this.years = [2021, 2022, 2023];
   }
 
   chartPeriodChange(value: string): void {
@@ -325,30 +319,54 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   private changeChart(value: string): void {
-    if (value === '1m') {
-      const data = this.lineData[0].series?.slice(
-        Math.max(this.lineData[0].series.length - 30, 0)
-      );
+    let data = null;
+    let tickInterval = 0;
 
-      console.log(this.lineData);
-
-      console.log(data);
-
-      this.lineData = [
-        {
-          name: 'Transactions',
-          series: data,
-        },
-      ];
-
-      this.xAxisTicks = this.chartHelper.generateLineXTicks(3, data);
+    switch (value) {
+      case '1m': {
+        data = this.dailyData[0].series?.slice(
+          Math.max(this.dailyData[0].series.length - 30, 0)
+        );
+        tickInterval = 3;
+        break;
+      }
+      case '6m': {
+        data = this.dailyData[0].series?.slice(
+          Math.max(this.dailyData[0].series.length - 180, 0)
+        );
+        tickInterval = 12;
+        break;
+      }
+      case '1m': {
+        data = this.dailyData[0].series?.slice(
+          Math.max(this.dailyData[0].series.length - 365, 0)
+        );
+        tickInterval = 12;
+        break;
+      }
+      default: {
+        data = this.dailyData[0].series;
+        tickInterval = 12;
+        break;
+      }
     }
+
+    const newData = [
+      {
+        name: 'Transactions',
+        series: data,
+      },
+    ];
+
+    this.chartData$.next(newData);
+
+    this.xAxisTicks = this.chartHelper.generateLineXTicks(tickInterval, data);
   }
 
   private reloadGraphData() {
-    const newLineData = this.lineData.filter(
+    const newLineData = this.dailyData.filter(
       (data) => data.name === 'Transactions'
     );
-    this.lineData = newLineData;
+    this.dailyData = newLineData;
   }
 }

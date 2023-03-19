@@ -32,10 +32,6 @@ export class TransactionsService {
     );
   }
 
-  // getYears(): Observable<any> {
-  //   return this.http.get(`${this.url}/full_data/all_years`);
-  // }
-
   getDailyAmounts(): Observable<DailyAmount[]> {
     return this.http.get<DailyAmount[]>(`${this.url}/expense/daily-amounts`);
   }

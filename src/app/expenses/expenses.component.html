@@ -81,22 +81,6 @@
                 [customSeriesTooltipTemplate]="lineChartSeriesToolTipRef"
               >
               </app-line-chart>
-
-              <!-- <app-bar-chart
-                *ngIf="chartMode === '1m'"
-                [sourceData]="barData"
-                [customToolTipTemplate]="barChartToolTipRef"
-              ></app-bar-chart>
-              <app-bar-chart
-                *ngIf="chartMode === '6m'"
-                [sourceData]="[]"
-                [customToolTipTemplate]="barChartToolTipRef"
-              ></app-bar-chart>
-              <app-bar-chart
-                *ngIf="chartMode === '1y'"
-                [sourceData]="[]"
-                [customToolTipTemplate]="barChartToolTipRef"
-              ></app-bar-chart> -->
             </div>
           </div>
         </div>
@@ -146,11 +130,5 @@
   <ng-template #lineChartSeriesToolTipRef let-model="model">
     <app-expenses-line-chart-tooltip [model]="model" [isSeriesTooltip]="true">
     </app-expenses-line-chart-tooltip>
-  </ng-template>
-
-  <ng-template #barChartToolTipRef let-model="model">
-    <app-expenses-bar-chart-tooltip
-      [model]="model"
-    ></app-expenses-bar-chart-tooltip>
   </ng-template>
 </div>
