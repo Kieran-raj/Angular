@@ -5,7 +5,6 @@ import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
-import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 
 const expensesPrefix = '[Expenses] - ';
 
@@ -57,20 +56,6 @@ export const loadCategoricalAmountsSuccess = createAction(
 export const addChosenExpenseToState = createAction(
   `${expensesPrefix} Add Selected Expense To State`,
   props<{ expense: Expense }>()
-);
-
-export const loadMovingAverage = createAction(
-  `${expensesPrefix} Load Moving Average`,
-  props<{ window?: string }>()
-);
-
-export const loadMovingAverageSuccess = createAction(
-  `${expensesPrefix} Load Moving Average Success`,
-  props<{ movingAverage: MovingAverageAmounts[] }>()
-);
-
-export const resetMovingAverageState = createAction(
-  `${expensesPrefix} Reset Moving Average`
 );
 
 export const loadCategories = createAction(`${expensesPrefix} Load Categories`);

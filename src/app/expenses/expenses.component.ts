@@ -18,13 +18,11 @@ import {
   loadAllExpenses,
   loadMonthlyExpense,
   loadMonthlyInsAndOuts,
-  loadMovingAverage,
 } from './data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
   selectDailyTransactions,
   selectMonthlyTransactions,
-  selectMovingAverageAmounts,
 } from './data-state/selectors/transactions.selectors';
 import { selectModalAction } from './data-state/selectors/updates.selectors';
 import { TransactionState } from './data-state/states/transactions.state';
@@ -38,7 +36,6 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { MovingAverageAmounts } from '../shared/models/moving-average-amounts';
 import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
@@ -62,7 +59,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public allData: LineData[];
   public dailyData: LineData[];
   public pieData: PieData[];
-  public movingAverageData: any = [];
   public xAxisTicks: string[] = [];
   public isLineDataLoading = true;
 
@@ -98,14 +94,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public monthlyAmounts$ = this.transactionStore.select(
     selectMonthlyTransactions
   );
-
-  /**
-   * Moving average amounts.
-   * @type {Observable<MovingAverageAmounts[] | undefined>}
-   */
-  public movingAverageAmounts$: Observable<
-    MovingAverageAmounts[] | undefined | null
-  > = this.transactionStore.select(selectMovingAverageAmounts);
 
   /**
    * Categorical amounts.
@@ -278,12 +266,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   resetGraph() {
     this.currentChartPeriod.next('Default');
     this.reloadGraphData();
-  }
-
-  toggleMovingAverage(event: boolean) {
-    if (!event) {
-      this.reloadGraphData();
-    }
   }
 
   ngOnDestroy(): void {

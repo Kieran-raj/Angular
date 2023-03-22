@@ -6,7 +6,6 @@ import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
-import { MovingAverageAmounts } from 'src/app/shared/models/moving-average-amounts';
 import { TransactionsService } from '../../api-services/transaction.service';
 
 import {
@@ -18,8 +17,6 @@ import {
   loadAllExpensesSuccess,
   loadCategoricalAmounts,
   loadCategoricalAmountsSuccess,
-  loadMovingAverage,
-  loadMovingAverageSuccess,
   loadCategories,
   loadCategoriesSuccess,
   loadMonthlyInsAndOuts,
@@ -81,21 +78,6 @@ export class TransactionsEffect {
           map((categoricalAmounts: CategoricalAmounts[]) =>
             loadCategoricalAmountsSuccess({
               transactions: categoricalAmounts,
-            })
-          )
-        )
-      )
-    )
-  );
-
-  loadMovingAverageAmounts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadMovingAverage),
-      mergeMap((action) =>
-        this.transactionService.getMovingAverage(action.window).pipe(
-          map((movingAverage: MovingAverageAmounts[]) =>
-            loadMovingAverageSuccess({
-              movingAverage: movingAverage,
             })
           )
         )
