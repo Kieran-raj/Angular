@@ -33,7 +33,6 @@ import { UpdatesEffect } from './expenses/data-state/effects/updates.effect';
 import { updatesReducer } from './expenses/data-state/reducers/updates.reducer';
 import { GridActionsComponent } from './components/grid-actions/grid-actions.component';
 import { ExpensesLineChartTooltipComponent } from './expenses/line-chart-tooltip/expenses-line-chart-tooltip.component';
-import { ExpensesBarChartTooltipComponent } from './expenses/expenses-bar-chart-tooltip/expenses-bar-chart-tooltip.component';
 import { ExpensesCreateModalComponent } from './expenses/expenses-create-modal/expenses-create-modal.component';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth.guard';
@@ -59,7 +58,6 @@ import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow
     PieChartComponent,
     GridActionsComponent,
     ExpensesLineChartTooltipComponent,
-    ExpensesBarChartTooltipComponent,
     ExpensesCreateModalComponent,
     LoginComponent,
     NetFlowBarChartComponent,

@@ -32,11 +32,6 @@ export const selectCategoricalAmounts = createSelector(
   (state: TransactionState) => state.categoricalAmounts
 );
 
-export const selectMovingAverageAmounts = createSelector(
-  selectTransactionsState,
-  (state: TransactionState) => state.movingAverageAmounts
-);
-
 export const selectCategories = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.categories

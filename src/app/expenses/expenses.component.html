@@ -13,7 +13,6 @@
                     class="pl-0"
                     id="expenses-side-bar"
                     (resetButton)="resetGraph()"
-                    (toggleMovingAverage)="toggleMovingAverage($event)"
                     (chartPeriod)="chartPeriodChange($event)"
                   ></app-expenses-side-bar>
                 </div>
@@ -31,14 +30,6 @@
                       <h5 class="dropdown-header" id="drop-down-chart-header">
                         Chart Options
                       </h5>
-                      <button
-                        class="btn shadow-none"
-                        id="chart-nav-new-dropdown-item"
-                        ngbDropdownItem
-                        [disabled]="true"
-                      >
-                        Moving Average
-                      </button>
                       <button
                         class="btn shadow-none"
                         id="chart-nav-new-dropdown-item"
@@ -72,8 +63,8 @@
                 </div>
               </div>
               <app-line-chart
-                *ngIf="chartMode === 'Default' && lineData"
-                [sourceData]="lineData"
+                *ngIf="chartData$ | async"
+                [sourceData]="chartData$ | async"
                 [xAxisTicks]="xAxisTicks"
                 [activeEntries]="activeEntries"
                 [isLoading]="isLineDataLoading"
@@ -81,22 +72,6 @@
                 [customSeriesTooltipTemplate]="lineChartSeriesToolTipRef"
               >
               </app-line-chart>
-
-              <app-bar-chart
-                *ngIf="chartMode === '1m'"
-                [sourceData]="barData"
-                [customToolTipTemplate]="barChartToolTipRef"
-              ></app-bar-chart>
-              <app-bar-chart
-                *ngIf="chartMode === '6m'"
-                [sourceData]="[]"
-                [customToolTipTemplate]="barChartToolTipRef"
-              ></app-bar-chart>
-              <app-bar-chart
-                *ngIf="chartMode === '1y'"
-                [sourceData]="[]"
-                [customToolTipTemplate]="barChartToolTipRef"
-              ></app-bar-chart>
             </div>
           </div>
         </div>
@@ -146,11 +121,5 @@
   <ng-template #lineChartSeriesToolTipRef let-model="model">
     <app-expenses-line-chart-tooltip [model]="model" [isSeriesTooltip]="true">
     </app-expenses-line-chart-tooltip>
-  </ng-template>
-
-  <ng-template #barChartToolTipRef let-model="model">
-    <app-expenses-bar-chart-tooltip
-      [model]="model"
-    ></app-expenses-bar-chart-tooltip>
   </ng-template>
 </div>
