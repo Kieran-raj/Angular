@@ -1,13 +1,14 @@
 import {
+  AfterViewInit,
   Component,
   Input,
   OnInit,
-  SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { LineData } from 'src/app/shared/models/line-data';
 import { chartSettings } from 'src/app/shared/settings/chart-settings';
+import * as shape from 'd3-shape';
 
 @Component({
   selector: 'app-line-chart',
@@ -16,12 +17,31 @@ import { chartSettings } from 'src/app/shared/settings/chart-settings';
   encapsulation: ViewEncapsulation.None,
 })
 export class LineChartComponent implements OnInit {
+  /**
+   * Souce data
+   * @type {LineData[] | null}
+   */
   @Input()
   sourceData: LineData[] | null = [];
+
+  /**
+   * x-axis ticks
+   * @type {any[]}
+   */
   @Input()
   xAxisTicks: any[] = [];
+
+  /**
+   * Active entries
+   * @type {any[]}
+   */
   @Input()
   activeEntries: any = [];
+
+  /**
+   * Is loading
+   * @type {boolean}
+   */
   @Input()
   isLoading: boolean;
 
@@ -38,6 +58,12 @@ export class LineChartComponent implements OnInit {
    */
   @Input()
   public customSeriesTooltipTemplate: TemplateRef<any>;
+
+  /**
+   * Custom curve definition
+   */
+  @Input()
+  public curve = shape.curveCardinal.tension(0.51);
 
   view: any = [
     chartSettings.lineChart.xViewSize,

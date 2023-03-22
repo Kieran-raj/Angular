@@ -1,5 +1,7 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -9,7 +11,6 @@ import {
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
-import { BarData } from '../shared/models/bar-data';
 import { LineData } from '../shared/models/line-data';
 import {
   loadCategoricalAmounts,
@@ -17,10 +18,10 @@ import {
   loadAllExpenses,
   loadMonthlyExpense,
   loadMonthlyInsAndOuts,
+  loadMovingAverage,
 } from './data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
-  selectChosenExpense,
   selectDailyTransactions,
   selectMonthlyTransactions,
   selectMovingAverageAmounts,
@@ -42,13 +43,13 @@ import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
 import { addModalAction } from './data-state/actions/updates.action';
-import { DataSeries } from '../shared/models/line-data-series';
 
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpensesComponent implements OnInit, AfterViewInit {
   @ViewChild(DateFilterComponent, { static: true })
@@ -272,27 +273,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
         }
       })
     );
-
-    // TODO: Dont know if this will be done!! keeping just incase.
-    // this.movingAverageAmounts$.subscribe(
-    //   (results: MovingAverageAmounts[] | undefined | null) => {
-    //     const mappedMovingAverageAmounts = results?.map(
-    //       (movingAverage: MovingAverageAmounts) => {
-    //         return {
-    //           value: movingAverage.Amount,
-    //           name: movingAverage.Date.split('T')[0],
-    //         };
-    //       }
-    //     );
-
-    //     this.lineData.push({
-    //       name: 'MovingAverage',
-    //       series: mappedMovingAverageAmounts,
-    //     });
-
-    //     this.lineData = [...this.lineData];
-    //   }
-    // );
   }
 
   resetGraph() {
