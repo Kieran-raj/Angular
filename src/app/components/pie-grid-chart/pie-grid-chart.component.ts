@@ -2,17 +2,14 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { PieData } from 'src/app/shared/models/pie-data';
 
 @Component({
-  selector: 'app-pie-chart',
-  templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss'],
+  selector: 'app-pie-grid-chart',
+  templateUrl: './pie-grid-chart.component.html',
+  styleUrls: ['./pie-grid-chart.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class PieChartComponent implements OnInit {
+export class PieGridChartComponent implements OnInit {
   @Input()
   sourceData: PieData[] = [];
-
-  @Input()
-  view: any = [];
 
   customColors = {
     food: '#233D53',
@@ -22,6 +19,12 @@ export class PieChartComponent implements OnInit {
     other: '#FA532E',
   };
 
+  // view: any = [700, 550];
+  view: any = [625, 270];
+  gradient = false;
+  showLegend = false;
+  legendPosition: any = 'below';
+  isDoughnut = false;
   colors = (value: string) => {
     switch (value.toLowerCase()) {
       case 'food': {
@@ -46,6 +49,14 @@ export class PieChartComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  public getPercentage(category: string) {
+    const categoryData = this.sourceData.find((data) => {
+      return data.name === category;
+    });
+
+    return categoryData?.pctOfTotal;
+  }
 
   public capitalise(word: string): string {
     return word[0].toUpperCase() + word.substring(1).toLowerCase();

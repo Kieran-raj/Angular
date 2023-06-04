@@ -1,10 +1,9 @@
-<div id="pie-chart">
-  <ngx-charts-pie-chart
-    [view]="view"
-    [doughnut]="true"
+<div id="pie-chart-grid">
+  <ngx-charts-pie-grid
     [results]="sourceData"
-    [animations]="false"
     [customColors]="colors"
+    [view]="view"
+    style="width: 100%; display: block"
   >
     <ng-template #tooltipTemplate let-model="model" class="tooltip">
       <div class="col">
@@ -27,7 +26,20 @@
             </h4>
           </div>
         </div>
+        <div class="row mx-0 px-0">
+          <div class="verticalTwo col">
+            <h5
+              class="my-0 ml-0 mr-2 px-0"
+              style="color: #233d53; opacity: 0.4"
+            >
+              <strong>Percentage of Total</strong>
+            </h5>
+            <h4 class="my-0 mx-0" style="color: #233d53">
+              <strong>{{ getPercentage(model.name)?.toFixed(2) }}%</strong>
+            </h4>
+          </div>
+        </div>
       </div>
     </ng-template>
-  </ngx-charts-pie-chart>
+  </ngx-charts-pie-grid>
 </div>

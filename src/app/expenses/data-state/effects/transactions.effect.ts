@@ -21,6 +21,8 @@ import {
   loadCategoriesSuccess,
   loadMonthlyInsAndOuts,
   loadMonthlyInsAndOutsSuccess,
+  loadMonthlyBreakDown,
+  loadMonthlyBreakDownSuccess,
 } from '../actions/transactions.action';
 
 @Injectable()
@@ -111,6 +113,23 @@ export class TransactionsEffect {
             })
           )
         )
+      )
+    )
+  );
+
+  loadMonthlyBreakdown$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadMonthlyBreakDown),
+      mergeMap((action) =>
+        this.transactionService
+          .getMonthBreakDown(action.month, action.year)
+          .pipe(
+            map((data: CategoricalAmounts[]) =>
+              loadMonthlyBreakDownSuccess({
+                amounts: data,
+              })
+            )
+          )
       )
     )
   );

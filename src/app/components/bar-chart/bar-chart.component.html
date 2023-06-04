@@ -13,6 +13,7 @@
     [legendTitle]="legendTitle"
     [scheme]="scheme"
     [customColors]="colorsCallback"
+    (select)="onSelect($event)"
   >
     <ng-template #tooltipTemplate let-model="model" class="tooltip">
       <ng-container

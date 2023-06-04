@@ -4,6 +4,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -28,7 +32,7 @@ import { GridComponent } from './components/grid/grid.component';
 import { ChartHelper } from './shared/helper-functions/chart-functions';
 import { ExpensesGridComponent } from './expenses/expenses-grid/expenses-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { PieGridChartComponent } from './components/pie-grid-chart/pie-grid-chart.component';
 import { UpdatesEffect } from './expenses/data-state/effects/updates.effect';
 import { updatesReducer } from './expenses/data-state/reducers/updates.reducer';
 import { GridActionsComponent } from './components/grid-actions/grid-actions.component';
@@ -41,6 +45,8 @@ import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { userReducer } from './expenses/data-state/reducers/user.reducer';
 import { UserEffect } from './expenses/data-state/effects/user.effect';
 import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow-bar-chart.component';
+import { NetFlowModalComponent } from './expenses/net-flow-modal/net-flow-modal.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,12 +61,14 @@ import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow
     ExpensesSideBarComponent,
     GridComponent,
     ExpensesGridComponent,
-    PieChartComponent,
+    PieGridChartComponent,
     GridActionsComponent,
     ExpensesLineChartTooltipComponent,
     ExpensesCreateModalComponent,
     LoginComponent,
     NetFlowBarChartComponent,
+    NetFlowModalComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +87,10 @@ import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow
     ]),
     BrowserAnimationsModule,
     NgbModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
     NgxChartsModule,
     FontAwesomeModule,
     StoreModule.forRoot({
@@ -101,6 +113,6 @@ import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow
     { provide: 'BASE_API_URL', useValue: 'https://localhost:7271' },
   ],
   bootstrap: [AppComponent],
-  exports: [ExpensesSideBarComponent],
+  exports: [ExpensesSideBarComponent, BrowserAnimationsModule],
 })
 export class AppModule {}

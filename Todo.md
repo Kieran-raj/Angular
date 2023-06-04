@@ -55,7 +55,8 @@
 40. Editing a transaction needs some work
 41. ~~Handle errors when navigating from stocks to dashboard~~ &#x2611;
 42. ~~Make ins and outs a bit smaller~~ &#x2611;
-43. Remove moving average logic
+43. ~~Remove moving average logic~~ &#x2611;
+44. **TESTS**!!!!!!!!!!!
 
 ---
 
@@ -72,6 +73,7 @@
 9. Clean up styling in nav bar
 10. Allow user to upload and save image as well
 11. Make dropdown on graph its own component
+12. Add Category service
 
 ---
 
@@ -86,6 +88,7 @@
 7. ~~Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)~~ &#x2611;
 8. Upcoming transactions
 9. When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)
+10. User profile
 
 ---
 

@@ -40,4 +40,9 @@ export interface TransactionState {
    * Monthly Ins and Outs
    */
   monthlyInsAndOuts: MonthlyInOut[] | null;
+
+  /**
+   * Monthly Breakdown
+   */
+  monthlyBreakdown: CategoricalAmounts[] | null;
 }

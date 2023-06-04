@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
@@ -61,6 +63,9 @@ export class BarChartComponent implements OnInit {
   @Input()
   public colorsCallback: (args: any) => string;
 
+  @Output()
+  public selected = new EventEmitter();
+
   /**
    * Color scheme
    * @type {string}
@@ -82,4 +87,8 @@ export class BarChartComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  onSelect($event: Event): void {
+    this.selected.emit($event);
+  }
 }
