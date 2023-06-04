@@ -77,20 +77,20 @@
         </div>
       </div>
       <div class="grid row">
-        <app-expenses-grid class="px-2 pb-3"></app-expenses-grid>
+        <app-expenses-grid class="px-0 pb-3 shadow"></app-expenses-grid>
       </div>
     </div>
     <div class="col-5">
       <div class="card mt-2 mx-0 row" id="chart-columm">
-        <div class="card-header border-0">Breakdown</div>
+        <div class="card-header border-0">Category Breakdown</div>
         <div class="container-fluid card-body cardBody shadow">
           <div class="col-12" id="pie-chart" align="center">
-            <app-pie-chart [sourceData]="pieData"></app-pie-chart>
+            <app-pie-grid-chart [sourceData]="pieData"></app-pie-grid-chart>
           </div>
         </div>
       </div>
       <div class="card mt-2 mx-0 row" id="chart-columm">
-        <div class="card-header border-0">Recent Monthly In vs Out</div>
+        <div class="card-header border-0">Recent In / Out</div>
         <div class="container-fluid card-body cardBody shadow">
           <div class="col-12" id="monthly-flow-chart">
             <app-net-flow-bar-chart></app-net-flow-bar-chart>

@@ -3,12 +3,6 @@
   color: white;
 }
 
-.crudButton {
-  background-color: #063a5b;
-  color: white;
-  border-radius: 2em;
-}
-
 .close {
   outline: none;
 }
@@ -18,9 +12,12 @@
 }
 
 .grid {
-  height: 80%;
-  padding-left: 0.3rem;
-  padding-right: 0.3rem;
+  height: 78%;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-right: 0;
+  padding-left: 0;
   padding-top: 0.5rem;
   padding-bottom: 16rem;
 }

@@ -12,6 +12,7 @@ import {
   loadMonthlyExpense,
   loadMonthlyExpenseSuccess,
   loadMonthlyInsAndOutsSuccess,
+  loadMonthlyBreakDownSuccess,
 } from '../actions/transactions.action';
 import { TransactionState } from '../states/transactions.state';
 
@@ -23,6 +24,7 @@ export const intitialTransactions: TransactionState = {
   chosenExpense: null,
   categories: null,
   monthlyInsAndOuts: null,
+  monthlyBreakdown: null,
 };
 
 export const transactionsReducer = createReducer(
@@ -92,6 +94,12 @@ export const transactionsReducer = createReducer(
     return {
       ...state,
       monthlyInsAndOuts: action.monthlyInsAndOuts,
+    };
+  }),
+  on(loadMonthlyBreakDownSuccess, (state, action) => {
+    return {
+      ...state,
+      monthlyBreakdown: action.amounts,
     };
   })
 );

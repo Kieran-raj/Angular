@@ -64,3 +64,13 @@ export const loadCategoriesSuccess = createAction(
   `${expensesPrefix} Load Categories Success`,
   props<{ categories: Category[] }>()
 );
+
+export const loadMonthlyBreakDown = createAction(
+  `${expensesPrefix} Load Monthly Breakdown Amounts`,
+  props<{ month: string; year: string }>()
+);
+
+export const loadMonthlyBreakDownSuccess = createAction(
+  `${expensesPrefix} Load Monthly Breakdown Amounts Success`,
+  props<{ amounts: CategoricalAmounts[] }>()
+);

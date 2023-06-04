@@ -56,4 +56,10 @@ export class TransactionsService {
       `${this.url}/expense/in-out-amounts?userId=${userId}`
     );
   }
+
+  getMonthBreakDown(month: string, year: string) {
+    return this.http.get<CategoricalAmounts[]>(
+      `${this.url}/expense/monthly-breakdown?month=${month}&year=${year}`
+    );
+  }
 }

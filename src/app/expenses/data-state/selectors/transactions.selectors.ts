@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { TransactionState } from '../states/transactions.state';
 
@@ -40,4 +41,16 @@ export const selectCategories = createSelector(
 export const selectMonthlyInsAndOuts = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.monthlyInsAndOuts
+);
+
+export const selectInsAndOutsSeriesData = (seriesName: string) =>
+  createSelector(
+    selectTransactionsState,
+    (state: TransactionState) =>
+      state.monthlyInsAndOuts?.find((m) => m.name === seriesName)?.series
+  );
+
+export const selectMonthlyBreakdown = createSelector(
+  selectTransactionsState,
+  (state: TransactionState) => state.monthlyBreakdown
 );

@@ -13,6 +13,15 @@
   color: white;
 }
 
+.mat-flat-button {
+  background-color: #005da6;
+  color: white;
+  font-size: large;
+  font-family: Helvetica;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
 #forgot-password-text {
   font-size: smaller;
   text-align: right;
@@ -21,12 +30,6 @@
 #login-title-text {
   font-size: x-large;
   margin-bottom: 0.5rem;
-}
-
-#login-button {
-  background-color: #005da6;
-  margin-bottom: 0.5rem;
-  width: 100%;
 }
 
 #valid-email-text {
