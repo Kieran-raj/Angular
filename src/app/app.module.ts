@@ -47,6 +47,7 @@ import { UserEffect } from './expenses/data-state/effects/user.effect';
 import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow-bar-chart.component';
 import { NetFlowModalComponent } from './expenses/net-flow-modal/net-flow-modal.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     NetFlowBarChartComponent,
     NetFlowModalComponent,
     PieChartComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +81,7 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomePageComponent },
+      { path: 'signup', component: SignUpComponent },
       {
         path: 'expenses',
         component: ExpensesComponent,

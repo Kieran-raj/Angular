@@ -6,6 +6,9 @@ import {
   userLogOut,
   userLoginFailure,
   resetError,
+  setCheckMessage,
+  signUpSuccess,
+  signUpFailure,
 } from '../actions/user.action';
 import { UserState } from '../states/user.state';
 
@@ -14,6 +17,7 @@ export const initialUser: UserState = {
   userInfo: null,
   isLoggingIn: null,
   error: null,
+  details: null,
 };
 
 export const userReducer = createReducer(
@@ -43,7 +47,7 @@ export const userReducer = createReducer(
       },
     };
   }),
-  on(resetError, (state, action) => {
+  on(resetError, (state, _) => {
     return {
       ...state,
       error: null,
@@ -60,6 +64,30 @@ export const userReducer = createReducer(
       ...state,
       userInfo: null,
       userToken: null,
+    };
+  }),
+  on(signUpSuccess, (state, _) => {
+    return {
+      ...state,
+      details: {
+        message: '',
+        statusCode: 201,
+      },
+    };
+  }),
+  on(signUpFailure, (state, action) => {
+    return {
+      ...state,
+      error: {
+        message: action.response.message,
+        statusCode: action.response.statusCode,
+      },
+    };
+  }),
+  on(setCheckMessage, (state, action) => {
+    return {
+      ...state,
+      details: action.response,
     };
   })
 );

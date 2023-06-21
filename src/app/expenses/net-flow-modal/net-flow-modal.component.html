@@ -9,7 +9,7 @@
     </div>
 
     <div class="row">
-      <div class="col-3 align-self-center">
+      <div class="col-3 offset-1 align-self-center">
         <div class="row" id="in-amount">
           <div class="col-1 px-0">
             <fa-icon [icon]="arrowUpIcon" size="2x"></fa-icon>
@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-8 align-self-center">
         <app-pie-chart
           *ngIf="!(isLoading$ | async)"
           [sourceData]="formatePieData(monthlyBreakdownData)"

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
@@ -15,7 +15,7 @@ import { UserState } from 'src/app/expenses/data-state/states/user.state';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   /**
    * User icon
    * @type {IconDefinition}
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
    * Subscriptions
    * @type {Subscription[]}
    */
-  public subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = [];
 
   constructor(private userStore: Store<UserState>) {}
 
@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
     this.clearForm();
   }
 
-  public closeError() {
+  public closeError(): void {
     this.userStore.dispatch(resetError());
   }
 

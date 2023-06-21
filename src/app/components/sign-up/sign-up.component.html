@@ -1,0 +1,85 @@
+<div class="container ms-0">
+  <div class="card justify-content-center">
+    <div class="card-header">
+      <div id="signup-title-text">Sign Up</div>
+      <div>Fill in the following form to sign up</div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="formGroup" *ngIf="!(isCreated$ | async)">
+        <div class="mb-3">
+          <label for="email-input">Email</label>
+          <input
+            id="email-input"
+            type="text"
+            class="form-control shadow-none"
+            formControlName="email"
+          />
+        </div>
+        <div
+          id="valid-email-text"
+          *ngIf="
+            formGroup.controls['email'].invalid &&
+            formGroup.controls['email'].dirty &&
+            !formGroup.controls['email'].touched
+          "
+        >
+          <span> Enter a valid email address </span>
+        </div>
+        <div class="mb-3">
+          <label for="displayname-input">Display Name</label>
+          <input
+            id="displayname-input"
+            type="text"
+            class="form-control shadow-none"
+            formControlName="displayName"
+          />
+        </div>
+        <div *ngIf="error$ | async; let error">
+          <div
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            {{ conflictErrorMessage }}
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              (click)="closeError()"
+            ></button>
+          </div>
+        </div>
+        <div *ngIf="formGroup.controls['password']">
+          <label for="password-input">Enter password</label>
+          <input
+            id="password-input"
+            type="password"
+            class="form-control shadow-none"
+            formControlName="password"
+          />
+        </div>
+      </form>
+      <div class="alert alert-success fade show" *ngIf="isCreated$ | async">
+        You have successfully signed up. Click
+        <a href="#" class="alert-link">here</a> to begin!!
+      </div>
+    </div>
+    <div class="card-footer">
+      <div *ngIf="!(isLoading$ | async)">
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="disableSignUpButton"
+          (click)="signUpCallback()"
+        >
+          Sign Up
+        </button>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="loader" *ngIf="isLoading$ | async"></div>
+      </div>
+      <div class="text-center">
+        Already have an account? <em><a href="/home">Login</a></em>
+      </div>
+    </div>
+  </div>
+</div>

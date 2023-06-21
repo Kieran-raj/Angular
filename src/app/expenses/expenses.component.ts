@@ -39,6 +39,7 @@ import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
 import { addModalAction } from './data-state/actions/updates.action';
+import { selectUserInfo } from './data-state/selectors/user.selectors';
 
 @Component({
   selector: 'app-expenses',
@@ -152,13 +153,13 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Successful update
    * @type {boolean}
    */
-  sucessfulUpdate: boolean;
+  successfulUpdate: boolean;
 
   /**
    * Update message
    * @type {string}
    */
-  updateMessage = 'Sucessfully added new cateogry';
+  updateMessage = 'Successfully added new cateogry';
 
   @ViewChild('editDeleteModal', { static: true })
   editDeleteModal: ElementRef;

@@ -74,6 +74,8 @@
 10. Allow user to upload and save image as well
 11. Make dropdown on graph its own component
 12. Add Category service
+13. Pull data-state related to log in out into separate
+14. Refactor end points to allow for userIds
 
 ---
 
@@ -87,8 +89,8 @@
 6. Allow the users to edit any monthly subscriptions that they want
 7. ~~Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)~~ &#x2611;
 8. Upcoming transactions
-9. When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)
-10. User profile
+9. ~~When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)~~ &#x2611;
+10. User profile / settings
 
 ---
 
