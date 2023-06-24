@@ -77,6 +77,7 @@
 13. Pull data-state related to log in out into separate
 14. Refactor end points to allow for userIds
 15. Log in and sign up form, have some shared logic, so pull out into separate file
+16. Upgrade angular
 
 ---
 

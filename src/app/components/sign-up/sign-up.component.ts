@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import {
@@ -19,11 +20,19 @@ import { UserState } from 'src/app/expenses/data-state/states/user.state';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit, OnDestroy {
+  // Icons
+  /**
+   * Clear icon
+   * @type {IconDefinition}
+   */
+  public faCross = faXmark;
+  //
+
   /**
    * Show password
    * @type {boolean}
    */
-  public showPassword = false;
+  public showPasswordText = false;
 
   /**
    * Form group
@@ -36,6 +45,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   /**
    * Disable signup button
+   * @type {boolean}
    */
   public disableSignUpButton = true;
 
@@ -69,6 +79,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public isCreated$ = new BehaviorSubject(false);
 
   /**
+   * Show password field
+   * @type {boolean}
+   */
+  public showPasswordField = false;
+
+  /**
    * Subscriptions
    * @type {Subscription[]}
    */
@@ -79,11 +95,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.formGroup.valueChanges.subscribe((values) => {
-        this.isFormValid(values);
+        if (!this.showPasswordField) {
+          this.isFormValid(values, ['password']);
+        } else {
+          this.isFormValid(values, null);
+        }
         Object.keys(values).some((key: any) => {
           const val = this.formGroup.controls[key].value;
           if (key !== 'password' && val?.length === 0) {
-            // Isssues here with recursion if we remove form control
+            this.showPasswordField = false;
           }
         });
       })
@@ -92,10 +112,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.signUpDetails$.subscribe((value) => {
         if (value?.statusCode.toString().startsWith('2')) {
-          this.formGroup.addControl(
-            'password',
-            new FormControl(null, [Validators.required])
-          );
+          if (!Object.keys(this.formGroup.controls).includes('password')) {
+            this.formGroup.addControl(
+              'password',
+              new FormControl(null, [Validators.required])
+            );
+          }
+          this.showPasswordField = true;
           this.isLoading$.next(false);
           if (value.message.length === 0) {
             this.isCreated$.next(true);
@@ -140,7 +163,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.isLoading$.next(true);
     const email = this.formGroup.controls['email'].value;
     const displayName = this.formGroup.controls['displayName'].value;
-    this.formGroup.controls['password']?.value.length > 0
+    this.formGroup.controls['password']?.value.length > 0 &&
+    this.showPasswordField
       ? this.signUp()
       : this.checkUserDetails(email, displayName);
   }
@@ -149,7 +173,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const ele = document.getElementById('password-input');
     const type = ele?.getAttribute('type');
     ele?.setAttribute('type', type === 'password' ? 'text' : 'password');
-    this.showPassword = !this.showPassword;
+    this.showPasswordText = !this.showPasswordText;
+  }
+
+  public clearInput(field: string) {
+    this.formGroup.controls[field].reset();
+
+    if (field !== 'password') {
+      this.showPasswordField = false;
+    }
   }
 
   private signUp() {
@@ -166,8 +198,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.userStore.dispatch(resetError());
   }
 
-  private isFormValid(formValues: any): void {
-    const isValid = Object.values(formValues).every((value: any) => {
+  private isFormValid(formValues: any, fieldsToIgnore: string[] | null): void {
+    const values = formValues;
+
+    if (fieldsToIgnore && fieldsToIgnore?.length > 0) {
+      fieldsToIgnore.forEach((field) => delete values[field]);
+    }
+
+    const isValid = Object.values(values).every((value: any) => {
       if (value !== null && value.length > 0) {
         return true;
       }

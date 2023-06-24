@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faAt, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import {
@@ -17,10 +17,16 @@ import { UserState } from 'src/app/expenses/data-state/states/user.state';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   /**
-   * User icon
+   * Email icon
    * @type {IconDefinition}
    */
-  public faUser = faUser;
+  public faEmail = faAt;
+
+  /**
+   * Clear icon
+   * @type {IconDefinition}
+   */
+  public faCross = faXmark;
 
   /**
    * Password icon
@@ -88,6 +94,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public closeError(): void {
     this.userStore.dispatch(resetError());
+  }
+
+  public clearInput(field: string) {
+    this.formGroup.controls[field].reset();
   }
 
   private clearForm(): void {

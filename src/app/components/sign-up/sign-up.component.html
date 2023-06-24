@@ -6,14 +6,19 @@
     </div>
     <div class="card-body">
       <form [formGroup]="formGroup" *ngIf="!(isCreated$ | async)">
-        <div class="mb-3">
-          <label for="email-input">Email</label>
+        <div class="input-group mb-2">
           <input
             id="email-input"
             type="text"
+            placeholder="Email"
             class="form-control shadow-none modal-text"
             formControlName="email"
           />
+          <div class="input-group-append">
+            <span class="input-group-text"
+              ><fa-icon (click)="clearInput('email')" [icon]="faCross"></fa-icon
+            ></span>
+          </div>
         </div>
         <div
           id="valid-email-text"
@@ -25,19 +30,28 @@
         >
           <span> Enter a valid email address </span>
         </div>
-        <div class="mb-3">
-          <label for="displayname-input">Display Name</label>
+
+        <div class="input-group mt-4">
           <input
             id="displayname-input"
             type="text"
             class="form-control shadow-none modal-text"
+            placeholder="Display Name"
             formControlName="displayName"
             (keydown.enter)="signUpCallback()"
           />
+          <div class="input-group-append">
+            <span class="input-group-text"
+              ><fa-icon
+                (click)="clearInput('displayName')"
+                [icon]="faCross"
+              ></fa-icon
+            ></span>
+          </div>
         </div>
         <div *ngIf="error$ | async; let error">
           <div
-            class="alert alert-danger alert-dismissible fade show"
+            class="alert alert-danger alert-dismissible fade show mt-2"
             role="alert"
           >
             {{ error.message }}
@@ -49,33 +63,30 @@
             ></button>
           </div>
         </div>
-        <div *ngIf="formGroup.controls['password']">
-          <label for="password-input">
-            <div class="row">
-              <div class="col-10">Password</div>
-              <div class="col-2">
-                <div class="row">
-                  <button
-                    class="col px-0 me-3"
-                    type="button"
-                    id="show-hide-button"
-                    (click)="togglePassword()"
-                  >
-                    {{ showPassword ? "Hide" : "Show" }}
-                  </button>
-                </div>
-              </div>
-            </div></label
-          >
-          <input
-            id="password-input"
-            type="password"
-            class="form-control shadow-none modal-text"
-            formControlName="password"
-            (keydown.enter)="signUpCallback()"
-          />
+        <div *ngIf="showPasswordField">
+          <div class="input-group mt-4">
+            <input
+              id="password-input"
+              type="password"
+              class="form-control shadow-none modal-text"
+              placeholder="Password"
+              formControlName="password"
+              (keydown.enter)="signUpCallback()"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text"
+                ><fa-icon
+                  (click)="clearInput('password')"
+                  [icon]="faCross"
+                ></fa-icon
+              ></span>
+            </div>
+          </div>
         </div>
       </form>
+      <div class="text-center modal-text mt-3">
+        Already have an account? <em><a href="/home">Log in</a></em>
+      </div>
       <div class="alert alert-success fade show" *ngIf="isCreated$ | async">
         You have successfully signed up. Click
         <a href="#" class="alert-link">here</a> to begin!!
@@ -94,9 +105,6 @@
       </div>
       <div class="d-flex justify-content-center">
         <div class="loader" *ngIf="isLoading$ | async"></div>
-      </div>
-      <div class="text-center modal-text">
-        Already have an account? <em><a href="/home">Login</a></em>
       </div>
     </div>
   </div>

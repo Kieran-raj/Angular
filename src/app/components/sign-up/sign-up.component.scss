@@ -2,6 +2,16 @@ a {
   text-decoration: none;
 }
 
+fa-icon {
+  color: #3e4256;
+  opacity: 70%;
+}
+
+fa-icon:hover {
+  color: black;
+  cursor: pointer;
+}
+
 label {
   width: 100%;
   color: #3e4256;
@@ -16,7 +26,7 @@ input {
 }
 
 .card {
-  width: 18%;
+  width: 15%;
   margin: 0 auto;
   float: none;
   position: absolute;
@@ -29,6 +39,21 @@ input {
   background-color: #005da6;
   color: white;
   text-align: center;
+}
+
+.card-footer {
+  background-color: white;
+  border-top: 0;
+}
+
+.input-group-text,
+input {
+  background-color: white;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom-width: 10%;
+  border-radius: 0%;
 }
 
 .mat-flat-button {
@@ -47,15 +72,6 @@ input {
   width: 35px;
   height: 35px;
   animation: spin 1s linear infinite;
-}
-
-#show-password-icon {
-  border: 0px;
-}
-
-#show-hide-button {
-  border: 0px;
-  background-color: white;
 }
 
 #valid-email-text {
