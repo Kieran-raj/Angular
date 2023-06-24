@@ -23,8 +23,8 @@
       >
         <button class="btn shadow-none" (click)="navigate('/home')">
           <div class="row">
-            <div class="col-5">
-              <fa-icon class="nav-bar-item-icon" [icon]="faHome"></fa-icon>
+            <div class="col-5 nav-bar-item-icon">
+              <fa-icon [icon]="faHome"></fa-icon>
             </div>
             <div class="col-7 nav-bar-item-text">
               <span>Home</span>
@@ -45,8 +45,8 @@
       >
         <button class="btn shadow-none" (click)="navigate('/expenses')">
           <div class="row" style="padding-left: 0.3rem">
-            <div class="col-5" style="width: fit-content">
-              <fa-icon class="nav-bar-item-icon" [icon]="faGrid"></fa-icon>
+            <div class="col-5 nav-bar-item-icon" style="width: fit-content">
+              <fa-icon [icon]="faGrid"></fa-icon>
             </div>
             <div class="col-7 nav-bar-item-text">
               <span style="padding-left: 0.3rem">Dashboard</span>
@@ -71,8 +71,8 @@
           (click)="navigate('/stocks')"
         >
           <div class="row">
-            <div class="col-5">
-              <fa-icon class="nav-bar-item-icon" [icon]="faChart"></fa-icon>
+            <div class="col-5 nav-bar-item-icon">
+              <fa-icon [icon]="faChart"></fa-icon>
             </div>
             <div class="col-7 nav-bar-item-text">
               <span><s>Stocks</s></span>
@@ -98,8 +98,8 @@
           disabled="true"
         >
           <div class="row">
-            <div class="col-5">
-              <fa-icon class="nav-bar-item-icon" [icon]="faGear"></fa-icon>
+            <div class="col-5 nav-bar-item-icon">
+              <fa-icon [icon]="faGear"></fa-icon>
             </div>
             <div class="col-7 nav-bar-item-text">
               <span><s>Settings</s></span>
@@ -113,8 +113,8 @@
       <div class="col" id="nav-sign-out">
         <button class="btn shadow-none" (click)="signOut()">
           <div class="row">
-            <div class="col-5">
-              <fa-icon class="nav-bar-item-icon" [icon]="faSignOut"></fa-icon>
+            <div class="col-5 nav-bar-item-icon">
+              <fa-icon [icon]="faSignOut"></fa-icon>
             </div>
             <div class="col-7 nav-bar-item-text">
               <span>Sign Out</span>

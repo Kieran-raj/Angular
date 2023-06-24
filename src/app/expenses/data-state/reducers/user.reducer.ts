@@ -87,6 +87,7 @@ export const userReducer = createReducer(
   on(setCheckMessage, (state, action) => {
     return {
       ...state,
+      error: null,
       details: action.response,
     };
   })

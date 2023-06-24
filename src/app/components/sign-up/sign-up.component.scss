@@ -2,6 +2,19 @@ a {
   text-decoration: none;
 }
 
+label {
+  width: 100%;
+  color: #3e4256;
+}
+
+input {
+  color: #3e4256;
+}
+
+.modal-text {
+  color: #3e4256;
+}
+
 .card {
   width: 18%;
   margin: 0 auto;
@@ -34,6 +47,15 @@ a {
   width: 35px;
   height: 35px;
   animation: spin 1s linear infinite;
+}
+
+#show-password-icon {
+  border: 0px;
+}
+
+#show-hide-button {
+  border: 0px;
+  background-color: white;
 }
 
 #valid-email-text {

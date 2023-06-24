@@ -53,7 +53,7 @@ export class UserEffect {
             catchError((error: HttpErrorResponse) => {
               const newResponse = {
                 statusCode: error.status,
-                message: error.message,
+                message: error.error.message,
               };
               return of(signUpFailure({ response: newResponse }));
             })
@@ -73,7 +73,7 @@ export class UserEffect {
           catchError((error: HttpErrorResponse) => {
             const newResponse = {
               statusCode: error.status,
-              message: error.message,
+              message: error.error.message,
             };
             return of(signUpFailure({ response: newResponse }));
           })

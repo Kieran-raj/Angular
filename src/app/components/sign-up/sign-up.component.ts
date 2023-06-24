@@ -20,6 +20,12 @@ import { UserState } from 'src/app/expenses/data-state/states/user.state';
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   /**
+   * Show password
+   * @type {boolean}
+   */
+  public showPassword = false;
+
+  /**
    * Form group
    * @type {FormGroup}
    */
@@ -74,6 +80,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.formGroup.valueChanges.subscribe((values) => {
         this.isFormValid(values);
+        Object.keys(values).some((key: any) => {
+          const val = this.formGroup.controls[key].value;
+          if (key !== 'password' && val?.length === 0) {
+            // Isssues here with recursion if we remove form control
+          }
+        });
       })
     );
 
@@ -119,8 +131,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
     );
   }
 
-  public closeError() {
-    this.userStore.dispatch(resetError());
+  public clearForm(): void {
+    this.closeError();
+    this.formGroup.reset();
   }
 
   public signUpCallback() {
@@ -130,6 +143,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.formGroup.controls['password']?.value.length > 0
       ? this.signUp()
       : this.checkUserDetails(email, displayName);
+  }
+
+  public togglePassword() {
+    const ele = document.getElementById('password-input');
+    const type = ele?.getAttribute('type');
+    ele?.setAttribute('type', type === 'password' ? 'text' : 'password');
+    this.showPassword = !this.showPassword;
   }
 
   private signUp() {
@@ -142,9 +162,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.userStore.dispatch(signUp({ userDetails: details }));
   }
 
-  private clearForm(): void {
-    this.closeError();
-    this.formGroup.reset();
+  private closeError() {
+    this.userStore.dispatch(resetError());
   }
 
   private isFormValid(formValues: any): void {
