@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 fa-icon {
   color: #3e4256;
   opacity: 70%;
@@ -6,6 +10,19 @@ fa-icon {
 fa-icon:hover {
   color: black;
   cursor: pointer;
+}
+
+label {
+  width: 100%;
+  color: #3e4256;
+}
+
+input {
+  color: #3e4256;
+}
+
+.modal-text {
+  color: #3e4256;
 }
 
 .card {
@@ -21,6 +38,7 @@ fa-icon:hover {
 .card-header {
   background-color: #005da6;
   color: white;
+  text-align: center;
 }
 
 .card-footer {
@@ -47,15 +65,13 @@ input {
   width: 100%;
 }
 
-#forgot-password-text {
-  font-size: smaller;
-  text-align: right;
-  margin-top: 0.3rem;
-}
-
-#login-title-text {
-  font-size: x-large;
-  margin-bottom: 0.5rem;
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  animation: spin 1s linear infinite;
 }
 
 #valid-email-text {
@@ -64,13 +80,9 @@ input {
   padding-bottom: 2%;
 }
 
-#password-input,
-#email-input {
-  box-shadow: none;
-}
-
-a {
-  text-decoration: none;
+#signup-title-text {
+  font-size: x-large;
+  margin-bottom: 0.5rem;
 }
 
 @media screen and (max-width: 1200px) {

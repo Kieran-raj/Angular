@@ -45,7 +45,6 @@ img {
 
 #side-nav-bar {
   background-color: #f8f9fd;
-  // background-color: red;
   color: #063a5b;
   padding-left: 2px;
 }
@@ -71,4 +70,15 @@ img {
 
 #user-logo-banner {
   justify-content: center;
+}
+
+/* Media Queries*/
+@media screen and (max-width: 1080px) {
+  #nav-bar-header-text {
+    font-size: large;
+  }
+
+  .nav-bar-item-icon {
+    padding: 0%;
+  }
 }

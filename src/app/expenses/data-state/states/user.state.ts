@@ -1,4 +1,5 @@
 import { AuthToken } from 'src/app/shared/models/auth-models/auth-token';
+import { SignUpMessage } from 'src/app/shared/models/auth-models/sign-up-message';
 import { User } from 'src/app/shared/models/user';
 
 export interface UserState {
@@ -24,4 +25,9 @@ export interface UserState {
     message: string | null;
     statusCode: number | null;
   } | null;
+
+  /**
+   * User Sign Up Details
+   */
+  details: SignUpMessage | null;
 }

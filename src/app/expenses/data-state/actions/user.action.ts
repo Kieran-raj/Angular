@@ -1,6 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { AuthToken } from 'src/app/shared/models/auth-models/auth-token';
+import { SignUpMessage } from 'src/app/shared/models/auth-models/sign-up-message';
 import { User } from 'src/app/shared/models/user';
+import { UserDetails } from 'src/app/shared/models/user-details';
 
 const userPrefix = `[User] - `;
 
@@ -27,3 +29,25 @@ export const setUserInfo = createAction(
 );
 
 export const userLogOut = createAction(`${userPrefix} Log out`);
+
+export const checkSignUpDetails = createAction(
+  `${userPrefix} Check sign up details`,
+  props<{ email: string; displayName: string }>()
+);
+
+export const setCheckMessage = createAction(
+  `${userPrefix} Set Checking Details Message`,
+  props<{ response: SignUpMessage }>()
+);
+
+export const signUp = createAction(
+  `${userPrefix} Sign Up`,
+  props<{ userDetails: UserDetails }>()
+);
+
+export const signUpSuccess = createAction(`${userPrefix} Sign Up Success`);
+
+export const signUpFailure = createAction(
+  `${userPrefix} Sign Up Failure`,
+  props<{ response: SignUpMessage }>()
+);

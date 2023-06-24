@@ -74,12 +74,16 @@
 10. Allow user to upload and save image as well
 11. Make dropdown on graph its own component
 12. Add Category service
+13. Pull data-state related to log in out into separate
+14. Refactor end points to allow for userIds
+15. Log in and sign up form, have some shared logic, so pull out into separate file
+16. Upgrade angular
 
 ---
 
 ### Business Logic
 
-1. ~~Allow the ability to create new categories~~ &#x2611; (~~Python~~ &#x2611; ; .NET)
+1. ~~Allow the ability to create new categories~~ &#x2611; (~~Python~~ &#x2611; ; ~~.NET~~ &#x2611;)
 2. ~~Allow for updating a record~~ &#x2611;
 3. ~~Allow for the creation of new records (should update grid and charts)~~ &#x2611;
 4. ~~All for the deletion of records (should update grid and charts)~~ &#x2611;
@@ -87,8 +91,17 @@
 6. Allow the users to edit any monthly subscriptions that they want
 7. ~~Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)~~ &#x2611;
 8. Upcoming transactions
-9. When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)
-10. User profile
+9. ~~When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)~~ &#x2611;
+10. User profile / settings
+11. Allow for demo mode
+
+---
+
+#### Styling
+
+1. Change show/hide password to use an icon
+2. Maybe change the log in and sign up model. Maybe use lines and not boxes
+3. Fix nav bar width to fit on an ipad
 
 ---
 

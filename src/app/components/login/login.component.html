@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card justify-content-center" *ngIf="true">
+  <div class="card justify-content-center">
     <div class="card-header">
       <div id="login-title-text">Login</div>
       <div>Please enter your email and password</div>
@@ -22,19 +22,19 @@
 
       <form [formGroup]="formGroup">
         <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text"
-              ><fa-icon [icon]="faUser"></fa-icon
-            ></span>
-          </div>
           <input
             id="email-input"
             type="text"
             class="form-control"
-            placeholder="E-mail"
+            placeholder="Email"
             formControlName="email"
             (keydown.enter)="loginCallBack()"
           />
+          <div class="input-group-append">
+            <span class="input-group-text"
+              ><fa-icon (click)="clearInput('email')" [icon]="faCross"></fa-icon
+            ></span>
+          </div>
         </div>
         <div
           id="valid-email-text"
@@ -46,12 +46,7 @@
         >
           <span> Enter a valid email address </span>
         </div>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text"
-              ><fa-icon [icon]="faLock"></fa-icon
-            ></span>
-          </div>
+        <div class="input-group mt-4">
           <input
             id="password-input"
             type="password"
@@ -60,6 +55,14 @@
             formControlName="password"
             (keydown.enter)="loginCallBack()"
           />
+          <div class="input-group-append">
+            <span class="input-group-text"
+              ><fa-icon
+                (click)="clearInput('password')"
+                [icon]="faCross"
+              ></fa-icon
+            ></span>
+          </div>
         </div>
         <div id="forgot-password-text">
           <a href="#"><em>Forgot password?</em></a>
@@ -78,7 +81,8 @@
         </button>
       </div>
       <div>
-        Don't have an account? <em><a href="#">Sign-up</a></em>
+        Don't have an account? <em><a href="/signup">Sign-up</a></em> or
+        <em><a href="#">Demo</a></em>
       </div>
     </div>
   </div>
