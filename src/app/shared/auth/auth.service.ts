@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthToken } from '../models/auth-models/auth-token';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,12 @@ export class AuthService {
    * @type {string}
    */
   private url: string;
+
+  /**
+   * User
+   * @type {User}
+   */
+  private _user: User;
 
   /**
    * Logged in
@@ -51,6 +58,15 @@ export class AuthService {
   public setSession(authToken: AuthToken) {
     localStorage.setItem('id_token', authToken.token);
     localStorage.setItem('expires_at', authToken.expirationTime);
+    const decodedToken = this.decodedToken();
+
+    const user = {
+      id: decodedToken.Id,
+      displayName: decodedToken.DisplayName,
+      email: decodedToken.Email,
+    };
+
+    this.user = user;
   }
 
   public getToken() {
@@ -73,6 +89,18 @@ export class AuthService {
     }
 
     return decodedToken;
+  }
+
+  public get user(): User {
+    return this._user;
+  }
+
+  public setUser() {
+    console.log('Here');
+  }
+
+  private set user(user: User) {
+    this._user = user;
   }
 
   private isTokenExpired() {

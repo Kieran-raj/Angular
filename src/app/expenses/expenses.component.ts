@@ -14,9 +14,9 @@ import { LineData } from '../shared/models/line-data';
 import {
   loadCategoricalAmounts,
   loadDailyExpenses,
-  loadAllExpenses,
   loadMonthlyExpense,
   loadMonthlyInsAndOuts,
+  loadExpenses,
 } from './data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
@@ -39,7 +39,9 @@ import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
 import { addModalAction } from './data-state/actions/updates.action';
+import { UserState } from './data-state/states/user.state';
 import { selectUserInfo } from './data-state/selectors/user.selectors';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-expenses',
@@ -155,12 +157,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   successfulUpdate: boolean;
 
-  /**
-   * Update message
-   * @type {string}
-   */
-  updateMessage = 'Successfully added new cateogry';
-
   @ViewChild('editDeleteModal', { static: true })
   editDeleteModal: ElementRef;
 
@@ -177,8 +173,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     this.transactionStore.dispatch(loadDailyExpenses());
 
     this.transactionStore.dispatch(loadMonthlyExpense());
-
-    this.transactionStore.dispatch(loadAllExpenses());
+    this.transactionStore.dispatch(
+      loadExpenses({
+        user: this.authService.user,
+      })
+    );
 
     this.transactionStore.dispatch(loadCategoricalAmounts());
 

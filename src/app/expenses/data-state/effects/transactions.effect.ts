@@ -9,12 +9,12 @@ import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
 import { TransactionsService } from '../../api-services/transaction.service';
 
 import {
-  loadAllExpenses,
+  loadExpenses,
   loadDailyExpenses,
   loadDailyExpensesSuccess,
   loadMonthlyExpense,
   loadMonthlyExpenseSuccess,
-  loadAllExpensesSuccess,
+  loadExpensesSuccess,
   loadCategoricalAmounts,
   loadCategoricalAmountsSuccess,
   loadCategories,
@@ -27,18 +27,29 @@ import {
 
 @Injectable()
 export class TransactionsEffect {
-  loadAllExpenses$ = createEffect(() =>
+  loadExpenses$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadAllExpenses),
-      mergeMap(() =>
-        this.transactionService.getAllExpenses().pipe(
+      ofType(loadExpenses),
+      mergeMap((action) => {
+        if (action?.user) {
+          return this.transactionService
+            .getUserExpenses(action.user.id.toString())
+            .pipe(
+              map((expenses: Expense[]) => {
+                return loadExpensesSuccess({
+                  expenses: expenses,
+                });
+              })
+            );
+        }
+        return this.transactionService.getAllExpenses().pipe(
           map((expenses: Expense[]) => {
-            return loadAllExpensesSuccess({
+            return loadExpensesSuccess({
               expenses: expenses,
             });
           })
-        )
-      )
+        );
+      })
     )
   );
 

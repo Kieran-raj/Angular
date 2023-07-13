@@ -7,8 +7,8 @@ import {
   loadCategoriesSuccess,
   loadDailyExpenses,
   loadDailyExpensesSuccess,
-  loadAllExpenses,
-  loadAllExpensesSuccess,
+  loadExpenses,
+  loadExpensesSuccess,
   loadMonthlyExpense,
   loadMonthlyExpenseSuccess,
   loadMonthlyInsAndOutsSuccess,
@@ -51,12 +51,12 @@ export const transactionsReducer = createReducer(
       monthlyTransactions: action.monthlyTransactions,
     };
   }),
-  on(loadAllExpenses, (state) => {
+  on(loadExpenses, (state) => {
     return {
       ...state,
     };
   }),
-  on(loadAllExpensesSuccess, (state, action) => {
+  on(loadExpensesSuccess, (state, action) => {
     return {
       ...state,
       expenses: action.expenses,

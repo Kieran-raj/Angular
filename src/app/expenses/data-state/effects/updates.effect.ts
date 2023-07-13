@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, mergeMap } from 'rxjs';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 import { UpdatesService } from '../../api-services/updates.service';
 import {
-  loadAllExpenses,
+  loadExpenses,
   loadDailyExpenses,
   loadMonthlyExpense,
   loadMonthlyInsAndOuts,
@@ -35,6 +36,7 @@ export class UpdatesEffect {
     )
   );
 
+  // Needs to reload expenses data with user
   updateCreateTransaction$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createUpdateTransaction),
@@ -47,7 +49,9 @@ export class UpdatesEffect {
 
             this.transactionStore.dispatch(loadMonthlyExpense());
 
-            this.transactionStore.dispatch(loadAllExpenses());
+            this.transactionStore.dispatch(
+              loadExpenses({ user: this.authService.user })
+            );
 
             this.transactionStore.dispatch(loadMonthlyInsAndOuts());
 
@@ -58,6 +62,7 @@ export class UpdatesEffect {
     )
   );
 
+  // Needs to reload expenses data with user
   deleteTransactions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteTransaction),
@@ -68,7 +73,7 @@ export class UpdatesEffect {
 
             this.transactionStore.dispatch(loadMonthlyExpense());
 
-            this.transactionStore.dispatch(loadAllExpenses());
+            this.transactionStore.dispatch(loadExpenses({ user: null }));
 
             return deleteTransactionSuccess();
           })
@@ -80,6 +85,7 @@ export class UpdatesEffect {
   constructor(
     private actions$: Actions,
     private updateService: UpdatesService,
-    private transactionStore: Store<TransactionState>
+    private transactionStore: Store<TransactionState>,
+    private authService: AuthService
   ) {}
 }
