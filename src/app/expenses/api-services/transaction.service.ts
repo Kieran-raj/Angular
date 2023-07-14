@@ -31,19 +31,17 @@ export class TransactionsService {
     );
   }
 
-  getDailyAmounts(): Observable<DailyAmount[]> {
-    return this.http.get<DailyAmount[]>(`${this.url}/expense/daily-amounts`);
-  }
-
-  getMonthlyAmounts(): Observable<MonthlyExpense[]> {
-    return this.http.get<MonthlyExpense[]>(
-      `${this.url}/expense/monthly-amounts`
+  getDailyAmounts(userId: string | null = null): Observable<DailyAmount[]> {
+    return this.http.get<DailyAmount[]>(
+      `${this.url}/expense/daily-amounts?userId=${userId}`
     );
   }
 
-  getCategoricalAmounts(): Observable<CategoricalAmounts[]> {
+  getCategoricalAmounts(
+    userId: string | null = null
+  ): Observable<CategoricalAmounts[]> {
     return this.http.get<CategoricalAmounts[]>(
-      `${this.url}/expense/categorical-amounts`
+      `${this.url}/expense/categorical-amounts?userId=${userId}`
     );
   }
 
@@ -51,7 +49,7 @@ export class TransactionsService {
     return this.http.get<Category[]>(`${this.url}/categories/all-categories`);
   }
 
-  getMonthlyInOuts(userId: Number): Observable<MonthlyInOut[]> {
+  getMonthlyInOuts(userId: string | null = null): Observable<MonthlyInOut[]> {
     return this.http.get<MonthlyInOut[]>(
       `${this.url}/expense/in-out-amounts?userId=${userId}`
     );

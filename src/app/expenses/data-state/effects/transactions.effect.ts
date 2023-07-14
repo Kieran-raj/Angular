@@ -4,17 +4,14 @@ import { map, mergeMap } from 'rxjs';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
-import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
 import { TransactionsService } from '../../api-services/transaction.service';
 
 import {
-  loadAllExpenses,
+  loadExpenses,
   loadDailyExpenses,
   loadDailyExpensesSuccess,
-  loadMonthlyExpense,
-  loadMonthlyExpenseSuccess,
-  loadAllExpensesSuccess,
+  loadExpensesSuccess,
   loadCategoricalAmounts,
   loadCategoricalAmountsSuccess,
   loadCategories,
@@ -24,21 +21,33 @@ import {
   loadMonthlyBreakDown,
   loadMonthlyBreakDownSuccess,
 } from '../actions/transactions.action';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Injectable()
 export class TransactionsEffect {
-  loadAllExpenses$ = createEffect(() =>
+  loadExpenses$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadAllExpenses),
-      mergeMap(() =>
-        this.transactionService.getAllExpenses().pipe(
+      ofType(loadExpenses),
+      mergeMap((action) => {
+        if (action?.user) {
+          return this.transactionService
+            .getUserExpenses(action.user.id.toString())
+            .pipe(
+              map((expenses: Expense[]) => {
+                return loadExpensesSuccess({
+                  expenses: expenses,
+                });
+              })
+            );
+        }
+        return this.transactionService.getAllExpenses().pipe(
           map((expenses: Expense[]) => {
-            return loadAllExpensesSuccess({
+            return loadExpensesSuccess({
               expenses: expenses,
             });
           })
-        )
-      )
+        );
+      })
     )
   );
 
@@ -46,28 +55,15 @@ export class TransactionsEffect {
     this.actions$.pipe(
       ofType(loadDailyExpenses),
       mergeMap(() =>
-        this.transactionService.getDailyAmounts().pipe(
-          map((dailyAmounts: DailyAmount[]) =>
-            loadDailyExpensesSuccess({
-              transactions: dailyAmounts,
-            })
+        this.transactionService
+          .getDailyAmounts(this.authService.user.id.toString())
+          .pipe(
+            map((dailyAmounts: DailyAmount[]) =>
+              loadDailyExpensesSuccess({
+                transactions: dailyAmounts,
+              })
+            )
           )
-        )
-      )
-    )
-  );
-
-  loadMonthlyExpenses$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadMonthlyExpense),
-      mergeMap(() =>
-        this.transactionService.getMonthlyAmounts().pipe(
-          map((monthlyAmounts: MonthlyExpense[]) =>
-            loadMonthlyExpenseSuccess({
-              monthlyTransactions: monthlyAmounts,
-            })
-          )
-        )
       )
     )
   );
@@ -76,13 +72,15 @@ export class TransactionsEffect {
     this.actions$.pipe(
       ofType(loadCategoricalAmounts),
       mergeMap(() =>
-        this.transactionService.getCategoricalAmounts().pipe(
-          map((categoricalAmounts: CategoricalAmounts[]) =>
-            loadCategoricalAmountsSuccess({
-              transactions: categoricalAmounts,
-            })
+        this.transactionService
+          .getCategoricalAmounts(this.authService.user.id.toString())
+          .pipe(
+            map((categoricalAmounts: CategoricalAmounts[]) =>
+              loadCategoricalAmountsSuccess({
+                transactions: categoricalAmounts,
+              })
+            )
           )
-        )
       )
     )
   );
@@ -106,13 +104,15 @@ export class TransactionsEffect {
     this.actions$.pipe(
       ofType(loadMonthlyInsAndOuts),
       mergeMap(() =>
-        this.transactionService.getMonthlyInOuts(1).pipe(
-          map((data: MonthlyInOut[]) =>
-            loadMonthlyInsAndOutsSuccess({
-              monthlyInsAndOuts: data,
-            })
+        this.transactionService
+          .getMonthlyInOuts(this.authService.user.id.toString())
+          .pipe(
+            map((data: MonthlyInOut[]) =>
+              loadMonthlyInsAndOutsSuccess({
+                monthlyInsAndOuts: data,
+              })
+            )
           )
-        )
       )
     )
   );
@@ -136,6 +136,7 @@ export class TransactionsEffect {
 
   constructor(
     private actions$: Actions,
-    private transactionService: TransactionsService
+    private transactionService: TransactionsService,
+    private authService: AuthService
   ) {}
 }

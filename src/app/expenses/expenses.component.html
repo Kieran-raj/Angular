@@ -85,7 +85,10 @@
         <div class="card-header border-0">Category Breakdown</div>
         <div class="container-fluid card-body cardBody shadow">
           <div class="col-12" id="pie-chart" align="center">
-            <app-pie-grid-chart [sourceData]="pieData"></app-pie-grid-chart>
+            <app-pie-grid-chart
+              *ngIf="pieData.length > 0"
+              [sourceData]="pieData"
+            ></app-pie-grid-chart>
           </div>
         </div>
       </div>

@@ -14,14 +14,12 @@ import { LineData } from '../shared/models/line-data';
 import {
   loadCategoricalAmounts,
   loadDailyExpenses,
-  loadAllExpenses,
-  loadMonthlyExpense,
   loadMonthlyInsAndOuts,
+  loadExpenses,
 } from './data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
   selectDailyTransactions,
-  selectMonthlyTransactions,
 } from './data-state/selectors/transactions.selectors';
 import { selectModalAction } from './data-state/selectors/updates.selectors';
 import { TransactionState } from './data-state/states/transactions.state';
@@ -39,7 +37,6 @@ import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
 import { addModalAction } from './data-state/actions/updates.action';
-import { selectUserInfo } from './data-state/selectors/user.selectors';
 
 @Component({
   selector: 'app-expenses',
@@ -87,13 +84,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * @type {Observable<DailyExpense[] | undefined>}
    */
   public dailyAmounts$ = this.transactionStore.select(selectDailyTransactions);
-  /**
-   * Monthly amounts.
-   * @type {Observable<MonthlyTransaction[] | undefined>}
-   */
-  public monthlyAmounts$ = this.transactionStore.select(
-    selectMonthlyTransactions
-  );
 
   /**
    * Categorical amounts.
@@ -155,12 +145,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   successfulUpdate: boolean;
 
-  /**
-   * Update message
-   * @type {string}
-   */
-  updateMessage = 'Successfully added new cateogry';
-
   @ViewChild('editDeleteModal', { static: true })
   editDeleteModal: ElementRef;
 
@@ -176,9 +160,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   ) {
     this.transactionStore.dispatch(loadDailyExpenses());
 
-    this.transactionStore.dispatch(loadMonthlyExpense());
-
-    this.transactionStore.dispatch(loadAllExpenses());
+    this.transactionStore.dispatch(
+      loadExpenses({
+        user: this.authService.user,
+      })
+    );
 
     this.transactionStore.dispatch(loadCategoricalAmounts());
 

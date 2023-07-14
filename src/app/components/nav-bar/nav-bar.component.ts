@@ -12,12 +12,14 @@ import {
 import { Store } from '@ngrx/store';
 import jwtDecode from 'jwt-decode';
 import { Subscription } from 'rxjs';
+import { clearState } from 'src/app/expenses/data-state/actions/transactions.action';
 import {
   setUserInfo,
   userLoginSuccess,
   userLogOut,
 } from 'src/app/expenses/data-state/actions/user.action';
 import { selectUserToken } from 'src/app/expenses/data-state/selectors/user.selectors';
+import { ExpensesAppState } from 'src/app/expenses/data-state/states/expenses-app.state';
 import { UserState } from 'src/app/expenses/data-state/states/user.state';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { User } from 'src/app/shared/models/user';
@@ -89,6 +91,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private userStore: Store<UserState>,
+    private store: Store<ExpensesAppState>,
     private router: Router
   ) {}
 
@@ -126,6 +129,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   public signOut() {
     this.userStore.dispatch(userLogOut());
+    this.store.dispatch(clearState());
     this.authService.logout();
     this.router.navigate(['/home']);
   }

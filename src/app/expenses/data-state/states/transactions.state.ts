@@ -17,11 +17,6 @@ export interface TransactionState {
   dailyTransactions: DailyAmount[] | null | undefined;
 
   /**
-   * Monthly Transactions
-   */
-  monthlyTransactions: MonthlyExpense[] | null | undefined;
-
-  /**
    * Categorical Amounts.
    */
   categoricalAmounts: CategoricalAmounts[] | null | undefined;

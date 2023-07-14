@@ -3,17 +3,18 @@ import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { Category } from 'src/app/shared/models/category';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
-import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
+import { User } from 'src/app/shared/models/user';
 
 const expensesPrefix = '[Expenses] - ';
 
-export const loadAllExpenses = createAction(
-  `${expensesPrefix} Load All Expenses`
+export const loadExpenses = createAction(
+  `${expensesPrefix} Load Expenses`,
+  props<{ user: User | null }>()
 );
 
-export const loadAllExpensesSuccess = createAction(
-  `${expensesPrefix} Load All Expenses Success`,
+export const loadExpensesSuccess = createAction(
+  `${expensesPrefix} Load Expenses Success`,
   props<{ expenses: Expense[] }>()
 );
 
@@ -24,15 +25,6 @@ export const loadDailyExpenses = createAction(
 export const loadDailyExpensesSuccess = createAction(
   `${expensesPrefix} Load Daily Expenses Success`,
   props<{ transactions: DailyAmount[] }>()
-);
-
-export const loadMonthlyExpense = createAction(
-  `${expensesPrefix} Load Monthly Expenses`
-);
-
-export const loadMonthlyExpenseSuccess = createAction(
-  `${expensesPrefix} Load Monthly Expenses Success`,
-  props<{ monthlyTransactions?: MonthlyExpense[] }>()
 );
 
 export const loadMonthlyInsAndOuts = createAction(
@@ -74,3 +66,5 @@ export const loadMonthlyBreakDownSuccess = createAction(
   `${expensesPrefix} Load Monthly Breakdown Amounts Success`,
   props<{ amounts: CategoricalAmounts[] }>()
 );
+
+export const clearState = createAction(`${expensesPrefix}  Clearing State`);
