@@ -77,7 +77,6 @@ export class AuthService {
     return {
       token: this.getToken(),
       expirationTime: localStorage.getItem('expires_at'),
-      userId: '1',
     } as AuthToken;
   }
 
@@ -96,7 +95,15 @@ export class AuthService {
   }
 
   public setUser() {
-    console.log('Here');
+    const decodedToken = this.decodedToken();
+
+    const user = {
+      id: decodedToken.Id,
+      displayName: decodedToken.DisplayName,
+      email: decodedToken.Email,
+    };
+
+    this.user = user;
   }
 
   private set user(user: User) {

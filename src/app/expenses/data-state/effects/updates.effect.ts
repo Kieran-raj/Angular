@@ -7,8 +7,8 @@ import { UpdatesService } from '../../api-services/updates.service';
 import {
   loadExpenses,
   loadDailyExpenses,
-  loadMonthlyExpense,
   loadMonthlyInsAndOuts,
+  loadCategoricalAmounts,
 } from '../actions/transactions.action';
 import {
   addNewCategory,
@@ -47,13 +47,13 @@ export class UpdatesEffect {
           map(() => {
             this.transactionStore.dispatch(loadDailyExpenses());
 
-            this.transactionStore.dispatch(loadMonthlyExpense());
-
             this.transactionStore.dispatch(
               loadExpenses({ user: this.authService.user })
             );
 
             this.transactionStore.dispatch(loadMonthlyInsAndOuts());
+
+            this.transactionStore.dispatch(loadCategoricalAmounts());
 
             return createUpdateTransactionSuccess({ isUpdated: true });
           })
@@ -69,11 +69,11 @@ export class UpdatesEffect {
       mergeMap((action) => {
         return this.updateService.deleteTransaction(action.expense).pipe(
           map(() => {
+            this.transactionStore.dispatch(loadCategoricalAmounts());
             this.transactionStore.dispatch(loadDailyExpenses());
-
-            this.transactionStore.dispatch(loadMonthlyExpense());
-
-            this.transactionStore.dispatch(loadExpenses({ user: null }));
+            this.transactionStore.dispatch(
+              loadExpenses({ user: this.authService.user })
+            );
 
             return deleteTransactionSuccess();
           })

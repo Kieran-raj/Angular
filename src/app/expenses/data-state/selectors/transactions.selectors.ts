@@ -13,11 +13,6 @@ export const selectDailyTransactions = createSelector(
   (state: TransactionState) => state.dailyTransactions
 );
 
-export const selectMonthlyTransactions = createSelector(
-  selectTransactionsState,
-  (state: TransactionState) => state.monthlyTransactions
-);
-
 export const selectExpenses = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.expenses

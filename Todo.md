@@ -78,6 +78,7 @@
 14. Refactor end points to allow for userIds
 15. Log in and sign up form, have some shared logic, so pull out into separate file
 16. Upgrade angular
+17. Maybe change nav bar to angular material
 
 ---
 
@@ -87,7 +88,7 @@
 2. ~~Allow for updating a record~~ &#x2611;
 3. ~~Allow for the creation of new records (should update grid and charts)~~ &#x2611;
 4. ~~All for the deletion of records (should update grid and charts)~~ &#x2611;
-5. Allow the creation of new users
+5. ~~Allow the creation of new users~~ &#x2611;
 6. Allow the users to edit any monthly subscriptions that they want
 7. ~~Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)~~ &#x2611;
 8. Upcoming transactions
