@@ -14,8 +14,6 @@ import {
   loadExpensesSuccess,
   loadCategoricalAmounts,
   loadCategoricalAmountsSuccess,
-  loadCategories,
-  loadCategoriesSuccess,
   loadMonthlyInsAndOuts,
   loadMonthlyInsAndOutsSuccess,
   loadMonthlyBreakDown,
@@ -81,21 +79,6 @@ export class TransactionsEffect {
               })
             )
           )
-      )
-    )
-  );
-
-  loadCategories$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadCategories),
-      mergeMap(() =>
-        this.transactionService.getCategories().pipe(
-          map((categoryData: any) =>
-            loadCategoriesSuccess({
-              categories: categoryData,
-            })
-          )
-        )
       )
     )
   );

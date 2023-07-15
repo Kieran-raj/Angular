@@ -48,6 +48,8 @@ import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow
 import { NetFlowModalComponent } from './expenses/net-flow-modal/net-flow-modal.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { categoryReducer } from './expenses/data-state/reducers/category.reducer';
+import { CategoryEffect } from './expenses/data-state/effects/category.effect';
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,6 +100,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     FontAwesomeModule,
     StoreModule.forRoot({
       transactions: transactionsReducer,
+      category: categoryReducer,
       updates: updatesReducer,
       user: userReducer,
     }),
@@ -106,7 +109,12 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([TransactionsEffect, UpdatesEffect, UserEffect]),
+    EffectsModule.forRoot([
+      TransactionsEffect,
+      CategoryEffect,
+      UpdatesEffect,
+      UserEffect,
+    ]),
   ],
   providers: [
     ChartHelper,

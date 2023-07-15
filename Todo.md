@@ -79,6 +79,7 @@
 15. Log in and sign up form, have some shared logic, so pull out into separate file
 16. Upgrade angular
 17. Maybe change nav bar to angular material
+18. Pull out all user into different its own component
 
 ---
 

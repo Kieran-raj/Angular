@@ -1,12 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
-import { Category } from 'src/app/shared/models/category';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
 import { User } from 'src/app/shared/models/user';
 
-const expensesPrefix = '[Expenses] - ';
+const expensesPrefix = '[Expenses Transactions] - ';
 
 export const loadExpenses = createAction(
   `${expensesPrefix} Load Expenses`,
@@ -48,13 +47,6 @@ export const loadCategoricalAmountsSuccess = createAction(
 export const addChosenExpenseToState = createAction(
   `${expensesPrefix} Add Selected Expense To State`,
   props<{ expense: Expense }>()
-);
-
-export const loadCategories = createAction(`${expensesPrefix} Load Categories`);
-
-export const loadCategoriesSuccess = createAction(
-  `${expensesPrefix} Load Categories Success`,
-  props<{ categories: Category[] }>()
 );
 
 export const loadMonthlyBreakDown = createAction(

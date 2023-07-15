@@ -15,18 +15,17 @@ import { Category } from 'src/app/shared/models/category';
 import { Expense } from 'src/app/shared/models/expense';
 import { User } from 'src/app/shared/models/user';
 import { modalSettings } from 'src/app/shared/settings/modal-settings';
-import { loadCategories } from '../data-state/actions/transactions.action';
+import { loadCategories } from '../data-state/actions/category.action';
 import {
   addNewCategory,
   createUpdateTransaction,
   deleteTransaction,
   resetUpdateState,
 } from '../data-state/actions/updates.action';
-import {
-  selectCategories,
-  selectChosenExpense,
-} from '../data-state/selectors/transactions.selectors';
+import { selectCategories } from '../data-state/selectors/category.selectors';
+import { selectChosenExpense } from '../data-state/selectors/transactions.selectors';
 import { selectUserInfo } from '../data-state/selectors/user.selectors';
+import { CategoryState } from '../data-state/states/category.state';
 import { TransactionState } from '../data-state/states/transactions.state';
 import { UpdateState } from '../data-state/states/update.state';
 import { UserState } from '../data-state/states/user.state';
@@ -122,6 +121,7 @@ export class ExpensesCreateModalComponent
 
   constructor(
     private transactionStore: Store<TransactionState>,
+    private categoryStore: Store<CategoryState>,
     private updatesStore: Store<UpdateState>,
     private userStore: Store<UserState>
   ) {
@@ -130,7 +130,7 @@ export class ExpensesCreateModalComponent
         this.user = user;
       })
     );
-    this.transactionStore.dispatch(loadCategories());
+    this.categoryStore.dispatch(loadCategories());
   }
 
   ngOnInit(): void {
@@ -140,10 +140,10 @@ export class ExpensesCreateModalComponent
       this.disableOKButton = false;
     }
 
-    this.categories$ = this.transactionStore.select(selectCategories);
+    this.categories$ = this.categoryStore.select(selectCategories);
 
     this.subscriptions.push(
-      this.transactionStore.select(selectCategories).subscribe((data) => {
+      this.categoryStore.select(selectCategories).subscribe((data) => {
         data?.forEach((category) => this.categories.push(category.name));
       })
     );

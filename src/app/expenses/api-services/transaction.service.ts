@@ -1,9 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Category } from 'src/app/shared/models/category';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
-import { MonthlyExpense } from 'src/app/shared/models/monthly-expense';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
@@ -43,10 +41,6 @@ export class TransactionsService {
     return this.http.get<CategoricalAmounts[]>(
       `${this.url}/expense/categorical-amounts?userId=${userId}`
     );
-  }
-
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.url}/categories/all-categories`);
   }
 
   getMonthlyInOuts(userId: string | null = null): Observable<MonthlyInOut[]> {

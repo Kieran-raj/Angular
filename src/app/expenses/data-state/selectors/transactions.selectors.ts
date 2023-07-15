@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { TransactionState } from '../states/transactions.state';
 
@@ -26,11 +25,6 @@ export const selectChosenExpense = createSelector(
 export const selectCategoricalAmounts = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.categoricalAmounts
-);
-
-export const selectCategories = createSelector(
-  selectTransactionsState,
-  (state: TransactionState) => state.categories
 );
 
 export const selectMonthlyInsAndOuts = createSelector(
