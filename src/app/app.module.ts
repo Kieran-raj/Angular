@@ -50,6 +50,10 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { categoryReducer } from './expenses/data-state/reducers/category.reducer';
 import { CategoryEffect } from './expenses/data-state/effects/category.effect';
+import { UserSettingsComponent } from './users/user-settings/user-settings.component';
+import { ProfileSettingsComponent } from './users/user-settings/profile-settings/profile-settings.component';
+
+import { NotificationSettingsComponent } from './users/user-settings/notification-settings/notification-settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +77,9 @@ import { CategoryEffect } from './expenses/data-state/effects/category.effect';
     NetFlowModalComponent,
     PieChartComponent,
     SignUpComponent,
+    UserSettingsComponent,
+    ProfileSettingsComponent,
+    NotificationSettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +95,21 @@ import { CategoryEffect } from './expenses/data-state/effects/category.effect';
         path: 'expenses',
         component: ExpensesComponent,
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'user/:username',
+        component: UserSettingsComponent,
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: 'profile',
+            component: ProfileSettingsComponent,
+          },
+          {
+            path: 'notifications',
+            component: NotificationSettingsComponent,
+          },
+        ],
       },
     ]),
     BrowserAnimationsModule,
@@ -121,7 +143,7 @@ import { CategoryEffect } from './expenses/data-state/effects/category.effect';
     AuthService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: 'BASE_API_URL', useValue: 'https://localhost:7271' },
+    { provide: 'BASE_API_URL', useValue: environment.baseUrl },
   ],
   bootstrap: [AppComponent],
   exports: [ExpensesSideBarComponent, BrowserAnimationsModule],

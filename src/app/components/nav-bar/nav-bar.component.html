@@ -5,7 +5,12 @@
 >
   <div class="col">
     <div class="row" id="user-logo-banner">
-      <img alt="User logo" src="./assets/images/userLogo.png" id="user-image" />
+      <img
+        alt="User logo"
+        src="./assets/images/userLogo.png"
+        id="user-image"
+        (click)="navigate('/user/kieran.rajasansir')"
+      />
     </div>
     <div class="row" id="user-banner">
       <div id="nav-bar-header-text">{{ user.displayName }}</div>
@@ -87,22 +92,21 @@
       <div
         class="col"
         [ngClass]="
-          getRoute().includes('settings')
+          getRoute().includes('kieran')
             ? 'nav-link-selected'
             : 'nav-link-unselected'
         "
       >
         <button
           class="btn shadow-none"
-          (click)="navigate('/settings')"
-          disabled="true"
+          [routerLink]="['user/kieran.rajasansir']"
         >
           <div class="row">
             <div class="col-5 nav-bar-item-icon">
               <fa-icon [icon]="faGear"></fa-icon>
             </div>
             <div class="col-7 nav-bar-item-text">
-              <span><s>Settings</s></span>
+              <span>Settings</span>
             </div>
           </div>
         </button>

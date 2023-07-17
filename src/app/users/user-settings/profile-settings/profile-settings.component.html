@@ -1,0 +1,65 @@
+<div class="col">
+  <div class="row pb-3 ps-4 d-flex align-items-center">
+    <div class="col-1">
+      <img alt="User logo" [src]="this.imageString" id="user-image" />
+    </div>
+    <div class="col-6" id="photo-upload">
+      <input
+        #csvInput
+        hidden="true"
+        type="file"
+        onclick="this.value=null"
+        (change)="uplodaPhoto($event)"
+      />
+      <button
+        mat-flat-button
+        id="upload-photo-button"
+        (click)="csvInput.click()"
+      >
+        Upload Photo
+      </button>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col-6">
+        <label for="firstNameInput"> First Name </label>
+        <input
+          class="form-control shadow-none"
+          id="firstNameInput"
+          type="text"
+          placeholder="First Name"
+        />
+      </div>
+      <div class="col-6">
+        <label for="lastNameInput"> Last Name </label>
+        <input
+          class="form-control shadow-none"
+          id="lastNameInput"
+          type="text"
+          placeholder="Last Name"
+        />
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-6">
+        <label for="emailInput"> Email </label>
+        <input
+          class="form-control shadow-none"
+          id="emailInput"
+          type="text"
+          placeholder="Email"
+        />
+      </div>
+      <div class="col-6">
+        <label for="displayName"> Display Name </label>
+        <input
+          class="form-control shadow-none"
+          id="displayName"
+          type="text"
+          placeholder="Display Name"
+        />
+      </div>
+    </div>
+  </div>
+</div>

@@ -57,6 +57,9 @@
 42. ~~Make ins and outs a bit smaller~~ &#x2611;
 43. ~~Remove moving average logic~~ &#x2611;
 44. **TESTS**!!!!!!!!!!!
+45. Need to add first name and last name to state and User object
+46. If you want to save, what should do?
+47. Monthly breakdown not working properly
 
 ---
 
@@ -96,6 +99,7 @@
 9. ~~When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)~~ &#x2611;
 10. User profile / settings
 11. Allow for demo mode
+12. Make it compatible for iphone
 
 ---
 
