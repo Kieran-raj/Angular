@@ -1,18 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { UserState } from 'src/app/expenses/data-state/states/user.state';
 
 @Component({
   selector: 'app-profile-settings',
   templateUrl: './profile-settings.component.html',
   styleUrls: ['./profile-settings.component.scss'],
 })
-export class ProfileSettingsComponent implements OnInit {
+export class ProfileSettingsComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   public imageString: any;
   public image: any;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  public formGroup = new FormGroup({
+    firstName: new FormControl(null, [Validators.required]),
+    lastName: new FormControl(null, [Validators.required]),
+    email: new FormControl(null, [Validators.required]),
+    displayName: new FormControl(null, [Validators.required]),
+    photo: new FormControl(null),
+  });
+
+  public subscriptions: Subscription[] = [];
+
+  constructor(
+    private sanitizer: DomSanitizer,
+    private userStore: Store<UserState>
+  ) {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.subscriptions.push(
+      this.formGroup.valueChanges.subscribe((data) => {
+        console.log(data);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {}
+
   public uplodaPhoto(fileInputEvent: any) {
     var reader = new FileReader();
     this.image = fileInputEvent.target.files[0];
@@ -25,6 +55,10 @@ export class ProfileSettingsComponent implements OnInit {
     this.imageString = this.sanitizer.bypassSecurityTrustUrl(
       `data:image/png;base64, ${btoa(binaryString)}`
     );
+  }
+
+  private clearForm() {
+    this.formGroup.reset();
   }
 }
 

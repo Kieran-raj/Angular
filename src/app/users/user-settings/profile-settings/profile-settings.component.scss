@@ -4,12 +4,18 @@ img {
   object-fit: cover;
 }
 
+label {
+  color: #063a5b;
+  font-size: larger;
+}
+
 #user-image {
   height: 100px;
   width: 100px;
 }
 
-#upload-photo-button {
+#upload-photo-button,
+#update-details-button {
   background-color: #005da6;
   color: white;
 }
