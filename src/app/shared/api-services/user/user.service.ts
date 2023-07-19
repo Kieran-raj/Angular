@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SignUpMessage } from '../../models/auth-models/sign-up-message';
 import { UserDetails } from '../../models/user-details';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +51,42 @@ export class UserSerivce {
     );
 
     return response;
+  }
+
+  updateUserDetails(user: User): Observable<User> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+
+    const options = { headers };
+
+    const body = { user: user };
+
+    return this.http.post<User>(
+      `${this.url}/user/update-details`,
+      body,
+      options
+    );
+  }
+
+  getUserInfo(id: string): Observable<User> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+
+    const options = { headers };
+    // return this.http.get<User>(`${this.url}/user/user-info?userId=${id}`);
+
+    const mockUser = {
+      id: 1,
+      email: 'admin@test.com',
+      firstName: 'kieran',
+      lastName: 'rajasansir',
+      displayName: 'Kieran Rajasansir',
+    };
+
+    return of(mockUser);
   }
 }

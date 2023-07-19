@@ -4,6 +4,10 @@ img {
   object-fit: cover;
 }
 
+input:disabled {
+  opacity: 50%;
+}
+
 label {
   color: #063a5b;
   font-size: larger;

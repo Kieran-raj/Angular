@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { AuthToken } from 'src/app/shared/models/auth-models/auth-token';
 import { SignUpMessage } from 'src/app/shared/models/auth-models/sign-up-message';
@@ -50,4 +51,19 @@ export const signUpSuccess = createAction(`${userPrefix} Sign Up Success`);
 export const signUpFailure = createAction(
   `${userPrefix} Sign Up Failure`,
   props<{ response: SignUpMessage }>()
+);
+
+export const updateUserDetails = createAction(
+  `${userPrefix} Update User Details`,
+  props<{ user: User }>()
+);
+
+export const updateUserDetailsSuccess = createAction(
+  `${userPrefix} Update User Details Success`,
+  props<{ user: User }>()
+);
+
+export const updateUserDetailsFailure = createAction(
+  `${userPrefix} Update User Details Failure`,
+  props<{ error: HttpErrorResponse }>()
 );

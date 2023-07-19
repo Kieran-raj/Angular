@@ -9,14 +9,15 @@
           #csvInput
           hidden="true"
           type="file"
-          formControlName="photo"
+          formControlName="image"
           onclick="this.value=null"
-          (change)="uplodaPhoto($event)"
+          (change)="uploadImage($event)"
         />
         <button
           mat-flat-button
           id="upload-photo-button"
           (click)="csvInput.click()"
+          [attr.disabled]="(isSaving$ | async) ? true : null"
         >
           Upload Photo
         </button>
@@ -32,6 +33,7 @@
             type="text"
             placeholder="First Name"
             formControlName="firstName"
+            [attr.disabled]="(isSaving$ | async) ? true : null"
           />
         </div>
         <div class="col-6">
@@ -42,6 +44,7 @@
             type="text"
             placeholder="Last Name"
             formControlName="lastName"
+            [attr.disabled]="(isSaving$ | async) ? true : null"
           />
         </div>
       </div>
@@ -54,6 +57,7 @@
             type="text"
             placeholder="Email"
             formControlName="email"
+            [attr.disabled]="(isSaving$ | async) ? true : null"
           />
         </div>
         <div class="col-6">
@@ -64,6 +68,7 @@
             type="text"
             placeholder="Display Name"
             formControlName="displayName"
+            [attr.disabled]="(isSaving$ | async) ? true : null"
           />
         </div>
       </div>
@@ -71,9 +76,20 @@
   </form>
   <div class="row mt-4">
     <div class="col-2">
-      <button mat-flat-button id="update-details-button" disabled="true">
+      <button
+        mat-flat-button
+        id="update-details-button"
+        [attr.disabled]="(isSaving$ | async) ? true : null"
+        (click)="okCallBack()"
+        *ngIf="!(isSaving$ | async)"
+      >
         Save Changes
       </button>
+      <mat-spinner
+        [diameter]="35"
+        [strokeWidth]="5"
+        *ngIf="isSaving$ | async"
+      ></mat-spinner>
     </div>
   </div>
 </div>

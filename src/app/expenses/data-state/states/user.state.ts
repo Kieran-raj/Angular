@@ -30,4 +30,9 @@ export interface UserState {
    * User Sign Up Details
    */
   details: SignUpMessage | null;
+
+  /**
+   * Is user updated
+   */
+  isUserUpdated: boolean | null;
 }

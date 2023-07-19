@@ -125,3 +125,9 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
     display: flex !important;
   }
 }
+
+@media screen and (max-width: 900px) {
+  app-nav-bar {
+    display: none;
+  }
+}

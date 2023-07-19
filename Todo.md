@@ -83,6 +83,8 @@
 16. Upgrade angular
 17. Maybe change nav bar to angular material
 18. Pull out all user into different its own component
+19. Pull Data state and API services into shared
+20. AuthService should handle setting the user info when first logging in
 
 ---
 
