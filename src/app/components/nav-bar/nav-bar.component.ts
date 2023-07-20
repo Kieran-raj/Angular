@@ -10,19 +10,12 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import jwtDecode from 'jwt-decode';
-import { Subscription } from 'rxjs';
 import { clearState } from 'src/app/expenses/data-state/actions/transactions.action';
-import {
-  setUserInfo,
-  userLoginSuccess,
-  userLogOut,
-} from 'src/app/expenses/data-state/actions/user.action';
-import { selectUserToken } from 'src/app/expenses/data-state/selectors/user.selectors';
+import { userLogOut } from 'src/app/expenses/data-state/actions/user.action';
+import { selectUserInfo } from 'src/app/expenses/data-state/selectors/user.selectors';
 import { ExpensesAppState } from 'src/app/expenses/data-state/states/expenses-app.state';
 import { UserState } from 'src/app/expenses/data-state/states/user.state';
 import { AuthService } from 'src/app/shared/auth/auth.service';
-import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-nav-bar',
@@ -34,7 +27,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
    * User
    * @type {User}
    */
-  user: User | null;
+  user$ = this.userStore.select(selectUserInfo);
 
   /**
    * User Icon
@@ -78,16 +71,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
    */
   faGear = faGear;
 
-  /**
-   * Auth Token
-   * @type {Observable<AuthToken>}
-   */
-  authToken$ = this.userStore.select(selectUserToken);
-
-  subscriptions: Subscription[] = [];
-
-  navLinkClass: string = '';
-
   constructor(
     private authService: AuthService,
     private userStore: Store<UserState>,
@@ -95,37 +78,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    if (this.authService.isloggedIn.value) {
-      const token = this.authService.getAuthTokenObject();
-      if (token) {
-        this.userStore.dispatch(userLoginSuccess({ authToken: token }));
-      }
-    }
+  ngOnInit(): void {}
 
-    this.subscriptions.push(
-      this.authToken$.subscribe((authToken) => {
-        if (!authToken) {
-          this.user = null;
-        }
-
-        if (authToken && Object.keys(authToken).length > 0) {
-          const token = authToken.token;
-          const decodedToken = jwtDecode(token) as any;
-          this.user = {
-            id: decodedToken.Id,
-            displayName: decodedToken.DisplayName,
-            email: decodedToken.Email,
-          };
-          this.userStore.dispatch(setUserInfo({ user: this.user }));
-        }
-      })
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
+  ngOnDestroy(): void {}
 
   public signOut() {
     this.userStore.dispatch(userLogOut());

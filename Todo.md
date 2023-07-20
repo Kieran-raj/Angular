@@ -76,15 +76,16 @@
 9. Clean up styling in nav bar
 10. Allow user to upload and save image as well
 11. Make dropdown on graph its own component
-12. Add Category service
+12. ~~Add Category service~~&#x2611;
 13. Pull data-state related to log in out into separate
-14. Refactor end points to allow for userIds
+14. ~~Refactor end points to allow for userIds~~&#x2611;
 15. Log in and sign up form, have some shared logic, so pull out into separate file
 16. Upgrade angular
 17. Maybe change nav bar to angular material
 18. Pull out all user into different its own component
 19. Pull Data state and API services into shared
-20. AuthService should handle setting the user info when first logging in
+20. ~~AppComponent should handle setting the user info when first logging in~~&#x2611;
+21. Refactor AuthService
 
 ---
 
@@ -112,9 +113,3 @@
 3. Fix nav bar width to fit on an ipad
 
 ---
-
-#### New things to learn/focus on
-
-1. ~~State management~~ &#x2611;
-2. ~~Subjects~~ &#x2611;
-3. async/await

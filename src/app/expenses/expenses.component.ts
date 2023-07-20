@@ -123,11 +123,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   modalDisplayRules: any;
 
   /**
-   * Is logged in
-   */
-  isLoggedIn$ = this.authService.isloggedIn;
-
-  /**
    * Modal instance.
    * @type {NgbModalRef}
    */

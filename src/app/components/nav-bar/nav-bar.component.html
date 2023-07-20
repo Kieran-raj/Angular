@@ -1,7 +1,7 @@
 <div
   class="min-vh-100 d-flex justify-content-center"
   id="side-nav-bar"
-  *ngIf="user"
+  *ngIf="user$ | async"
 >
   <div class="col">
     <div class="row" id="user-logo-banner">
@@ -13,7 +13,7 @@
       />
     </div>
     <div class="row" id="user-banner">
-      <div id="nav-bar-header-text">{{ user.displayName }}</div>
+      <div id="nav-bar-header-text">{{ (user$ | async)?.displayName }}</div>
     </div>
     <hr />
 

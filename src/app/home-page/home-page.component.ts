@@ -20,7 +20,7 @@ export class HomePageComponent implements OnInit {
    * Is the user logged in
    * @type {BehaviorSubject<boolean>}
    */
-  isLoggedIn$ = this.authService.isloggedIn;
+  isLoggedIn$ = this.authService.isloggedIn$;
 
   /**
    * Is logging in

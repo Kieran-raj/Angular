@@ -27,7 +27,7 @@ export class UserEffect {
       mergeMap((action) => {
         return this.authService.login(action.email, action.password).pipe(
           map((token) => {
-            this.authService.isloggedIn.next(true);
+            this.authService.isloggedIn$.next(true);
             this.authService.setSession(token);
             return userLoginSuccess({ authToken: token });
           }),
