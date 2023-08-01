@@ -16,6 +16,7 @@ import { selectUserInfo } from 'src/app/expenses/data-state/selectors/user.selec
 import { ExpensesAppState } from 'src/app/expenses/data-state/states/expenses-app.state';
 import { UserState } from 'src/app/expenses/data-state/states/user.state';
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-nav-bar',
@@ -95,5 +96,12 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   public getRoute(): string {
     return this.router.url;
+  }
+
+  public getUserPath(user: User | null): string {
+    if (user) {
+      return user.displayName;
+    }
+    return '';
   }
 }

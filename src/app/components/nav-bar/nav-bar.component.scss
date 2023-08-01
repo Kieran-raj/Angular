@@ -24,7 +24,7 @@ img {
 
 .nav-bar-item-button {
   margin-left: 1px;
-  width: 75%;
+  width: 100%;
 }
 
 .nav-bar-item-text {
@@ -45,7 +45,7 @@ img {
 }
 
 #side-nav-bar {
-  background-color: #f8f9fd;
+  background-color: white;
   color: #063a5b;
   padding-left: 2px;
 }
@@ -58,7 +58,7 @@ img {
   margin-bottom: 5rem;
 }
 
-#user-image {
+#user-photo {
   margin-top: 2rem;
   height: 100px;
   width: 100px;
@@ -81,5 +81,31 @@ img {
 
   .nav-bar-item-icon {
     padding: 0%;
+  }
+}
+
+/* Media Queries*/
+@media screen and (max-width: 1080px) {
+  #nav-bar-header-text {
+    font-size: large;
+  }
+
+  .nav-bar-item-icon {
+    padding: 0%;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  #nav-bar-header-text {
+    font-size: xx-large;
+  }
+
+  .nav-bar-item-text {
+    font-size: x-large;
+  }
+
+  .nav-bar-item-icon {
+    padding: 0%;
+    font-size: x-large;
   }
 }

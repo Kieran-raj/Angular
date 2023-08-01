@@ -99,6 +99,7 @@ export const userReducer = createReducer(
     return {
       ...state,
       userInfo: action.user,
+      isUserUpdated: true,
     };
   }),
   on(updateUserDetailsFailure, (state, action) => {
@@ -110,6 +111,7 @@ export const userReducer = createReducer(
     return {
       ...state,
       error: errorDetails,
+      isUserUpdated: false,
     };
   })
 );

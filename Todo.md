@@ -85,7 +85,8 @@
 18. Pull out all user into different its own component
 19. Pull Data state and API services into shared
 20. ~~AppComponent should handle setting the user info when first logging in~~&#x2611;
-21. Refactor AuthService
+21. Refactor AuthService and how user sessions are handles and how data is set
+22. Refactor navbar to work on phones and ipad
 
 ---
 

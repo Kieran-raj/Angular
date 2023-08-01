@@ -10,6 +10,7 @@ import {
   userLoginSuccess,
 } from './expenses/data-state/actions/user.action';
 import { User } from './shared/models/user';
+import { UserSerivce } from './shared/api-services/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -34,10 +35,10 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private userStore: Store<UserState>
+    private userStore: Store<UserState>,
+    private userService: UserSerivce,
   ) {
     if (this.authService.isloggedIn$.value) {
-      console.log('IsLoggedIn triggered');
       const token = this.authService.getAuthTokenObject();
       if (token) {
         this.userStore.dispatch(userLoginSuccess({ authToken: token }));
@@ -56,9 +57,18 @@ export class AppComponent implements OnInit {
             displayName: decodedToken.DisplayName,
             email: decodedToken.Email,
           };
+
+          this.userService
+            .getUserInfo(this.user.id.toString())
+            .subscribe((user) => {
+              console.log(user);
+              this.user = user;
+            })
+            .unsubscribe();
+
           this.userStore.dispatch(setUserInfo({ user: this.user }));
         }
-      })
+      }),
     );
   }
 }

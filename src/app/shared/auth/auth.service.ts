@@ -47,6 +47,7 @@ export class AuthService {
       email: email,
       password: password,
     };
+
     return this.http.post<AuthToken>(`${this.url}/auth/token`, body, options);
   }
 

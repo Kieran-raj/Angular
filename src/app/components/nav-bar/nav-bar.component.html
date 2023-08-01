@@ -5,12 +5,7 @@
 >
   <div class="col">
     <div class="row" id="user-logo-banner">
-      <img
-        alt="User logo"
-        src="./assets/images/userLogo.png"
-        id="user-image"
-        (click)="navigate('/user/kieran.rajasansir/profile')"
-      />
+      <img alt="User logo" src="./assets/images/userLogo.png" id="user-photo" />
     </div>
     <div class="row" id="user-banner">
       <div id="nav-bar-header-text">{{ (user$ | async)?.displayName }}</div>
@@ -19,7 +14,6 @@
 
     <div class="row nav-bar-item-button">
       <div
-        class="col"
         [ngClass]="
           getRoute().includes('home')
             ? 'nav-link-selected'
@@ -41,7 +35,6 @@
 
     <div class="row nav-bar-item-button">
       <div
-        class="col"
         [ngClass]="
           getRoute().includes('expenses')
             ? 'nav-link-selected'
@@ -63,7 +56,6 @@
 
     <div class="row nav-bar-item-button">
       <div
-        class="col"
         [ngClass]="
           getRoute().includes('stocks')
             ? 'nav-link-selected'
@@ -90,16 +82,15 @@
 
     <div class="row nav-bar-item-button">
       <div
-        class="col"
         [ngClass]="
-          getRoute().includes('kieran')
+          getRoute().includes((user$ | async)!.displayName)
             ? 'nav-link-selected'
             : 'nav-link-unselected'
         "
       >
         <button
           class="btn shadow-none"
-          [routerLink]="['user/kieran.rajasansir/profile']"
+          [routerLink]="['user/', getUserPath(user$ | async), 'profile']"
         >
           <div class="row">
             <div class="col-5 nav-bar-item-icon">

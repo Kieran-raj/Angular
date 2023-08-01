@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -118,6 +119,7 @@ import { NotificationSettingsComponent } from './users/user-settings/notificatio
     MatDialogModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     NgxChartsModule,
     FontAwesomeModule,
     StoreModule.forRoot({

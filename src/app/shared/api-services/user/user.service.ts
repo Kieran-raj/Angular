@@ -13,7 +13,7 @@ export class UserSerivce {
 
   constructor(
     @Inject('BASE_API_URL') private baseUrl: string,
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     this.url = `${this.baseUrl}/api`;
   }
@@ -30,7 +30,7 @@ export class UserSerivce {
     return this.http.post<SignUpMessage>(
       `${this.url}/user/create`,
       body,
-      options
+      options,
     );
   }
 
@@ -47,7 +47,7 @@ export class UserSerivce {
     const response = this.http.post<SignUpMessage>(
       `${this.url}/user/check-details`,
       body,
-      options
+      options,
     );
 
     return response;
@@ -63,11 +63,20 @@ export class UserSerivce {
 
     const body = { user: user };
 
-    return this.http.post<User>(
-      `${this.url}/user/update-details`,
-      body,
-      options
-    );
+    const mockUser = {
+      id: 1,
+      email: 'admin@test.com',
+      firstName: 'kieran',
+      lastName: 'rajasansir',
+      displayName: 'jkrajasansir',
+    };
+
+    return of(mockUser);
+    // return this.http.post<User>(
+    //   `${this.url}/user/update-details`,
+    //   body,
+    //   options
+    // );
   }
 
   getUserInfo(id: string): Observable<User> {
@@ -77,16 +86,16 @@ export class UserSerivce {
     });
 
     const options = { headers };
-    // return this.http.get<User>(`${this.url}/user/user-info?userId=${id}`);
+    return this.http.get<User>(`${this.url}/user/user-info?userId=${id}`);
 
-    const mockUser = {
-      id: 1,
-      email: 'admin@test.com',
-      firstName: 'kieran',
-      lastName: 'rajasansir',
-      displayName: 'Kieran Rajasansir',
-    };
+    // const mockUser = {
+    //   id: 1,
+    //   email: 'admin@test.com',
+    //   firstName: 'kieran',
+    //   lastName: 'rajasansir',
+    //   displayName: 'Kieran Rajasansir',
+    // };
 
-    return of(mockUser);
+    // return of(mockUser);
   }
 }

@@ -1,5 +1,6 @@
 .header {
   font-size: x-large;
+  color: #063a5b;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
@@ -31,4 +32,8 @@
     65%,
     #005da6 100%
   );
+}
+
+#delete-account-button {
+  margin-top: 2rem;
 }

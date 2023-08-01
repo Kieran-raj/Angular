@@ -1,8 +1,8 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
 <div class="header">Account Settings</div>
 <div class="row">
-  <div class="col-3" style="height: 100%">
-    <div class="card">
+  <div class="col-xl-3 col-lg-4" style="height: 100%">
+    <div class="card" id="user-profile-nav-card">
       <div class="card-body shadow">
         <div class="col">
           <div class="row" *ngFor="let button of buttons">
@@ -23,7 +23,7 @@
               </div>
             </button>
           </div>
-          <div class="row">
+          <div class="row" id="delete-account-button">
             <button class="btn shadow-none">
               <div class="row">
                 <div class="col-2 item-delete-text">
@@ -39,7 +39,7 @@
       </div>
     </div>
   </div>
-  <div class="col-7" style="height: 100%">
+  <div class="col-xl-7 col-lg-8" style="height: 100%">
     <div class="card">
       <div class="card-body shadow"><router-outlet></router-outlet></div>
     </div>

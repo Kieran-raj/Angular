@@ -29,3 +29,8 @@ export const selectSignUpDetails = createSelector(
   selectUserState,
   (state: UserState) => state.details
 );
+
+export const selectIsUserUpdated = createSelector(
+  selectUserState,
+  (state: UserState) => state.isUserUpdated
+);
