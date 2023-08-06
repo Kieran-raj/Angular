@@ -82,7 +82,7 @@
 15. Log in and sign up form, have some shared logic, so pull out into separate file
 16. Upgrade angular
 17. Maybe change nav bar to angular material
-18. Pull out all user into different its own component
+18. ~~Pull out all user into different its own component~~&#x2611;
 19. Pull Data state and API services into shared
 20. ~~AppComponent should handle setting the user info when first logging in~~&#x2611;
 21. Refactor AuthService and how user sessions are handles and how data is set

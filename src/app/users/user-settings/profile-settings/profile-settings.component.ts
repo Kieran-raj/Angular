@@ -9,6 +9,8 @@ import {
   selectUserInfo
 } from 'src/app/expenses/data-state/selectors/user.selectors';
 import { UserState } from 'src/app/expenses/data-state/states/user.state';
+import { BuinessRuleContext } from 'src/app/shared/business-rules/business-rule-context';
+import { ProfileSettingsBusinessRule } from 'src/app/shared/business-rules/rules/ProfileSettingsBusinessRule';
 import { User } from 'src/app/shared/models/user';
 
 @Component({
@@ -78,19 +80,20 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
   });
 
   /**
-   * Initial form group data
-   */
-  public initialFormData: { [key: string]: any } = {};
-
-  /**
    * Is the form being saved
    * @type {BehaviorSubject<boolean>}
    */
   public isSaving$ = new BehaviorSubject<boolean>(false);
 
+  /**
+   * Initial form group data
+   */
+  private initialFormData: { [key: string]: any } = {};
+
   constructor(
     private sanitizer: DomSanitizer,
-    private userStore: Store<UserState>
+    private userStore: Store<UserState>,
+    private businessRuleContext: BuinessRuleContext
   ) {}
 
   ngOnInit(): void {
@@ -106,10 +109,6 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
           });
 
           this.initialFormData = this.formGroup.value;
-
-          // The way the button behaves should be reworked potentially
-          this.disableCancel = true;
-          this.disableSave = true;
         }
       })
     );
@@ -128,49 +127,32 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
           Object.keys(this.formGroup.controls).forEach((control) => {
             this.formGroup.controls[control].disable();
           });
+        } else {
+          Object.keys(this.formGroup.controls).forEach((control) => {
+            if (control !== 'displayName') {
+              this.formGroup.controls[control].enable();
+            }
+          });
         }
       })
     );
 
-    //  Come up with better way. Maybe convert User to class and have isEqual() method
-    //  Gonna need quite a lot of business logic for the form, business rules engine
-
-    //  Takes the form, then applies any rules (1 for fields, 1 for buttons) we have, and our form is subscribed to those rules
-    //  Loop through the rules and apply
-    //  Most like have a BehaviourSubject in BusinessRule class, which will subscribe, and fire any rules when changes happen
-
-    //   eg
-    //   const ruleResult = {
-    //     buttons: [
-    //       {
-    //         cancel: {
-    //           isDisabled: true,
-    //         },
-    //         save: {
-    //           isDisabled: true,
-    //         },
-    //       },
-    //     ],
-    //     fields: [
-    //       {
-    //         email: {
-    //           isDisabled: true,
-    //         },
-    //       },
-    //     ],
-    //   };
-
     this.subscriptions.push(
       this.formGroup?.valueChanges.subscribe((data) => {
-        if (data) {
-          if (this.isEqual(data)) {
-            this.disableSave = true;
-            this.disableCancel = true;
-            return;
-          }
+        if (data && Object.keys(this.initialFormData).length > 0) {
+          const businessRuleData = {
+            initialData: this.initialFormData,
+            currentData: data
+          };
 
-          this.disableSave = false;
-          this.disableCancel = false;
+          const result = this.businessRuleContext.executeRule(
+            ProfileSettingsBusinessRule.name,
+            businessRuleData
+          );
+
+          this.disableCancel = result.result?.['disableCancel'];
+          this.disableSave = result.result?.['disableSave'];
+
           return;
         }
       })
@@ -182,18 +164,12 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
     this.clearForm();
   }
 
-  public deleteImage() {
-    this.formGroup.controls['photo'].setValue('./assets/images/userLogo.png');
-    this.disableCancel = false;
-    this.disableSave = false;
-  }
-
   public okCallBack() {
     this.isSaving$.next(true);
     const updatedClone = { ...this.user } as any;
     Object.keys(this.formGroup.controls).forEach((control) => {
       const controlValue = this.formGroup.controls[control].value;
-      if (updatedClone && controlValue) {
+      if (updatedClone && (controlValue || control === 'photo')) {
         updatedClone[control] = controlValue;
       }
     });
@@ -203,21 +179,32 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
 
   public activateEdit(controlName: string) {
     this.formGroup.controls[controlName].enable();
-    this.disableCancel = false;
+    // this.formGroup.controls[controlName].setValue(null);
+
+    // TODO: This needs to allow for the business rules as well
+    // Might be best to have a subscription and use observables
+    // that way it can be trigger when when things are happening, which can make the form
+    // quite powerful
+    // this.disableCancel = false;
   }
 
-  public reset() {
+  public cancelCallBack() {
     this.formGroup.controls['displayName'].disable();
     Object.keys(this.initialFormData).forEach((key) => {
       this.formGroup.controls[key].setValue(this.initialFormData[key]);
     });
   }
 
-  public isDisabled(isSaving: boolean, controlName: string) {
-    if (isSaving) {
-      return true;
+  public getImage() {
+    var photoValue = this.formGroup?.controls['photo'].value;
+    if (photoValue) {
+      return this.sanitizer.bypassSecurityTrustUrl(photoValue);
     }
-    return true;
+    return './assets/images/userLogo.png';
+  }
+
+  public deleteImage() {
+    this.formGroup.controls['photo'].setValue(null);
   }
 
   public uploadImage(fileInputEvent: any) {
@@ -225,16 +212,6 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
     this.photo = fileInputEvent.target.files[0];
     reader.onload = this.handleReaderLoaded.bind(this);
     reader.readAsBinaryString(this.photo);
-  }
-
-  public getImage() {
-    /// Not working if there isnt an image
-
-    var photoValue = this.formGroup?.controls['photo'].value;
-    if (photoValue) {
-      return this.sanitizer.bypassSecurityTrustUrl(photoValue);
-    }
-    return './assets/images/userLogo.png';
   }
 
   private handleReaderLoaded(readerEvt: any) {
@@ -250,15 +227,5 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
 
   private clearForm() {
     this.formGroup.reset();
-  }
-
-  private isEqual(valueChanges: User) {
-    // Some issues when photo is added to the check
-    return (
-      valueChanges.email === this.initialFormData['email'] &&
-      valueChanges.firstName == this.initialFormData['firstName'] &&
-      valueChanges.lastName == this.initialFormData['lastName'] &&
-      valueChanges.displayName == this.initialFormData['displayName']
-    );
   }
 }

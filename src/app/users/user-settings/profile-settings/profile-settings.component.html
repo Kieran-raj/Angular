@@ -14,7 +14,7 @@
         id="cancel-button"
         [disabled]="disableCancel"
         *ngIf="!(isSaving$ | async)"
-        (click)="reset()"
+        (click)="cancelCallBack()"
       >
         Cancel
       </button>

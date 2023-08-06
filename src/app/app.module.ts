@@ -55,6 +55,8 @@ import { UserSettingsComponent } from './users/user-settings/user-settings.compo
 import { ProfileSettingsComponent } from './users/user-settings/profile-settings/profile-settings.component';
 
 import { NotificationSettingsComponent } from './users/user-settings/notification-settings/notification-settings.component';
+import { BuinessRuleContext } from './shared/business-rules/business-rule-context';
+import { ProfileSettingsBusinessRule } from './shared/business-rules/rules/ProfileSettingsBusinessRule';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +82,7 @@ import { NotificationSettingsComponent } from './users/user-settings/notificatio
     SignUpComponent,
     UserSettingsComponent,
     ProfileSettingsComponent,
-    NotificationSettingsComponent,
+    NotificationSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +97,7 @@ import { NotificationSettingsComponent } from './users/user-settings/notificatio
       {
         path: 'expenses',
         component: ExpensesComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard]
       },
       {
         path: 'user/:username',
@@ -104,14 +106,14 @@ import { NotificationSettingsComponent } from './users/user-settings/notificatio
         children: [
           {
             path: 'profile',
-            component: ProfileSettingsComponent,
+            component: ProfileSettingsComponent
           },
           {
             path: 'notifications',
-            component: NotificationSettingsComponent,
-          },
-        ],
-      },
+            component: NotificationSettingsComponent
+          }
+        ]
+      }
     ]),
     BrowserAnimationsModule,
     NgbModule,
@@ -126,28 +128,33 @@ import { NotificationSettingsComponent } from './users/user-settings/notificatio
       transactions: transactionsReducer,
       category: categoryReducer,
       updates: updatesReducer,
-      user: userReducer,
+      user: userReducer
     }),
     StoreDevtoolsModule.instrument({
       name: 'Personal Project - State',
       maxAge: 25,
-      logOnly: environment.production,
+      logOnly: environment.production
     }),
     EffectsModule.forRoot([
       TransactionsEffect,
       CategoryEffect,
       UpdatesEffect,
-      UserEffect,
-    ]),
+      UserEffect
+    ])
   ],
   providers: [
     ChartHelper,
     AuthService,
     AuthGuard,
+    BuinessRuleContext,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: 'BASE_API_URL', useValue: environment.baseUrl },
+    { provide: 'BASE_API_URL', useValue: environment.baseUrl }
   ],
   bootstrap: [AppComponent],
-  exports: [ExpensesSideBarComponent, BrowserAnimationsModule],
+  exports: [ExpensesSideBarComponent, BrowserAnimationsModule]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private buinessRuleContext: BuinessRuleContext) {
+    this.buinessRuleContext.registerRule(new ProfileSettingsBusinessRule());
+  }
+}
