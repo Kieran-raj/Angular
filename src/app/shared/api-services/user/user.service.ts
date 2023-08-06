@@ -6,14 +6,14 @@ import { UserDetails } from '../../models/user-details';
 import { User } from '../../models/user';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserSerivce {
   url: string;
 
   constructor(
     @Inject('BASE_API_URL') private baseUrl: string,
-    private http: HttpClient,
+    private http: HttpClient
   ) {
     this.url = `${this.baseUrl}/api`;
   }
@@ -21,7 +21,7 @@ export class UserSerivce {
   signUp(details: UserDetails): Observable<SignUpMessage> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
     const options = { headers };
 
@@ -30,14 +30,14 @@ export class UserSerivce {
     return this.http.post<SignUpMessage>(
       `${this.url}/user/create`,
       body,
-      options,
+      options
     );
   }
 
   checkDetails(email: string, displayName: string): Observable<SignUpMessage> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
 
     const options = { headers };
@@ -47,7 +47,7 @@ export class UserSerivce {
     const response = this.http.post<SignUpMessage>(
       `${this.url}/user/check-details`,
       body,
-      options,
+      options
     );
 
     return response;
@@ -56,46 +56,15 @@ export class UserSerivce {
   updateUserDetails(user: User): Observable<User> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
 
     const options = { headers };
 
-    const body = { user: user };
-
-    const mockUser = {
-      id: 1,
-      email: 'admin@test.com',
-      firstName: 'kieran',
-      lastName: 'rajasansir',
-      displayName: 'jkrajasansir',
-    };
-
-    return of(mockUser);
-    // return this.http.post<User>(
-    //   `${this.url}/user/update-details`,
-    //   body,
-    //   options
-    // );
+    return this.http.post<User>(`${this.url}/user/update`, user, options);
   }
 
   getUserInfo(id: string): Observable<User> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    });
-
-    const options = { headers };
     return this.http.get<User>(`${this.url}/user/user-info?userId=${id}`);
-
-    // const mockUser = {
-    //   id: 1,
-    //   email: 'admin@test.com',
-    //   firstName: 'kieran',
-    //   lastName: 'rajasansir',
-    //   displayName: 'Kieran Rajasansir',
-    // };
-
-    // return of(mockUser);
   }
 }

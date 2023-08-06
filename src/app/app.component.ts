@@ -7,7 +7,7 @@ import jwtDecode from 'jwt-decode';
 import { selectUserToken } from './expenses/data-state/selectors/user.selectors';
 import {
   setUserInfo,
-  userLoginSuccess,
+  userLoginSuccess
 } from './expenses/data-state/actions/user.action';
 import { User } from './shared/models/user';
 import { UserSerivce } from './shared/api-services/user/user.service';
@@ -15,7 +15,7 @@ import { UserSerivce } from './shared/api-services/user/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   /**
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userStore: Store<UserState>,
-    private userService: UserSerivce,
+    private userService: UserSerivce
   ) {
     if (this.authService.isloggedIn$.value) {
       const token = this.authService.getAuthTokenObject();
@@ -55,20 +55,17 @@ export class AppComponent implements OnInit {
           this.user = {
             id: decodedToken.Id,
             displayName: decodedToken.DisplayName,
-            email: decodedToken.Email,
+            email: decodedToken.Email
           };
 
+          // This below does't quite feel right
           this.userService
             .getUserInfo(this.user.id.toString())
             .subscribe((user) => {
-              console.log(user);
-              this.user = user;
-            })
-            .unsubscribe();
-
-          this.userStore.dispatch(setUserInfo({ user: this.user }));
+              this.userStore.dispatch(setUserInfo({ user: user }));
+            });
         }
-      }),
+      })
     );
   }
 }

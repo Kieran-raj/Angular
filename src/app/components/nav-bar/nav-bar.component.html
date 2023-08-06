@@ -5,7 +5,11 @@
 >
   <div class="col">
     <div class="row" id="user-logo-banner">
-      <img alt="User logo" src="./assets/images/userLogo.png" id="user-photo" />
+      <img
+        alt="User logo"
+        [src]="getUserProfilePicture(user$ | async)"
+        id="user-photo"
+      />
     </div>
     <div class="row" id="user-banner">
       <div id="nav-bar-header-text">{{ (user$ | async)?.displayName }}</div>

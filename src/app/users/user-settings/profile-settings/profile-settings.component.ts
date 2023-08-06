@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { updateUserDetails } from 'src/app/expenses/data-state/actions/user.action';
 import {
   selectIsUserUpdated,
-  selectUserInfo,
+  selectUserInfo
 } from 'src/app/expenses/data-state/selectors/user.selectors';
 import { UserState } from 'src/app/expenses/data-state/states/user.state';
 import { User } from 'src/app/shared/models/user';
@@ -14,7 +14,7 @@ import { User } from 'src/app/shared/models/user';
 @Component({
   selector: 'app-profile-settings',
   templateUrl: './profile-settings.component.html',
-  styleUrls: ['./profile-settings.component.scss'],
+  styleUrls: ['./profile-settings.component.scss']
 })
 export class ProfileSettingsComponent implements OnInit, OnDestroy {
   /**
@@ -73,14 +73,14 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     email: new FormControl(null),
-    displayName: new FormControl(null),
-    photo: new FormControl(null),
+    displayName: new FormControl({ value: null, disabled: true }),
+    photo: new FormControl(null)
   });
 
   /**
    * Initial form group data
    */
-  public initialData: { [key: string]: string } = {};
+  public initialFormData: { [key: string]: any } = {};
 
   /**
    * Is the form being saved
@@ -104,6 +104,12 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
               this.formGroup.controls[f].setValue(userObject[f]);
             }
           });
+
+          this.initialFormData = this.formGroup.value;
+
+          // The way the button behaves should be reworked potentially
+          this.disableCancel = true;
+          this.disableSave = true;
         }
       })
     );
@@ -115,10 +121,6 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
         }
       })
     );
-
-    this.initialData = this.setInitialFormGroup(this.formGroup.controls);
-
-    this.formGroup.controls['displayName'].disable();
 
     this.subscriptions.push(
       this.isSaving$.subscribe((isSaving) => {
@@ -159,7 +161,7 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
     //   };
 
     this.subscriptions.push(
-      this.formGroup.valueChanges.subscribe((data) => {
+      this.formGroup?.valueChanges.subscribe((data) => {
         if (data) {
           if (this.isEqual(data)) {
             this.disableSave = true;
@@ -181,7 +183,9 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
   }
 
   public deleteImage() {
-    this.photoString = './assets/images/userLogo.png';
+    this.formGroup.controls['photo'].setValue('./assets/images/userLogo.png');
+    this.disableCancel = false;
+    this.disableSave = false;
   }
 
   public okCallBack() {
@@ -204,8 +208,8 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
 
   public reset() {
     this.formGroup.controls['displayName'].disable();
-    Object.keys(this.initialData).forEach((key) => {
-      this.formGroup.controls[key].setValue(this.initialData[key]);
+    Object.keys(this.initialFormData).forEach((key) => {
+      this.formGroup.controls[key].setValue(this.initialFormData[key]);
     });
   }
 
@@ -223,38 +227,38 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
     reader.readAsBinaryString(this.photo);
   }
 
+  public getImage() {
+    /// Not working if there isnt an image
+
+    var photoValue = this.formGroup?.controls['photo'].value;
+    if (photoValue) {
+      return this.sanitizer.bypassSecurityTrustUrl(photoValue);
+    }
+    return './assets/images/userLogo.png';
+  }
+
   private handleReaderLoaded(readerEvt: any) {
     var binaryString = readerEvt.target.result;
     this.photoString = this.sanitizer.bypassSecurityTrustUrl(
       `data:image/png;base64, ${btoa(binaryString)}`
     );
 
-    this.formGroup.controls['photo'].setValue(this.photoString);
+    this.formGroup.controls['photo'].setValue(
+      `data:image/png;base64, ${btoa(binaryString)}`
+    );
   }
 
   private clearForm() {
     this.formGroup.reset();
   }
 
-  private setInitialFormGroup(controls: {
-    [key: string]: AbstractControl;
-  }): any {
-    const data: { [key: string]: any } = {};
-    Object.keys(controls).forEach((control) => {
-      data[control] = controls[control].value;
-    });
-
-    return data;
-  }
-
   private isEqual(valueChanges: User) {
+    // Some issues when photo is added to the check
     return (
-      valueChanges.email === this.initialData['email'] &&
-      valueChanges.firstName == this.initialData['firstName'] &&
-      valueChanges.lastName == this.initialData['lastName']
+      valueChanges.email === this.initialFormData['email'] &&
+      valueChanges.firstName == this.initialFormData['firstName'] &&
+      valueChanges.lastName == this.initialFormData['lastName'] &&
+      valueChanges.displayName == this.initialFormData['displayName']
     );
   }
 }
-
-///https://www.behance.net/gallery/160949619/Profile-Settings-Page-for-a-Fintech-Web-App?tracking_source=search_projects|settings+page
-// https://dribbble.com/shots/17219796/attachments/12323150?mode=media

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {
   faArrowTrendUp,
@@ -7,7 +8,7 @@ import {
   faHome,
   faSignOut,
   faUser,
-  IconDefinition,
+  IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { clearState } from 'src/app/expenses/data-state/actions/transactions.action';
@@ -21,7 +22,7 @@ import { User } from 'src/app/shared/models/user';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss'],
+  styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit, OnDestroy {
   /**
@@ -72,11 +73,18 @@ export class NavBarComponent implements OnInit, OnDestroy {
    */
   faGear = faGear;
 
+  /**
+   * Encoded photo string
+   * @type {any}
+   */
+  public photoString: any = './assets/images/userLogo.png';
+
   constructor(
     private authService: AuthService,
     private userStore: Store<UserState>,
     private store: Store<ExpensesAppState>,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {}
@@ -103,5 +111,12 @@ export class NavBarComponent implements OnInit, OnDestroy {
       return user.displayName;
     }
     return '';
+  }
+
+  public getUserProfilePicture(user: User | null): any {
+    if (user?.photo) {
+      return this.sanitizer.bypassSecurityTrustUrl(user.photo);
+    }
+    return this.photoString;
   }
 }

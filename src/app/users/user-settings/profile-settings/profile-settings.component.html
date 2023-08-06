@@ -1,7 +1,7 @@
 <div class="col">
   <div class="row mb-5">
     <div class="col-xl-2 col-2">
-      <img alt="User logo" [src]="this.photoString" id="user-photo" />
+      <img alt="User logo" [src]="getImage()" id="user-photo" />
     </div>
     <div class="col-xl-7 col-6" id="header-text-col">
       <div class="row" id="heading">My Profile</div>
@@ -89,11 +89,7 @@
       <div class="col-xl-5 col-5">
         <div class="row">
           <div class="col-xl-7 col-6 pe-0">
-            <img
-              alt="User logo"
-              [src]="this.photoString"
-              id="user-photo-change"
-            />
+            <img alt="User logo" [src]="getImage()" id="user-photo-change" />
           </div>
           <div class="col-xl-5 col-6 px-0">
             <input
