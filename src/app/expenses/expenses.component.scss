@@ -20,7 +20,7 @@
 }
 
 .grid {
-  height: 78%;
+  height: 48rem;
   width: 100%;
   margin-left: 0;
   margin-right: 0;
@@ -54,4 +54,19 @@
 
 #dashboard-panels {
   height: 100%;
+}
+
+// This needs to be change to have the ability to scroll in the data window. ignore the nav bar
+/* Media Queries*/
+@media screen and (max-width: 2000px) {
+  .grid {
+    height: 44rem;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+    padding-left: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 16rem;
+  }
 }

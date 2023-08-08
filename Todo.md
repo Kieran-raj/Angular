@@ -102,9 +102,12 @@
 7. ~~Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)~~ &#x2611;
 8. Upcoming transactions
 9. ~~When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)~~ &#x2611;
-10. User profile / settings
-11. Allow for demo mode
-12. Make it compatible for iphone
+10. ~~User profile settings~~ &#x2611;
+11. User notification settings
+12. Delete account
+13. Change password
+14. Allow for demo mode
+15. Make it compatible for iphone
 
 ---
 

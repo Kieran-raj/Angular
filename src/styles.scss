@@ -24,8 +24,8 @@ $Angular-theme: mat.define-light-theme(
     color: (
       primary: $Angular-primary,
       accent: $Angular-accent,
-      warn: $Angular-warn,
-    ),
+      warn: $Angular-warn
+    )
   )
 );
 

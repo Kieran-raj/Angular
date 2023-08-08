@@ -28,7 +28,7 @@ export class UserSerivce {
     const body = details;
 
     return this.http.post<SignUpMessage>(
-      `${this.url}/user/create`,
+      `${this.url}/auth/register`,
       body,
       options
     );

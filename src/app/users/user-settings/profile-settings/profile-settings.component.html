@@ -56,27 +56,13 @@
       <div class="col-xl-1 col-1"></div>
       <div class="col-xl-5 col-5 form-labels">Username</div>
       <div class="col-xl-5 col-5">
-        <div class="row">
-          <div class="col-xl-9">
-            <input
-              class="form-control shadow-none mt-1"
-              id="displayName"
-              type="text"
-              placeholder="Display Name"
-              formControlName="displayName"
-            />
-          </div>
-          <div class="col-xl-3 col-3">
-            <button
-              class="float-end"
-              mat-flat-button
-              id="edit-button"
-              (click)="activateEdit('displayName')"
-            >
-              Edit
-            </button>
-          </div>
-        </div>
+        <input
+          class="form-control shadow-none mt-1"
+          id="displayName"
+          type="text"
+          placeholder="Display Name"
+          formControlName="displayName"
+        />
       </div>
     </div>
     <hr />
@@ -88,10 +74,10 @@
       </div>
       <div class="col-xl-5 col-5">
         <div class="row">
-          <div class="col-xl-7 col-6 pe-0">
+          <div class="col-xl-5 col-lg-5 col-4 pe-0">
             <img alt="User logo" [src]="getImage()" id="user-photo-change" />
           </div>
-          <div class="col-xl-5 col-6 px-0">
+          <div class="col-xl-7 col-lg-7 col-8 px-0">
             <input
               #csvInput
               hidden="true"

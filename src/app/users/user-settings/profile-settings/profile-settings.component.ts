@@ -75,7 +75,7 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     email: new FormControl(null),
-    displayName: new FormControl({ value: null, disabled: true }),
+    displayName: new FormControl(null),
     photo: new FormControl(null)
   });
 
@@ -117,22 +117,18 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
       this.isUpdated$.subscribe((isUpdated) => {
         if (isUpdated) {
           this.isSaving$.next(false);
-        }
-      })
-    );
+          const businessRuleData = {
+            initialData: this.initialFormData,
+            currentData: this.initialFormData
+          };
 
-    this.subscriptions.push(
-      this.isSaving$.subscribe((isSaving) => {
-        if (isSaving) {
-          Object.keys(this.formGroup.controls).forEach((control) => {
-            this.formGroup.controls[control].disable();
-          });
-        } else {
-          Object.keys(this.formGroup.controls).forEach((control) => {
-            if (control !== 'displayName') {
-              this.formGroup.controls[control].enable();
-            }
-          });
+          const result = this.businessRuleContext.executeRule(
+            ProfileSettingsBusinessRule.name,
+            businessRuleData
+          );
+
+          this.disableCancel = result.result?.['disableCancel'];
+          this.disableSave = result.result?.['disableSave'];
         }
       })
     );
@@ -179,13 +175,6 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
 
   public activateEdit(controlName: string) {
     this.formGroup.controls[controlName].enable();
-    // this.formGroup.controls[controlName].setValue(null);
-
-    // TODO: This needs to allow for the business rules as well
-    // Might be best to have a subscription and use observables
-    // that way it can be trigger when when things are happening, which can make the form
-    // quite powerful
-    // this.disableCancel = false;
   }
 
   public cancelCallBack() {
