@@ -57,6 +57,9 @@
 42. ~~Make ins and outs a bit smaller~~ &#x2611;
 43. ~~Remove moving average logic~~ &#x2611;
 44. **TESTS**!!!!!!!!!!!
+45. Need to add first name and last name to state and User object
+46. If you want to save, what should do?
+47. Monthly breakdown not working properly
 
 ---
 
@@ -73,12 +76,18 @@
 9. Clean up styling in nav bar
 10. Allow user to upload and save image as well
 11. Make dropdown on graph its own component
-12. Add Category service
+12. ~~Add Category service~~&#x2611;
 13. Pull data-state related to log in out into separate
-14. Refactor end points to allow for userIds
+14. ~~Refactor end points to allow for userIds~~&#x2611;
 15. Log in and sign up form, have some shared logic, so pull out into separate file
 16. Upgrade angular
 17. Maybe change nav bar to angular material
+18. ~~Pull out all user into different its own component~~&#x2611;
+19. Pull Data state and API services into shared
+20. ~~AppComponent should handle setting the user info when first logging in~~&#x2611;
+21. Refactor AuthService and how user sessions are handles and how data is set
+22. Refactor navbar to work on phones and ipad
+23. Refactor login to its own route, that way there is more control over loading and make sure no render occurs before user info is set. Also call seems to be slow because the user-info call is slow which is likely due to the image size
 
 ---
 
@@ -93,8 +102,12 @@
 7. ~~Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)~~ &#x2611;
 8. Upcoming transactions
 9. ~~When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)~~ &#x2611;
-10. User profile / settings
-11. Allow for demo mode
+10. ~~User profile settings~~ &#x2611;
+11. User notification settings
+12. Delete account
+13. Change password
+14. Allow for demo mode
+15. Make it compatible for iphone
 
 ---
 
@@ -105,9 +118,3 @@
 3. Fix nav bar width to fit on an ipad
 
 ---
-
-#### New things to learn/focus on
-
-1. ~~State management~~ &#x2611;
-2. ~~Subjects~~ &#x2611;
-3. async/await

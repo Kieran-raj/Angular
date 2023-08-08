@@ -3,8 +3,6 @@ import {
   addChosenExpenseToState,
   loadCategoricalAmounts,
   loadCategoricalAmountsSuccess,
-  loadCategories,
-  loadCategoriesSuccess,
   loadDailyExpenses,
   loadDailyExpensesSuccess,
   loadExpenses,
@@ -20,7 +18,6 @@ export const intitialTransactions: TransactionState = {
   dailyTransactions: null,
   categoricalAmounts: null,
   chosenExpense: null,
-  categories: null,
   monthlyInsAndOuts: null,
   monthlyBreakdown: null,
 };
@@ -66,17 +63,7 @@ export const transactionsReducer = createReducer(
       categoricalAmounts: action.transactions,
     };
   }),
-  on(loadCategories, (state) => {
-    return {
-      ...state,
-    };
-  }),
-  on(loadCategoriesSuccess, (state, action) => {
-    return {
-      ...state,
-      categories: action.categories,
-    };
-  }),
+
   on(loadMonthlyInsAndOutsSuccess, (state, action) => {
     return {
       ...state,

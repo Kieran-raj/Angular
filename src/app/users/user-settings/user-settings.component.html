@@ -1,0 +1,47 @@
+<app-header-details [pageTitle]="pageTitle"></app-header-details>
+<div class="header">Account Settings</div>
+<div class="row">
+  <div class="col-lg-4 col-xl-3" style="height: 100%">
+    <div class="card" id="user-profile-nav-card">
+      <div class="card-body shadow">
+        <div class="col">
+          <div class="row" *ngFor="let button of buttons">
+            <button
+              class="btn shadow-none"
+              [routerLink]="[button.path]"
+              [ngClass]="
+                getRoute().includes(button.path) ? 'selected-button' : ''
+              "
+            >
+              <div class="row">
+                <div class="col-2" [ngClass]="button.customCssClass">
+                  <fa-icon [icon]="button.icon"></fa-icon>
+                </div>
+                <div class="col-10 text-start item-text">
+                  <span>{{ button.displayText }}</span>
+                </div>
+              </div>
+            </button>
+          </div>
+          <div class="row" id="delete-account-button">
+            <button class="btn shadow-none" disabled="true">
+              <div class="row">
+                <div class="col-2 item-delete-text">
+                  <fa-icon [icon]="faX"></fa-icon>
+                </div>
+                <div class="col-10 text-start item-text">
+                  <span><s>Delete Account</s></span>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8 col-xl-7" style="height: 100%">
+    <div class="card">
+      <div class="card-body shadow"><router-outlet></router-outlet></div>
+    </div>
+  </div>
+</div>

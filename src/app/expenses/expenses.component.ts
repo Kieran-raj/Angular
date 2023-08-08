@@ -5,7 +5,7 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -15,11 +15,11 @@ import {
   loadCategoricalAmounts,
   loadDailyExpenses,
   loadMonthlyInsAndOuts,
-  loadExpenses,
+  loadExpenses
 } from './data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
-  selectDailyTransactions,
+  selectDailyTransactions
 } from './data-state/selectors/transactions.selectors';
 import { selectModalAction } from './data-state/selectors/updates.selectors';
 import { TransactionState } from './data-state/states/transactions.state';
@@ -30,20 +30,22 @@ import {
   faArrowsRotate,
   faChartLine,
   faPlus,
-  faXmark,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
 import { addModalAction } from './data-state/actions/updates.action';
+import { selectUserInfo } from './data-state/selectors/user.selectors';
+import { UserState } from './data-state/states/user.state';
 
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExpensesComponent implements OnInit, AfterViewInit {
   @ViewChild(DateFilterComponent, { static: true })
@@ -123,11 +125,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   modalDisplayRules: any;
 
   /**
-   * Is logged in
-   */
-  isLoggedIn$ = this.authService.isloggedIn;
-
-  /**
    * Modal instance.
    * @type {NgbModalRef}
    */
@@ -138,6 +135,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * @type {string}
    */
   public modalAction: string;
+
+  /**
+   * User observable
+   * @type {Observable<User | null>}
+   */
+  public user$ = this.userStore.select(selectUserInfo);
 
   /**
    * Successful update
@@ -154,6 +157,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   constructor(
     private transactionStore: Store<TransactionState>,
     private updateStore: Store<UpdateState>,
+    private userStore: Store<UserState>,
     private authService: AuthService,
     private chartHelper: ChartHelper,
     private modalService: NgbModal
@@ -162,7 +166,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
     this.transactionStore.dispatch(
       loadExpenses({
-        user: this.authService.user,
+        user: this.authService.user
       })
     );
 
@@ -181,7 +185,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
               category.category[0].toUpperCase() +
               category.category.substring(1).toLowerCase(),
             value: category.amount,
-            pctOfTotal: category.percentage,
+            pctOfTotal: category.percentage
           });
         });
         this.pieData = formatedPieData;
@@ -195,7 +199,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
             (dailyAmount: DailyAmount) => {
               return {
                 value: dailyAmount.amount,
-                name: dailyAmount.date.split('T')[0],
+                name: dailyAmount.date.split('T')[0]
               };
             }
           );
@@ -203,8 +207,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
           const lineData = [
             {
               name: 'Transactions',
-              series: mappedDailyAmountsToNgxCharts,
-            },
+              series: mappedDailyAmountsToNgxCharts
+            }
           ];
 
           this.dailyData = lineData;
@@ -302,8 +306,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     const newData = [
       {
         name: 'Transactions',
-        series: data,
-      },
+        series: data
+      }
     ];
 
     this.chartData$.next(newData);

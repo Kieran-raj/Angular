@@ -24,8 +24,8 @@ $Angular-theme: mat.define-light-theme(
     color: (
       primary: $Angular-primary,
       accent: $Angular-accent,
-      warn: $Angular-warn,
-    ),
+      warn: $Angular-warn
+    )
   )
 );
 
@@ -41,6 +41,7 @@ body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
+  background-color: #f8f9fd;
 }
 body {
   margin: 0;
@@ -123,5 +124,11 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
 
   .ag-body-horizontal-scroll {
     display: flex !important;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  app-nav-bar {
+    display: none;
   }
 }

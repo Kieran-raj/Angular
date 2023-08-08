@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SignUpMessage } from '../../models/auth-models/sign-up-message';
 import { UserDetails } from '../../models/user-details';
+import { User } from '../../models/user';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserSerivce {
   url: string;
@@ -20,14 +21,14 @@ export class UserSerivce {
   signUp(details: UserDetails): Observable<SignUpMessage> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
     const options = { headers };
 
     const body = details;
 
     return this.http.post<SignUpMessage>(
-      `${this.url}/user/create`,
+      `${this.url}/auth/register`,
       body,
       options
     );
@@ -36,7 +37,7 @@ export class UserSerivce {
   checkDetails(email: string, displayName: string): Observable<SignUpMessage> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
 
     const options = { headers };
@@ -50,5 +51,20 @@ export class UserSerivce {
     );
 
     return response;
+  }
+
+  updateUserDetails(user: User): Observable<User> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    const options = { headers };
+
+    return this.http.post<User>(`${this.url}/user/update`, user, options);
+  }
+
+  getUserInfo(id: string): Observable<User> {
+    return this.http.get<User>(`${this.url}/user/user-info?userId=${id}`);
   }
 }

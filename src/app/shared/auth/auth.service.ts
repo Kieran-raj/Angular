@@ -25,7 +25,7 @@ export class AuthService {
    * Logged in
    * @type {BehaviorSubject<boolean>}
    */
-  public isloggedIn = new BehaviorSubject<boolean>(
+  public isloggedIn$ = new BehaviorSubject<boolean>(
     this.isValidSession() ? true : false
   );
 
@@ -47,12 +47,13 @@ export class AuthService {
       email: email,
       password: password,
     };
+
     return this.http.post<AuthToken>(`${this.url}/auth/token`, body, options);
   }
 
   public logout() {
     this.removeSession();
-    this.isloggedIn.next(false);
+    this.isloggedIn$.next(false);
   }
 
   public setSession(authToken: AuthToken) {
@@ -67,10 +68,6 @@ export class AuthService {
     };
 
     this.user = user;
-  }
-
-  public getToken() {
-    return localStorage.getItem('id_token');
   }
 
   public getAuthTokenObject() {
@@ -90,10 +87,6 @@ export class AuthService {
     return decodedToken;
   }
 
-  public get user(): User {
-    return this._user;
-  }
-
   public setUser() {
     const decodedToken = this.decodedToken();
 
@@ -106,8 +99,16 @@ export class AuthService {
     this.user = user;
   }
 
+  public get user(): User {
+    return this._user;
+  }
+
   private set user(user: User) {
     this._user = user;
+  }
+
+  private getToken() {
+    return localStorage.getItem('id_token');
   }
 
   private isTokenExpired() {

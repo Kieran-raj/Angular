@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Expense } from 'src/app/shared/models/expense';
 
-const updatesPrefix = `[Updates] - `;
+const updatesPrefix = `[Expenses Updates] - `;
 
 export const addNewCategory = createAction(
   `${updatesPrefix} Add New Category`,

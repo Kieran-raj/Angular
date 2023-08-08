@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -48,6 +49,14 @@ import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow
 import { NetFlowModalComponent } from './expenses/net-flow-modal/net-flow-modal.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { categoryReducer } from './expenses/data-state/reducers/category.reducer';
+import { CategoryEffect } from './expenses/data-state/effects/category.effect';
+import { UserSettingsComponent } from './users/user-settings/user-settings.component';
+import { ProfileSettingsComponent } from './users/user-settings/profile-settings/profile-settings.component';
+
+import { NotificationSettingsComponent } from './users/user-settings/notification-settings/notification-settings.component';
+import { BuinessRuleContext } from './shared/business-rules/business-rule-context';
+import { ProfileSettingsBusinessRule } from './shared/business-rules/rules/ProfileSettingsBusinessRule';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +80,9 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     NetFlowModalComponent,
     PieChartComponent,
     SignUpComponent,
+    UserSettingsComponent,
+    ProfileSettingsComponent,
+    NotificationSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -85,8 +97,23 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
       {
         path: 'expenses',
         component: ExpensesComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard]
       },
+      {
+        path: 'user/:username',
+        component: UserSettingsComponent,
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: 'profile',
+            component: ProfileSettingsComponent
+          },
+          {
+            path: 'notifications',
+            component: NotificationSettingsComponent
+          }
+        ]
+      }
     ]),
     BrowserAnimationsModule,
     NgbModule,
@@ -94,28 +121,40 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     MatDialogModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     NgxChartsModule,
     FontAwesomeModule,
     StoreModule.forRoot({
       transactions: transactionsReducer,
+      category: categoryReducer,
       updates: updatesReducer,
-      user: userReducer,
+      user: userReducer
     }),
     StoreDevtoolsModule.instrument({
       name: 'Personal Project - State',
       maxAge: 25,
-      logOnly: environment.production,
+      logOnly: environment.production
     }),
-    EffectsModule.forRoot([TransactionsEffect, UpdatesEffect, UserEffect]),
+    EffectsModule.forRoot([
+      TransactionsEffect,
+      CategoryEffect,
+      UpdatesEffect,
+      UserEffect
+    ])
   ],
   providers: [
     ChartHelper,
     AuthService,
     AuthGuard,
+    BuinessRuleContext,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: 'BASE_API_URL', useValue: 'https://localhost:7271' },
+    { provide: 'BASE_API_URL', useValue: environment.baseUrl }
   ],
   bootstrap: [AppComponent],
-  exports: [ExpensesSideBarComponent, BrowserAnimationsModule],
+  exports: [ExpensesSideBarComponent, BrowserAnimationsModule]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private buinessRuleContext: BuinessRuleContext) {
+    this.buinessRuleContext.registerRule(new ProfileSettingsBusinessRule());
+  }
+}

@@ -7,7 +7,7 @@ import { AuthService } from '../shared/auth/auth.service';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss'],
+  styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
   /**
@@ -20,7 +20,7 @@ export class HomePageComponent implements OnInit {
    * Is the user logged in
    * @type {BehaviorSubject<boolean>}
    */
-  isLoggedIn$ = this.authService.isloggedIn;
+  isLoggedIn$ = this.authService.isloggedIn$;
 
   /**
    * Is logging in
