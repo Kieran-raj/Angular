@@ -75,7 +75,8 @@ export const userReducer = createReducer(
       ...state,
       details: {
         message: '',
-        statusCode: 201
+        statusCode: 201,
+        canAdd: true
       }
     };
   }),

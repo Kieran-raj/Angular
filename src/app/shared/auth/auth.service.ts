@@ -4,9 +4,11 @@ import jwtDecode from 'jwt-decode';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthToken } from '../models/auth-models/auth-token';
 import { User } from '../models/user';
+import { SignUpMessage } from '../models/auth-models/sign-up-message';
+import { UserDetails } from '../models/user-details';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   /**
@@ -36,16 +38,54 @@ export class AuthService {
     this.url = `${this.baseUrl}/api`;
   }
 
+  public checkDetails(
+    email: string,
+    displayName: string
+  ): Observable<SignUpMessage> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    const options = { headers };
+
+    const body = { email: email, displayName: displayName };
+
+    const response = this.http.post<SignUpMessage>(
+      `${this.url}/auth/check-details`,
+      body,
+      options
+    );
+
+    return response;
+  }
+
+  signUp(details: UserDetails): Observable<SignUpMessage> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    const options = { headers };
+
+    const body = details;
+
+    return this.http.post<SignUpMessage>(
+      `${this.url}/auth/register`,
+      body,
+      options
+    );
+  }
+
   public login(email: string, password: string): Observable<AuthToken> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
     const options = { headers };
 
     const body = {
       email: email,
-      password: password,
+      password: password
     };
 
     return this.http.post<AuthToken>(`${this.url}/auth/token`, body, options);
@@ -64,7 +104,7 @@ export class AuthService {
     const user = {
       id: decodedToken.Id,
       displayName: decodedToken.DisplayName,
-      email: decodedToken.Email,
+      email: decodedToken.Email
     };
 
     this.user = user;
@@ -73,7 +113,7 @@ export class AuthService {
   public getAuthTokenObject() {
     return {
       token: this.getToken(),
-      expirationTime: localStorage.getItem('expires_at'),
+      expirationTime: localStorage.getItem('expires_at')
     } as AuthToken;
   }
 
@@ -93,7 +133,7 @@ export class AuthService {
     const user = {
       id: decodedToken.Id,
       displayName: decodedToken.DisplayName,
-      email: decodedToken.Email,
+      email: decodedToken.Email
     };
 
     this.user = user;
