@@ -14,7 +14,7 @@ import {
   updateUserDetailsSuccess,
   userLogin,
   userLoginFailure,
-  userLoginSuccess,
+  userLoginSuccess
 } from '../actions/user.action';
 import { UserSerivce } from 'src/app/shared/api-services/user/user.service';
 import { User } from 'src/app/shared/models/user';
@@ -35,7 +35,7 @@ export class UserEffect {
             return of(
               userLoginFailure({
                 message: error.error.message,
-                statusCode: error.status,
+                statusCode: error.status
               })
             );
           })
@@ -48,7 +48,7 @@ export class UserEffect {
     this.actions$.pipe(
       ofType(checkSignUpDetails),
       mergeMap((action) => {
-        return this.userService
+        return this.authService
           .checkDetails(action.email, action.displayName)
           .pipe(
             map((response) => {
@@ -58,6 +58,7 @@ export class UserEffect {
               const newResponse = {
                 statusCode: error.status,
                 message: error.error.message,
+                canAdd: false
               };
               return of(signUpFailure({ response: newResponse }));
             })
@@ -70,12 +71,13 @@ export class UserEffect {
     this.actions$.pipe(
       ofType(signUp),
       mergeMap((action) => {
-        return this.userService.signUp(action.userDetails).pipe(
+        return this.authService.signUp(action.userDetails).pipe(
           map(() => signUpSuccess()),
           catchError((error: HttpErrorResponse) => {
             const newResponse = {
               statusCode: error.status,
               message: error.error.message,
+              canAdd: false
             };
             return of(signUpFailure({ response: newResponse }));
           })
