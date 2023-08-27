@@ -35,4 +35,9 @@ export interface UserState {
    * Is user updated
    */
   isUserUpdated: boolean | null;
+
+  /**
+   * Had the user been deleted
+   */
+  isUserDeleted: boolean | null;
 }

@@ -3,7 +3,7 @@ import {
   Component,
   Input,
   OnDestroy,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
@@ -20,7 +20,7 @@ import {
   addNewCategory,
   createUpdateTransaction,
   deleteTransaction,
-  resetUpdateState,
+  resetUpdateState
 } from '../data-state/actions/updates.action';
 import { selectCategories } from '../data-state/selectors/category.selectors';
 import { selectChosenExpense } from '../data-state/selectors/transactions.selectors';
@@ -33,7 +33,7 @@ import { UserState } from '../data-state/states/user.state';
 @Component({
   selector: 'app-expenses-create-modal',
   templateUrl: './expenses-create-modal.component.html',
-  styleUrls: ['./expenses-create-modal.component.scss'],
+  styleUrls: ['./expenses-create-modal.component.scss']
 })
 export class ExpensesCreateModalComponent
   implements OnInit, AfterViewInit, OnDestroy
@@ -110,13 +110,13 @@ export class ExpensesCreateModalComponent
     category: new FormControl(null, [Validators.required]),
     amount: new FormControl(null, [
       Validators.required,
-      Validators.pattern('^[0-9]*$'),
+      Validators.pattern('^[0-9]*$')
     ]),
     date: new FormControl(null, [Validators.required]),
     description: new FormControl(null, [
       Validators.required,
-      Validators.maxLength(50),
-    ]),
+      Validators.maxLength(50)
+    ])
   });
 
   constructor(
@@ -171,7 +171,7 @@ export class ExpensesCreateModalComponent
         category: this.formGroup.controls['category'],
         date: null,
         description: null,
-        userId: null,
+        userId: null
       };
       this.updatesStore.dispatch(addNewCategory({ category: newCategory }));
     }
@@ -185,7 +185,7 @@ export class ExpensesCreateModalComponent
         category: this.formGroup.controls['category'].value.name.toLowerCase(),
         date: this.formatStringToUtc(this.formGroup.controls['date'].value),
         description: this.formGroup.controls['description'].value,
-        userId: this.user?.id,
+        userId: this.user?.id.toString()
       } as Expense;
 
       this.updatesStore.dispatch(

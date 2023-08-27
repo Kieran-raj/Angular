@@ -1,0 +1,62 @@
+<mat-dialog-content class="mat-typography" id="mat-dialog" align="center">
+  <div *ngIf="!(isDeleting$ | async)">
+    <div class="alert alert-warning" role="alert">
+      <div class="row">
+        <div class="col-1">
+          <fa-icon [icon]="faInfoTriangle" size="2x"></fa-icon>
+        </div>
+        <div class="col-11">
+          All the data from this account will be deleted and <b>cannot</b> be
+          recovered. Confirm this deletion by entering your username.
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="formGroup">
+      <input
+        class="form-control shadow-none"
+        type="text"
+        placeholder="Confirm username"
+        formControlName="userName"
+      />
+    </form>
+  </div>
+  <div *ngIf="userError$ | async">
+    <div class="alert alert-danger" role="alert">
+      <div class="row">
+        <div class="col-1">
+          <fa-icon [icon]="faCircleExclamation" size="2x"></fa-icon>
+        </div>
+        <div class="col-11">
+          There was an error deleting your account. Please try again later
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="isDeleting$ | async"
+    class="d-flex justify-content-center flex-nowrap"
+  >
+    <mat-spinner [diameter]="80" [strokeWidth]="7"> </mat-spinner>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" *ngIf="!(isDeleting$ | async)">
+  <button
+    class="dialog-button"
+    id="cancel-button"
+    mat-flat-button
+    (click)="onClose()"
+  >
+    Cancel
+  </button>
+  <button
+    class="dialog-button"
+    id="delete-button"
+    mat-flat-button
+    color="red"
+    [disabled]="!(isValid$ | async)"
+    (click)="onDelete()"
+  >
+    Delete
+  </button>
+</mat-dialog-actions>

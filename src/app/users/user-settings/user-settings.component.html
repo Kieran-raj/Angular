@@ -24,13 +24,13 @@
             </button>
           </div>
           <div class="row" id="delete-account-button">
-            <button class="btn shadow-none" disabled="true">
+            <button class="btn shadow-none" (click)="openDeleteDialog()">
               <div class="row">
                 <div class="col-2 item-delete-text">
                   <fa-icon [icon]="faX"></fa-icon>
                 </div>
                 <div class="col-10 text-start item-text">
-                  <span><s>Delete Account</s></span>
+                  <span>Delete Account</span>
                 </div>
               </div>
             </button>

@@ -1,12 +1,18 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { faBell, faLock, faUser, faX } from '@fortawesome/free-solid-svg-icons';
+import { DeleteAccountModalComponent } from '../delete-account-modal/delete-account-modal.component';
 
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class UserSettingsComponent implements OnInit {
   /**
@@ -19,25 +25,30 @@ export class UserSettingsComponent implements OnInit {
       displayText: 'Profile Settings',
       customCssClass: 'item-text',
       icon: faUser,
-      path: 'profile',
+      path: 'profile'
     },
     {
       displayText: 'Notification Settings',
       customCssClass: 'item-text',
       icon: faBell,
-      path: 'notifications',
+      path: 'notifications'
     },
     {
       displayText: 'Password',
       customCssClass: 'item-text',
       icon: faLock,
-      path: 'password',
-    },
+      path: 'password'
+    }
   ];
 
   public pageTitle = 'Settings';
 
-  constructor(private router: Router) {}
+  private deleteAccountDialogInstance: MatDialogRef<DeleteAccountModalComponent> | null;
+
+  constructor(
+    private router: Router,
+    private dialogSerive: MatDialog
+  ) {}
 
   ngOnInit(): void {}
 
@@ -47,5 +58,16 @@ export class UserSettingsComponent implements OnInit {
 
   public getRoute(): string {
     return this.router.url;
+  }
+
+  public openDeleteDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '30rem';
+
+    this.deleteAccountDialogInstance = this.dialogSerive.open(
+      DeleteAccountModalComponent,
+      dialogConfig
+    );
   }
 }

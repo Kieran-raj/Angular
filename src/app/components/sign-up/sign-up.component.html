@@ -84,7 +84,7 @@
           </div>
         </div>
       </form>
-      <div class="text-center modal-text mt-3">
+      <div class="text-center modal-text mt-3" *ngIf="!(isCreated$ | async)">
         Already have an account? <em><a href="/home">Log in</a></em>
       </div>
       <div class="alert alert-success fade show" *ngIf="isCreated$ | async">

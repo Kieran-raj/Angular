@@ -26,5 +26,5 @@ export interface Expense {
   /**
    * User id
    */
-  userId: number;
+  userId: string;
 }

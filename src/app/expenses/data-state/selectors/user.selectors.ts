@@ -34,3 +34,8 @@ export const selectIsUserUpdated = createSelector(
   selectUserState,
   (state: UserState) => state.isUserUpdated
 );
+
+export const selectIsUserDeleted = createSelector(
+  selectUserState,
+  (state: UserState) => state.isUserDeleted
+);

@@ -57,6 +57,7 @@ import { ProfileSettingsComponent } from './users/user-settings/profile-settings
 import { NotificationSettingsComponent } from './users/user-settings/notification-settings/notification-settings.component';
 import { BuinessRuleContext } from './shared/business-rules/business-rule-context';
 import { ProfileSettingsBusinessRule } from './shared/business-rules/rules/ProfileSettingsBusinessRule';
+import { DeleteAccountModalComponent } from './users/delete-account-modal/delete-account-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +83,8 @@ import { ProfileSettingsBusinessRule } from './shared/business-rules/rules/Profi
     SignUpComponent,
     UserSettingsComponent,
     ProfileSettingsComponent,
-    NotificationSettingsComponent
+    NotificationSettingsComponent,
+    DeleteAccountModalComponent
   ],
   imports: [
     BrowserModule,

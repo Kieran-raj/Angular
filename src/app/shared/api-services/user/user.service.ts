@@ -32,4 +32,15 @@ export class UserSerivce {
   getUserInfo(id: string): Observable<User> {
     return this.http.get<User>(`${this.url}/user/user-info?userId=${id}`);
   }
+
+  deleteUser(user: User): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    const options = { headers };
+
+    return this.http.post(`${this.url}/user/delete`, user, options);
+  }
 }

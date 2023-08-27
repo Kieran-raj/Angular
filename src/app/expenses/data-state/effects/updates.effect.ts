@@ -8,7 +8,7 @@ import {
   loadExpenses,
   loadDailyExpenses,
   loadMonthlyInsAndOuts,
-  loadCategoricalAmounts,
+  loadCategoricalAmounts
 } from '../actions/transactions.action';
 import {
   addNewCategory,
@@ -16,7 +16,7 @@ import {
   createUpdateTransaction,
   createUpdateTransactionSuccess,
   deleteTransaction,
-  deleteTransactionSuccess,
+  deleteTransactionSuccess
 } from '../actions/updates.action';
 import { TransactionState } from '../states/transactions.state';
 
@@ -27,7 +27,7 @@ export class UpdatesEffect {
       ofType(addNewCategory),
       mergeMap((action) => {
         const body = {
-          name: action.category,
+          name: action.category
         };
         return this.updateService
           .updateCategory(body)
