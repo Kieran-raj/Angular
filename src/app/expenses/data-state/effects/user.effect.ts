@@ -5,6 +5,9 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import {
   checkSignUpDetails,
+  deleteUserAccount,
+  deleteUserAccountFailure,
+  deleteUserAccountSuccess,
   setCheckMessage,
   signUp,
   signUpFailure,
@@ -94,6 +97,22 @@ export class UserEffect {
           map((response: User) => updateUserDetailsSuccess({ user: response })),
           catchError((error: HttpErrorResponse) => {
             return of(updateUserDetailsFailure({ error: error }));
+          })
+        );
+      })
+    )
+  );
+
+  deleteUserAccount$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteUserAccount),
+      mergeMap((action) => {
+        return this.userService.deleteUser(action.user).pipe(
+          map((response: any) => {
+            return deleteUserAccountSuccess();
+          }),
+          catchError((error: HttpErrorResponse) => {
+            return of(deleteUserAccountFailure({ error: error }));
           })
         );
       })

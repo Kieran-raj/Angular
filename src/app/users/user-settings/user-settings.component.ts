@@ -63,8 +63,7 @@ export class UserSettingsComponent implements OnInit {
   public openDeleteDialog() {
     const dialogConfig = new MatDialogConfig();
 
-    // This size needs to be decided
-    dialogConfig.width = '80vw';
+    dialogConfig.width = '30rem';
 
     this.deleteAccountDialogInstance = this.dialogSerive.open(
       DeleteAccountModalComponent,

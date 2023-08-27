@@ -5,14 +5,14 @@ import {
   createUpdateTransaction,
   createUpdateTransactionSuccess,
   resetUpdateState,
-  addModalAction,
+  addModalAction
 } from '../actions/updates.action';
 import { UpdateState } from '../states/update.state';
 
 export const initialUpdates: UpdateState = {
   categoryUpdate: null,
   transactionCreateUpdate: null,
-  modalAction: null,
+  modalAction: null
 };
 
 export const updatesReducer = createReducer(
@@ -23,8 +23,8 @@ export const updatesReducer = createReducer(
       categoryUpdate: {
         newCategory: action.category,
         isUpdated: false,
-        action: 'new',
-      },
+        action: 'new'
+      }
     };
   }),
   on(addNewCategorySuccess, (state, action) => {
@@ -33,8 +33,8 @@ export const updatesReducer = createReducer(
       categoryUpdate: {
         newCategory: null,
         isUpdated: action.isUpdated,
-        action: null,
-      },
+        action: null
+      }
     };
   }),
   on(createUpdateTransaction, (state, action) => {
@@ -43,8 +43,8 @@ export const updatesReducer = createReducer(
       transactionCreateUpdate: {
         transaction: action.updates,
         isUpdated: false,
-        action: 'new',
-      },
+        action: 'new'
+      }
     };
   }),
   on(createUpdateTransactionSuccess, (state, action) => {
@@ -53,21 +53,21 @@ export const updatesReducer = createReducer(
       transactionCreateUpdate: {
         transaction: null,
         isUpdated: action.isUpdated,
-        action: null,
-      },
+        action: null
+      }
     };
   }),
   on(addModalAction, (state, action) => {
     return {
       ...state,
-      modalAction: action.action,
+      modalAction: action.action
     };
   }),
   on(resetUpdateState, (_, __) => {
     return {
       categoryUpdate: null,
       transactionCreateUpdate: null,
-      modalAction: null,
+      modalAction: null
     };
   })
 );

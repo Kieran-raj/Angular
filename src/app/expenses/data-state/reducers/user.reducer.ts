@@ -11,7 +11,9 @@ import {
   signUpFailure,
   updateUserDetails,
   updateUserDetailsFailure,
-  updateUserDetailsSuccess
+  updateUserDetailsSuccess,
+  deleteUserAccountSuccess,
+  deleteUserAccountFailure
 } from '../actions/user.action';
 import { UserState } from '../states/user.state';
 
@@ -21,7 +23,8 @@ export const initialUser: UserState = {
   isLoggingIn: null,
   error: null,
   details: null,
-  isUserUpdated: null
+  isUserUpdated: null,
+  isUserDeleted: null
 };
 
 export const userReducer = createReducer(
@@ -119,6 +122,23 @@ export const userReducer = createReducer(
       ...state,
       error: errorDetails,
       isUserUpdated: false
+    };
+  }),
+  on(deleteUserAccountSuccess, (state) => {
+    return {
+      ...state,
+      isUserDeleted: true
+    };
+  }),
+  on(deleteUserAccountFailure, (state, action) => {
+    const errorDetails = {
+      message: action.error.message,
+      statusCode: action.error.status
+    };
+    return {
+      ...state,
+      error: errorDetails,
+      isUserDeleted: null
     };
   })
 );

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Category } from 'src/app/shared/models/category';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UpdatesService {
   url: string;
@@ -19,7 +19,7 @@ export class UpdatesService {
   updateCategory(body: Category): Observable<Category[]> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
     const options = { headers };
 
@@ -33,7 +33,7 @@ export class UpdatesService {
   updateCreateTransaction(body: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
     const options = { headers };
 
@@ -47,7 +47,7 @@ export class UpdatesService {
   deleteTransaction(body: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     });
     const options = { headers: headers, body: body };
 
