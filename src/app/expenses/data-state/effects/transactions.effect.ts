@@ -17,7 +17,7 @@ import {
   loadMonthlyInsAndOuts,
   loadMonthlyInsAndOutsSuccess,
   loadMonthlyBreakDown,
-  loadMonthlyBreakDownSuccess,
+  loadMonthlyBreakDownSuccess
 } from '../actions/transactions.action';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 
@@ -33,7 +33,7 @@ export class TransactionsEffect {
             .pipe(
               map((expenses: Expense[]) => {
                 return loadExpensesSuccess({
-                  expenses: expenses,
+                  expenses: expenses
                 });
               })
             );
@@ -41,7 +41,7 @@ export class TransactionsEffect {
         return this.transactionService.getAllExpenses().pipe(
           map((expenses: Expense[]) => {
             return loadExpensesSuccess({
-              expenses: expenses,
+              expenses: expenses
             });
           })
         );
@@ -58,7 +58,7 @@ export class TransactionsEffect {
           .pipe(
             map((dailyAmounts: DailyAmount[]) =>
               loadDailyExpensesSuccess({
-                transactions: dailyAmounts,
+                transactions: dailyAmounts
               })
             )
           )
@@ -75,7 +75,7 @@ export class TransactionsEffect {
           .pipe(
             map((categoricalAmounts: CategoricalAmounts[]) =>
               loadCategoricalAmountsSuccess({
-                transactions: categoricalAmounts,
+                transactions: categoricalAmounts
               })
             )
           )
@@ -92,7 +92,7 @@ export class TransactionsEffect {
           .pipe(
             map((data: MonthlyInOut[]) =>
               loadMonthlyInsAndOutsSuccess({
-                monthlyInsAndOuts: data,
+                monthlyInsAndOuts: data
               })
             )
           )
@@ -105,11 +105,15 @@ export class TransactionsEffect {
       ofType(loadMonthlyBreakDown),
       mergeMap((action) =>
         this.transactionService
-          .getMonthBreakDown(action.month, action.year)
+          .getMonthBreakDown(
+            action.month,
+            action.year,
+            this.authService.user.id.toString()
+          )
           .pipe(
             map((data: CategoricalAmounts[]) =>
               loadMonthlyBreakDownSuccess({
-                amounts: data,
+                amounts: data
               })
             )
           )
