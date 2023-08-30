@@ -9,6 +9,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -58,6 +60,7 @@ import { NotificationSettingsComponent } from './users/user-settings/notificatio
 import { BuinessRuleContext } from './shared/business-rules/business-rule-context';
 import { ProfileSettingsBusinessRule } from './shared/business-rules/rules/ProfileSettingsBusinessRule';
 import { DeleteAccountModalComponent } from './users/delete-account-modal/delete-account-modal.component';
+import { ChartDropDownComponent } from './expenses/chart-drop-down/chart-drop-down.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +87,8 @@ import { DeleteAccountModalComponent } from './users/delete-account-modal/delete
     UserSettingsComponent,
     ProfileSettingsComponent,
     NotificationSettingsComponent,
-    DeleteAccountModalComponent
+    DeleteAccountModalComponent,
+    ChartDropDownComponent
   ],
   imports: [
     BrowserModule,
@@ -124,6 +128,8 @@ import { DeleteAccountModalComponent } from './users/delete-account-modal/delete
     MatDividerModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    MatMenuModule,
+    MatIconModule,
     NgxChartsModule,
     FontAwesomeModule,
     StoreModule.forRoot({
