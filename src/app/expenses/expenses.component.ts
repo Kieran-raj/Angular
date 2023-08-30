@@ -29,14 +29,12 @@ import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowsRotate,
   faChartLine,
-  faPlus,
   faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from './data-state/states/update.state';
-import { addModalAction } from './data-state/actions/updates.action';
 import { selectUserInfo } from './data-state/selectors/user.selectors';
 import { UserState } from './data-state/states/user.state';
 
@@ -65,7 +63,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * Icons
    */
   public faXmark: IconDefinition = faXmark;
-  public faPlus: IconDefinition = faPlus;
   public faArrows: IconDefinition = faArrowsRotate;
   public faChartLine: IconDefinition = faChartLine;
 
@@ -260,10 +257,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
-
-  setModalAction(action: string | null) {
-    this.updateStore.dispatch(addModalAction({ action: action }));
   }
 
   private openModal(content: any) {

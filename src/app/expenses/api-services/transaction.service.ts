@@ -7,7 +7,7 @@ import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class TransactionsService {
   url: string;
@@ -49,9 +49,9 @@ export class TransactionsService {
     );
   }
 
-  getMonthBreakDown(month: string, year: string) {
+  getMonthBreakDown(month: string, year: string, userId: string) {
     return this.http.get<CategoricalAmounts[]>(
-      `${this.url}/expense/monthly-breakdown?month=${month}&year=${year}`
+      `${this.url}/expense/monthly-breakdown?month=${month}&year=${year}&userId=${userId}`
     );
   }
 }

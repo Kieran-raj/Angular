@@ -1,0 +1,55 @@
+<div>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="dropDownMenu"
+    id="chart-nav-new-dropdown-item"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #dropDownMenu="matMenu" xPosition="before">
+    <button
+      mat-menu-item
+      [mat-menu-trigger-for]="addDropDown"
+      id="chart-nav-new-dropdown-item"
+    >
+      <mat-icon>create</mat-icon>
+      <span>Create</span>
+    </button>
+    <button
+      mat-menu-item
+      [matMenuTriggerFor]="optionsDropDown"
+      id="chart-nav-new-dropdown-item"
+    >
+      <mat-icon>settings</mat-icon>
+      <span>Chart Options </span>
+    </button>
+  </mat-menu>
+
+  <mat-menu #optionsDropDown="matMenu">
+    <button
+      mat-menu-item
+      id="chart-nav-new-dropdown-item"
+      (click)="emitResetGraph()"
+    >
+      <mat-icon>refresh</mat-icon><span>Reset Graph</span>
+    </button>
+  </mat-menu>
+
+  <mat-menu #addDropDown="matMenu">
+    <button
+      mat-menu-item
+      id="chart-nav-new-dropdown-item"
+      (click)="setModalAction('newCategory')"
+    >
+      <mat-icon>category</mat-icon><span>New Category</span>
+    </button>
+
+    <button
+      mat-menu-item
+      id="chart-nav-new-dropdown-item"
+      (click)="setModalAction('newTransaction')"
+    >
+      <mat-icon>add_box</mat-icon><span>New Transaction</span>
+    </button>
+  </mat-menu>
+</div>

@@ -61,10 +61,9 @@ export class ExpensesCreateModalComponent
 
   /**
    * Chosen Expense
-   * @type {Observable<Expense | null>}
+   * @type {Expense | null}
    */
-  public chosenExpense$: Observable<Expense | null> =
-    this.transactionStore.select(selectChosenExpense);
+  public chosenExpense: Expense | null;
 
   /**
    * Action settings
@@ -110,7 +109,7 @@ export class ExpensesCreateModalComponent
     category: new FormControl(null, [Validators.required]),
     amount: new FormControl(null, [
       Validators.required,
-      Validators.pattern('^[0-9]*$')
+      Validators.pattern('^[0-9]*(.[0-9]{0,2})?$')
     ]),
     date: new FormControl(null, [Validators.required]),
     description: new FormControl(null, [
@@ -131,6 +130,14 @@ export class ExpensesCreateModalComponent
       })
     );
     this.categoryStore.dispatch(loadCategories());
+
+    this.subscriptions.push(
+      this.transactionStore
+        .select(selectChosenExpense)
+        .subscribe((expense: Expense | null) => {
+          this.chosenExpense = expense;
+        })
+    );
   }
 
   ngOnInit(): void {
@@ -185,7 +192,8 @@ export class ExpensesCreateModalComponent
         category: this.formGroup.controls['category'].value.name.toLowerCase(),
         date: this.formatStringToUtc(this.formGroup.controls['date'].value),
         description: this.formGroup.controls['description'].value,
-        userId: this.user?.id.toString()
+        userId: this.user?.id.toString(),
+        id: this.modalAction === 'editTransaction' ? this.chosenExpense?.id : 0
       } as Expense;
 
       this.updatesStore.dispatch(
@@ -194,9 +202,9 @@ export class ExpensesCreateModalComponent
     }
 
     if (this.modalAction === 'deleteTransaction') {
-      this.chosenExpense$.subscribe((expense) => {
-        this.updatesStore.dispatch(deleteTransaction({ expense: expense }));
-      });
+      this.updatesStore.dispatch(
+        deleteTransaction({ expense: this.chosenExpense })
+      );
     }
 
     this.modal.close();
@@ -209,9 +217,23 @@ export class ExpensesCreateModalComponent
   }
 
   private formatStringToUtc(stringDate: string) {
-    const time = new Date().getTime();
-    const newDate = new Date(stringDate).setTime(time);
-    return new Date(newDate).toISOString();
+    const time = new Date();
+    const milliseconds = time.getUTCMilliseconds();
+    const seconds = time.getUTCSeconds();
+    const hours = time.getUTCHours();
+    const newDate = new Date(stringDate);
+
+    const utcDate = Date.UTC(
+      newDate.getUTCFullYear(),
+      newDate.getUTCMonth(),
+      newDate.getDate(),
+      hours,
+      time.getUTCMinutes(),
+      seconds,
+      milliseconds
+    );
+
+    return new Date(utcDate).toISOString();
   }
 
   private clearForm() {

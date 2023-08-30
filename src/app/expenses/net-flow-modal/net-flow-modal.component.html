@@ -15,7 +15,7 @@
             <fa-icon [icon]="arrowUpIcon" size="2x"></fa-icon>
           </div>
           <div class="col-11 px-5">
-            <h4>£{{ inAmount | number : ".2" }}</h4>
+            <h4>£{{ inAmount | number: ".2" }}</h4>
           </div>
         </div>
         <div class="row" id="out-amount">
@@ -23,14 +23,14 @@
             <fa-icon [icon]="arrowDownIcon" size="2x"></fa-icon>
           </div>
           <div class="col-11 px-5">
-            <h4>£{{ outAmount | number : ".2" }}</h4>
+            <h4>£{{ outAmount | number: ".2" }}</h4>
           </div>
         </div>
         <div class="row"><hr /></div>
         <div class="row" id="net-amount">
           <div class="col-1 px-0"><h4>Net:</h4></div>
           <div class="col-11 px-5">
-            <h4>£{{ inAmount - outAmount | number : ".2" }}</h4>
+            <h4>£{{ inAmount - outAmount | number: ".2" }}</h4>
           </div>
         </div>
       </div>
@@ -45,13 +45,6 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button
-      mat-raised-button
-      color="primary"
-      cdkFocusInitial
-      (click)="onClose()"
-    >
-      Close
-    </button>
+    <button mat-raised-button cdkFocusInitial (click)="onClose()">Close</button>
   </mat-dialog-actions>
 </div>

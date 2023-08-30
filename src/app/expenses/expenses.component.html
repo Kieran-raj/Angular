@@ -13,54 +13,13 @@
                   <app-expenses-side-bar
                     class="pl-0"
                     id="expenses-side-bar"
-                    (resetButton)="resetGraph()"
                     (chartPeriod)="chartPeriodChange($event)"
                   ></app-expenses-side-bar>
                 </div>
                 <div class="col-2 text-end" id="extra-button-col">
-                  <div ngbDropdown>
-                    <button
-                      type="button"
-                      class="btn shadow-none"
-                      id="chart-nav-new-dropdown-button"
-                      ngbDropdownToggle
-                    >
-                      <fa-icon [icon]="faPlus" size="lg"></fa-icon>
-                    </button>
-                    <div ngbDropdownMenu id="chart-nav-new-dropdown-menu">
-                      <h5 class="dropdown-header" id="drop-down-chart-header">
-                        Chart Options
-                      </h5>
-                      <button
-                        class="btn shadow-none"
-                        id="chart-nav-new-dropdown-item"
-                        ngbDropdownItem
-                        (click)="resetGraph()"
-                      >
-                        Reset Graph
-                      </button>
-                      <div class="dropdown-divider"></div>
-                      <h5 class="dropdown-header" id="drop-down-chart-header">
-                        Add Data
-                      </h5>
-                      <button
-                        class="btn shadow-none"
-                        id="chart-nav-new-dropdown-item"
-                        ngbDropdownItem
-                        (click)="setModalAction('newCategory')"
-                      >
-                        New Category
-                      </button>
-                      <button
-                        class="btn shadow-none"
-                        id="chart-nav-new-dropdown-item"
-                        ngbDropdownItem
-                        (click)="setModalAction('newTransaction')"
-                      >
-                        New Transaction
-                      </button>
-                    </div>
-                  </div>
+                  <app-chart-drop-down
+                    (resetGraph)="resetGraph()"
+                  ></app-chart-drop-down>
                 </div>
               </div>
               <app-line-chart
@@ -102,9 +61,16 @@
         </div>
       </div>
       <div class="card mt-2 mx-0 row" id="chart-columm">
-        <div class="card-header border-0">Upcoming transactions</div>
-        <div class="container-fluid card-body cardBody shadow">
-          <div class="col-12" id="file-input" align="center">Transactions</div>
+        <div class="card-header border-0" style="opacity: 50%">
+          Upcoming transactions
+        </div>
+        <div
+          class="container-fluid card-body cardBody shadow"
+          style="opacity: 50%"
+        >
+          <div class="col-12" id="file-input" align="center">
+            This feature is coming soon!!!
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,38 @@
+span {
+  font-size: medium;
+  vertical-align: bottom;
+}
+
+#chart-nav-new-dropdown-item {
+  mat-icon {
+    color: #315594;
+  }
+}
+
+#chart-nav-new-dropdown-item:hover {
+  background-color: #063a5b;
+  color: white;
+  opacity: 80%;
+
+  .mat-menu-submenu-icon {
+    color: white;
+  }
+
+  mat-icon {
+    color: white;
+  }
+}
+
+.mat-menu-item-highlighted:not([disabled]) {
+  background: #063a5b;
+  color: white;
+  opacity: 50%;
+
+  .mat-menu-submenu-icon {
+    color: white;
+  }
+
+  mat-icon {
+    color: white;
+  }
+}
