@@ -226,7 +226,7 @@ export class ExpensesCreateModalComponent
     const utcDate = Date.UTC(
       newDate.getUTCFullYear(),
       newDate.getUTCMonth(),
-      newDate.getUTCDay(),
+      newDate.getDate(),
       hours,
       time.getUTCMinutes(),
       seconds,
