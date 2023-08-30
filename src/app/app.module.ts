@@ -98,8 +98,13 @@ import { ChartDropDownComponent } from './expenses/chart-drop-down/chart-drop-do
     AgGridModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomePageComponent },
+      { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignUpComponent },
+      {
+        path: 'home',
+        component: HomePageComponent,
+        canActivate: [AuthGuard]
+      },
       {
         path: 'expenses',
         component: ExpensesComponent,

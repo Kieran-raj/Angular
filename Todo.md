@@ -87,7 +87,7 @@
 20. ~~AppComponent should handle setting the user info when first logging in~~ &#x2611;
 21. Refactor AuthService and how user sessions are handles and how data is set
 22. Refactor navbar to work on phones and ipad
-23. Refactor login to its own route, that way there is more control over loading and make sure no render occurs before user info is set. Also call seems to be slow because the user-info call is slow which is likely due to the image size
+23. ~~Refactor login to its own route, that way there is more control over loading and make sure no render occurs before user info is set. Also call seems to be slow because the user-info call is slow which is likely due to the image size~~ (Need to try with new photo) &#x2611;
 24. Make users and expenses into their own modules. That way we can control the imports a lot
 25. Use business rule when dealing with create and update modal
 

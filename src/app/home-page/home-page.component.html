@@ -1,12 +1,2 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
-<div class="container">
-  <div
-    *ngIf="!(isLoggedIn$ | async) && !(isLoggingIn$ | async)"
-    class="text-center"
-  >
-    <app-login></app-login>
-  </div>
-  <div class="loader" *ngIf="isLoggingIn$ | async"></div>
-</div>
-
-<router-outlet></router-outlet>
+<div class="container"></div>
