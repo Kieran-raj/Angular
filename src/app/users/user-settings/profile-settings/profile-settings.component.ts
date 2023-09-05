@@ -3,12 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { updateUserDetails } from 'src/app/expenses/data-state/actions/user.action';
+import { updateUserDetails } from 'src/app/shared/data-state/actions/user.action';
 import {
   selectIsUserUpdated,
   selectUserInfo
-} from 'src/app/expenses/data-state/selectors/user.selectors';
-import { UserState } from 'src/app/expenses/data-state/states/user.state';
+} from 'src/app/shared/data-state/selectors/user.selectors';
+import { UserState } from 'src/app/shared/data-state/states/user.state';
 import { BuinessRuleContext } from 'src/app/shared/business-rules/business-rule-context';
 import { ProfileSettingsBusinessRule } from 'src/app/shared/business-rules/rules/ProfileSettingsBusinessRule';
 import { User } from 'src/app/shared/models/user';

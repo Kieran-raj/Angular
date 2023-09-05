@@ -6,18 +6,18 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import {
   checkSignUpDetails,
   resetError,
-  signUp,
-} from 'src/app/expenses/data-state/actions/user.action';
+  signUp
+} from 'src/app/shared/data-state/actions/user.action';
 import {
   selectSignUpDetails,
-  selectUserError,
-} from 'src/app/expenses/data-state/selectors/user.selectors';
-import { UserState } from 'src/app/expenses/data-state/states/user.state';
+  selectUserError
+} from 'src/app/shared/data-state/selectors/user.selectors';
+import { UserState } from 'src/app/shared/data-state/states/user.state';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss'],
+  styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   // Icons
@@ -40,7 +40,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
    */
   public formGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
-    displayName: new FormControl(null, [Validators.required]),
+    displayName: new FormControl(null, [Validators.required])
   });
 
   /**
@@ -188,7 +188,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const details = {
       email: this.formGroup.controls['email'].value,
       displayName: this.formGroup.controls['displayName'].value,
-      password: this.formGroup.controls['password'].value,
+      password: this.formGroup.controls['password'].value
     };
 
     this.userStore.dispatch(signUp({ userDetails: details }));

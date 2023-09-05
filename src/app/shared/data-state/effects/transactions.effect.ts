@@ -5,7 +5,7 @@ import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
-import { TransactionsService } from '../../api-services/transaction.service';
+import { TransactionsService } from '../../../expenses/api-services/transaction.service';
 
 import {
   loadExpenses,

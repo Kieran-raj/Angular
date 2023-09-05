@@ -16,13 +16,13 @@ import {
   loadDailyExpenses,
   loadMonthlyInsAndOuts,
   loadExpenses
-} from './data-state/actions/transactions.action';
+} from '../shared/data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
   selectDailyTransactions
-} from './data-state/selectors/transactions.selectors';
-import { selectModalAction } from './data-state/selectors/updates.selectors';
-import { TransactionState } from './data-state/states/transactions.state';
+} from '../shared/data-state/selectors/transactions.selectors';
+import { selectModalAction } from '../shared/data-state/selectors/updates.selectors';
+import { TransactionState } from '../shared/data-state/states/transactions.state';
 import { ChartHelper } from '../shared/helper-functions/chart-functions';
 import { PieData } from '../shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
@@ -34,9 +34,9 @@ import {
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DailyAmount } from '../shared/models/daily-expense';
 import { AuthService } from '../shared/auth/auth.service';
-import { UpdateState } from './data-state/states/update.state';
-import { selectUserInfo } from './data-state/selectors/user.selectors';
-import { UserState } from './data-state/states/user.state';
+import { UpdateState } from '../shared/data-state/states/update.state';
+import { selectUserInfo } from '../shared/data-state/selectors/user.selectors';
+import { UserState } from '../shared/data-state/states/user.state';
 
 @Component({
   selector: 'app-expenses',

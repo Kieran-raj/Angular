@@ -7,12 +7,12 @@ import { Subscription } from 'rxjs';
 import {
   resetError,
   userLogin
-} from 'src/app/expenses/data-state/actions/user.action';
+} from 'src/app/shared/data-state/actions/user.action';
 import {
   selectIsLoggingIn,
   selectUserError
-} from 'src/app/expenses/data-state/selectors/user.selectors';
-import { UserState } from 'src/app/expenses/data-state/states/user.state';
+} from 'src/app/shared/data-state/selectors/user.selectors';
+import { UserState } from 'src/app/shared/data-state/states/user.state';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({

@@ -3,7 +3,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -12,19 +12,19 @@ import {
   ColDef,
   GridReadyEvent,
   ValueFormatterParams,
-  ValueGetterParams,
+  ValueGetterParams
 } from 'ag-grid-community';
 import { Observable, Subscription } from 'rxjs';
 import { GridActionsComponent } from 'src/app/components/grid-actions/grid-actions.component';
 import { Expense } from 'src/app/shared/models/expense';
-import { addChosenExpenseToState } from '../data-state/actions/transactions.action';
-import { selectExpenses } from '../data-state/selectors/transactions.selectors';
-import { TransactionState } from '../data-state/states/transactions.state';
+import { addChosenExpenseToState } from '../../shared/data-state/actions/transactions.action';
+import { selectExpenses } from '../../shared/data-state/selectors/transactions.selectors';
+import { TransactionState } from '../../shared/data-state/states/transactions.state';
 
 @Component({
   selector: 'app-expenses-grid',
   templateUrl: './expenses-grid.component.html',
-  styleUrls: ['./expenses-grid.component.scss'],
+  styleUrls: ['./expenses-grid.component.scss']
 })
 export class ExpensesGridComponent implements OnInit, OnDestroy {
   /**
@@ -47,14 +47,14 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       field: 'amount',
       filter: 'agNumberColumnFilter',
       sortable: true,
-      valueFormatter: this.amountValueFormatter,
+      valueFormatter: this.amountValueFormatter
     },
     {
       headerName: 'Category',
       field: 'category',
       filter: 'agTextColumnFilter',
       sortable: true,
-      valueFormatter: this.categoryValueFormatter,
+      valueFormatter: this.categoryValueFormatter
     },
     {
       headerName: 'Date',
@@ -62,20 +62,20 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
       filter: 'agDateColumnFilter',
       sortable: true,
       sort: 'desc',
-      valueGetter: this.dataValueGetter,
+      valueGetter: this.dataValueGetter
     },
     { headerName: 'Description', field: 'description', sortable: false },
     {
       headerName: 'Actions',
       headerClass: 'text-center',
       cellStyle: {
-        textAlign: 'center',
+        textAlign: 'center'
       },
       field: '',
       sortable: false,
       maxWidth: 150,
-      cellRenderer: GridActionsComponent,
-    },
+      cellRenderer: GridActionsComponent
+    }
   ];
 
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
@@ -98,7 +98,7 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
   onCellClicked(e: CellClickedEvent): void {
     this.transactionStore.dispatch(
       addChosenExpenseToState({
-        expense: e.node.data,
+        expense: e.node.data
       })
     );
   }

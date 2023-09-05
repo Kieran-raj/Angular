@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
-import { CategoryService } from '../../api-services/category.service';
+import { CategoryService } from '../../../expenses/api-services/category.service';
 import {
   loadCategories,
-  loadCategoriesSuccess,
+  loadCategoriesSuccess
 } from '../actions/category.action';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class CategoryEffect {
         this.categoryService.getCategories().pipe(
           map((categoryData: any) =>
             loadCategoriesSuccess({
-              categories: categoryData,
+              categories: categoryData
             })
           )
         )
