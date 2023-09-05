@@ -11,11 +11,11 @@ import {
   IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import { clearState } from 'src/app/expenses/data-state/actions/transactions.action';
-import { userLogOut } from 'src/app/expenses/data-state/actions/user.action';
-import { selectUserInfo } from 'src/app/expenses/data-state/selectors/user.selectors';
-import { ExpensesAppState } from 'src/app/expenses/data-state/states/expenses-app.state';
-import { UserState } from 'src/app/expenses/data-state/states/user.state';
+import { clearState } from 'src/app/shared/data-state/actions/transactions.action';
+import { userLogOut } from 'src/app/shared/data-state/actions/user.action';
+import { selectUserInfo } from 'src/app/shared/data-state/selectors/user.selectors';
+import { ExpensesAppState } from 'src/app/shared/data-state/states/expenses-app.state';
+import { UserState } from 'src/app/shared/data-state/states/user.state';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { User } from 'src/app/shared/models/user';
 

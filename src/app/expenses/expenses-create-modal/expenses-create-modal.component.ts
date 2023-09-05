@@ -15,20 +15,20 @@ import { Category } from 'src/app/shared/models/category';
 import { Expense } from 'src/app/shared/models/expense';
 import { User } from 'src/app/shared/models/user';
 import { modalSettings } from 'src/app/shared/settings/modal-settings';
-import { loadCategories } from '../data-state/actions/category.action';
+import { loadCategories } from '../../shared/data-state/actions/category.action';
 import {
   addNewCategory,
   createUpdateTransaction,
   deleteTransaction,
   resetUpdateState
-} from '../data-state/actions/updates.action';
-import { selectCategories } from '../data-state/selectors/category.selectors';
-import { selectChosenExpense } from '../data-state/selectors/transactions.selectors';
-import { selectUserInfo } from '../data-state/selectors/user.selectors';
-import { CategoryState } from '../data-state/states/category.state';
-import { TransactionState } from '../data-state/states/transactions.state';
-import { UpdateState } from '../data-state/states/update.state';
-import { UserState } from '../data-state/states/user.state';
+} from '../../shared/data-state/actions/updates.action';
+import { selectCategories } from '../../shared/data-state/selectors/category.selectors';
+import { selectChosenExpense } from '../../shared/data-state/selectors/transactions.selectors';
+import { selectUserInfo } from '../../shared/data-state/selectors/user.selectors';
+import { CategoryState } from '../../shared/data-state/states/category.state';
+import { TransactionState } from '../../shared/data-state/states/transactions.state';
+import { UpdateState } from '../../shared/data-state/states/update.state';
+import { UserState } from '../../shared/data-state/states/user.state';
 
 @Component({
   selector: 'app-expenses-create-modal',

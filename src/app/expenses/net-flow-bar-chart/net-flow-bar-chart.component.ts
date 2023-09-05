@@ -2,26 +2,26 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatDialogConfig,
-  MatDialogRef,
+  MatDialogRef
 } from '@angular/material/dialog';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { combineLatest, Subscription } from 'rxjs';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
-import { loadMonthlyBreakDown } from '../data-state/actions/transactions.action';
+import { loadMonthlyBreakDown } from '../../shared/data-state/actions/transactions.action';
 import {
   selectInsAndOutsSeriesData,
   selectMonthlyBreakdown,
-  selectMonthlyInsAndOuts,
-} from '../data-state/selectors/transactions.selectors';
-import { TransactionState } from '../data-state/states/transactions.state';
+  selectMonthlyInsAndOuts
+} from '../../shared/data-state/selectors/transactions.selectors';
+import { TransactionState } from '../../shared/data-state/states/transactions.state';
 import { NetFlowModalComponent } from '../net-flow-modal/net-flow-modal.component';
 
 @Component({
   selector: 'app-net-flow-bar-chart',
   templateUrl: './net-flow-bar-chart.component.html',
-  styleUrls: ['./net-flow-bar-chart.component.scss'],
+  styleUrls: ['./net-flow-bar-chart.component.scss']
 })
 export class NetFlowBarChartComponent implements OnInit {
   /**
@@ -81,7 +81,7 @@ export class NetFlowBarChartComponent implements OnInit {
     Sep: '9',
     Oct: '10',
     Nov: '11',
-    Dec: '12',
+    Dec: '12'
   };
 
   constructor(
@@ -104,20 +104,20 @@ export class NetFlowBarChartComponent implements OnInit {
     this.transactionStore.dispatch(
       loadMonthlyBreakDown({
         month: this.monthlyMap[month],
-        year: year,
+        year: year
       })
     );
 
     this.subscriptions.push(
       combineLatest([
         this.transactionStore.select(selectInsAndOutsSeriesData(series)),
-        this.transactionStore.select(selectMonthlyBreakdown),
+        this.transactionStore.select(selectMonthlyBreakdown)
       ]).subscribe(([seriesData, monthlyBreakdownData]) => {
         this.monthlyBreakdownData = monthlyBreakdownData;
         dialogConfig.data = {
           inAmount: seriesData?.find((s) => s.name === 'In')?.value,
           outAmount: seriesData?.find((s) => s.name === 'Out')?.value,
-          title: this.generateTitle(year, month),
+          title: this.generateTitle(year, month)
         };
 
         /**

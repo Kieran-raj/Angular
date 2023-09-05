@@ -10,18 +10,18 @@ import {
 
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription, combineLatest, filter } from 'rxjs';
-import { clearState } from 'src/app/expenses/data-state/actions/transactions.action';
+import { clearState } from 'src/app/shared/data-state/actions/transactions.action';
 import {
   deleteUserAccount,
   userLogOut
-} from 'src/app/expenses/data-state/actions/user.action';
+} from 'src/app/shared/data-state/actions/user.action';
 import {
   selectIsUserDeleted,
   selectUserError,
   selectUserInfo
-} from 'src/app/expenses/data-state/selectors/user.selectors';
-import { ExpensesAppState } from 'src/app/expenses/data-state/states/expenses-app.state';
-import { UserState } from 'src/app/expenses/data-state/states/user.state';
+} from 'src/app/shared/data-state/selectors/user.selectors';
+import { ExpensesAppState } from 'src/app/shared/data-state/states/expenses-app.state';
+import { UserState } from 'src/app/shared/data-state/states/user.state';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { User } from 'src/app/shared/models/user';
 

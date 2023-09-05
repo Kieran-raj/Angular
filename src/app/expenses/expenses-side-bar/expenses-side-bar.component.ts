@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import { TransactionState } from '../data-state/states/transactions.state';
+import { TransactionState } from '../../shared/data-state/states/transactions.state';
 
 @Component({
   selector: 'app-expenses-side-bar',
   templateUrl: './expenses-side-bar.component.html',
-  styleUrls: ['./expenses-side-bar.component.scss'],
+  styleUrls: ['./expenses-side-bar.component.scss']
 })
 export class ExpensesSideBarComponent implements OnInit {
   /**

@@ -2,20 +2,20 @@ import { Component } from '@angular/core';
 import {
   faPenToSquare,
   faTrashCan,
-  IconDefinition,
+  IconDefinition
 } from '@fortawesome/free-regular-svg-icons';
 import { Store } from '@ngrx/store';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { GridApi, ICellRendererParams } from 'ag-grid-community';
 import { Subscription } from 'rxjs';
-import { addModalAction } from 'src/app/expenses/data-state/actions/updates.action';
-import { selectChosenExpense } from 'src/app/expenses/data-state/selectors/transactions.selectors';
-import { UpdateState } from 'src/app/expenses/data-state/states/update.state';
+import { addModalAction } from 'src/app/shared/data-state/actions/updates.action';
+import { selectChosenExpense } from 'src/app/shared/data-state/selectors/transactions.selectors';
+import { UpdateState } from 'src/app/shared/data-state/states/update.state';
 
 @Component({
   selector: 'app-grid-actions',
   templateUrl: './grid-actions.component.html',
-  styleUrls: ['./grid-actions.component.scss'],
+  styleUrls: ['./grid-actions.component.scss']
 })
 export class GridActionsComponent implements ICellRendererAngularComp {
   /**

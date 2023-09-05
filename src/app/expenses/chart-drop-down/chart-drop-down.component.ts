@@ -5,9 +5,9 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { UpdateState } from '../data-state/states/update.state';
+import { UpdateState } from '../../shared/data-state/states/update.state';
 import { Store } from '@ngrx/store';
-import { addModalAction } from '../data-state/actions/updates.action';
+import { addModalAction } from '../../shared/data-state/actions/updates.action';
 
 @Component({
   selector: 'app-chart-drop-down',

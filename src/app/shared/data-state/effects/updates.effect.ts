@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, mergeMap } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
-import { UpdatesService } from '../../api-services/updates.service';
+import { UpdatesService } from '../../../expenses/api-services/updates.service';
 import {
   loadExpenses,
   loadDailyExpenses,

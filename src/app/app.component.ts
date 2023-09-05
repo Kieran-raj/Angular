@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './shared/auth/auth.service';
-import { UserState } from './expenses/data-state/states/user.state';
+import { UserState } from './shared/data-state/states/user.state';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import jwtDecode from 'jwt-decode';
-import { selectUserToken } from './expenses/data-state/selectors/user.selectors';
+import { selectUserToken } from './shared/data-state/selectors/user.selectors';
 import {
   setUserInfo,
   userLoginSuccess
-} from './expenses/data-state/actions/user.action';
+} from './shared/data-state/actions/user.action';
 import { User } from './shared/models/user';
 import { UserSerivce } from './shared/api-services/user/user.service';
 
