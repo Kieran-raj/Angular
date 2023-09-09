@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, mergeMap } from 'rxjs';
-import { AuthService } from 'src/app/shared/auth/auth.service';
 import { UpdatesService } from '../../../expenses/api-services/updates.service';
 import {
   loadExpenses,
@@ -19,6 +18,7 @@ import {
   deleteTransactionSuccess
 } from '../actions/updates.action';
 import { TransactionState } from '../states/transactions.state';
+import { ExpensesAuthService } from '../../auth/expenses-auth.service';
 
 @Injectable()
 export class UpdatesEffect {
@@ -48,7 +48,7 @@ export class UpdatesEffect {
             this.transactionStore.dispatch(loadDailyExpenses());
 
             this.transactionStore.dispatch(
-              loadExpenses({ user: this.authService.user })
+              loadExpenses({ user: this.authService.domainUser })
             );
 
             this.transactionStore.dispatch(loadMonthlyInsAndOuts());
@@ -72,7 +72,7 @@ export class UpdatesEffect {
             this.transactionStore.dispatch(loadCategoricalAmounts());
             this.transactionStore.dispatch(loadDailyExpenses());
             this.transactionStore.dispatch(
-              loadExpenses({ user: this.authService.user })
+              loadExpenses({ user: this.authService.domainUser })
             );
 
             return deleteTransactionSuccess();
@@ -86,6 +86,6 @@ export class UpdatesEffect {
     private actions$: Actions,
     private updateService: UpdatesService,
     private transactionStore: Store<TransactionState>,
-    private authService: AuthService
+    private authService: ExpensesAuthService
   ) {}
 }

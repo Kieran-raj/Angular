@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs';
-import { AuthService } from 'src/app/shared/auth/auth.service';
 import { CategoryService } from '../../../expenses/api-services/category.service';
 import {
   loadCategories,
@@ -27,7 +26,6 @@ export class CategoryEffect {
 
   constructor(
     private actions$: Actions,
-    private authService: AuthService,
     private categoryService: CategoryService
   ) {}
 }

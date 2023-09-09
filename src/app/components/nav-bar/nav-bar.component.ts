@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {
   faArrowTrendUp,
@@ -10,14 +9,8 @@ import {
   faUser,
   IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
-import { Store } from '@ngrx/store';
-import { clearState } from 'src/app/shared/data-state/actions/transactions.action';
-import { userLogOut } from 'src/app/shared/data-state/actions/user.action';
-import { selectUserInfo } from 'src/app/shared/data-state/selectors/user.selectors';
-import { ExpensesAppState } from 'src/app/shared/data-state/states/expenses-app.state';
-import { UserState } from 'src/app/shared/data-state/states/user.state';
-import { AuthService } from 'src/app/shared/auth/auth.service';
-import { User } from 'src/app/shared/models/user';
+import { ExpensesAuthService } from 'src/app/shared/auth/expenses-auth.service';
+import { User } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-nav-bar',
@@ -27,9 +20,9 @@ import { User } from 'src/app/shared/models/user';
 export class NavBarComponent implements OnInit, OnDestroy {
   /**
    * User
-   * @type {User}
+   * @type {Observable<any>}
    */
-  user$ = this.userStore.select(selectUserInfo);
+  user$ = this.expensesAuthService.user$;
 
   /**
    * User Icon
@@ -80,11 +73,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
   public photoString: any = './assets/images/userLogo.png';
 
   constructor(
-    private authService: AuthService,
-    private userStore: Store<UserState>,
-    private store: Store<ExpensesAppState>,
-    private router: Router,
-    private sanitizer: DomSanitizer
+    private expensesAuthService: ExpensesAuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -92,10 +82,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   public signOut() {
-    this.userStore.dispatch(userLogOut());
-    this.store.dispatch(clearState());
-    this.authService.logout();
-    this.router.navigate(['/home']);
+    this.expensesAuthService.logout();
   }
 
   public navigate(path: string) {
@@ -106,17 +93,14 @@ export class NavBarComponent implements OnInit, OnDestroy {
     return this.router.url;
   }
 
-  public getUserPath(user: User | null): string {
+  public getUserPath(user: User | null | undefined): string {
     if (user) {
-      return user.displayName;
+      return user.nickname ?? '';
     }
     return '';
   }
 
-  public getUserProfilePicture(user: User | null): any {
-    if (user?.photo) {
-      return this.sanitizer.bypassSecurityTrustUrl(user.photo);
-    }
-    return this.photoString;
+  public log(user: any) {
+    console.log(user);
   }
 }

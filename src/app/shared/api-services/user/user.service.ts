@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { SignUpMessage } from '../../models/auth-models/sign-up-message';
-import { UserDetails } from '../../models/user-details';
+import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 
 @Injectable({

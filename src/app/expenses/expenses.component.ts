@@ -33,10 +33,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DailyAmount } from '../shared/models/daily-expense';
-import { AuthService } from '../shared/auth/auth.service';
 import { UpdateState } from '../shared/data-state/states/update.state';
 import { selectUserInfo } from '../shared/data-state/selectors/user.selectors';
 import { UserState } from '../shared/data-state/states/user.state';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-expenses',
@@ -155,15 +155,18 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private transactionStore: Store<TransactionState>,
     private updateStore: Store<UpdateState>,
     private userStore: Store<UserState>,
-    private authService: AuthService,
     private chartHelper: ChartHelper,
     private modalService: NgbModal
   ) {
     this.transactionStore.dispatch(loadDailyExpenses());
 
-    this.transactionStore.dispatch(
-      loadExpenses({
-        user: this.authService.user
+    this.subscriptions.push(
+      this.user$.subscribe((user: User | null) => {
+        this.transactionStore.dispatch(
+          loadExpenses({
+            user: user
+          })
+        );
       })
     );
 

@@ -5,14 +5,10 @@
 >
   <div class="col">
     <div class="row" id="user-logo-banner">
-      <img
-        alt="User logo"
-        [src]="getUserProfilePicture(user$ | async)"
-        id="user-photo"
-      />
+      <img alt="User logo" [src]="(user$ | async)?.picture" id="user-photo" />
     </div>
     <div class="row" id="user-banner">
-      <div id="nav-bar-header-text">{{ (user$ | async)?.displayName }}</div>
+      <div id="nav-bar-header-text">{{ (user$ | async)?.nickname }}</div>
     </div>
     <hr />
 
@@ -87,7 +83,7 @@
     <div class="row nav-bar-item-button">
       <div
         [ngClass]="
-          getRoute().includes((user$ | async)!.displayName)
+          getRoute().includes((user$ | async)?.nickname ?? '*')
             ? 'nav-link-selected'
             : 'nav-link-unselected'
         "
