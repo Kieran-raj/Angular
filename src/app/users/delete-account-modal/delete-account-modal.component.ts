@@ -11,10 +11,7 @@ import {
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription, combineLatest, filter } from 'rxjs';
 import { clearState } from 'src/app/shared/data-state/actions/transactions.action';
-import {
-  deleteUserAccount,
-  userLogOut
-} from 'src/app/shared/data-state/actions/user.action';
+import { deleteUserAccount } from 'src/app/shared/data-state/actions/user.action';
 import {
   selectIsUserDeleted,
   selectUserError,
@@ -22,8 +19,8 @@ import {
 } from 'src/app/shared/data-state/selectors/user.selectors';
 import { ExpensesAppState } from 'src/app/shared/data-state/states/expenses-app.state';
 import { UserState } from 'src/app/shared/data-state/states/user.state';
-import { AuthService } from 'src/app/shared/auth/auth.service';
 import { User } from 'src/app/shared/models/user';
+import { ExpensesAuthService } from 'src/app/shared/auth/expenses-auth.service';
 
 @Component({
   selector: 'app-delete-account-modal',
@@ -91,7 +88,7 @@ export class DeleteAccountModalComponent implements OnInit {
     private router: Router,
     private dialogInstance: MatDialogRef<DeleteAccountModalComponent>,
     private userStore: Store<UserState>,
-    private authService: AuthService,
+    private authService: ExpensesAuthService,
     private store: Store<ExpensesAppState>
   ) {}
 
@@ -150,7 +147,6 @@ export class DeleteAccountModalComponent implements OnInit {
   }
 
   private logout() {
-    this.userStore.dispatch(userLogOut());
     this.store.dispatch(clearState());
     this.authService.logout();
     this.router.navigate(['/home']);

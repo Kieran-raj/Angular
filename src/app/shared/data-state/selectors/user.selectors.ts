@@ -15,19 +15,9 @@ export const selectUserInfo = createSelector(
   (state: UserState) => state.userInfo
 );
 
-export const selectIsLoggingIn = createSelector(
-  selectUserState,
-  (state: UserState) => state.isLoggingIn
-);
-
 export const selectUserError = createSelector(
   selectUserState,
   (state: UserState) => state.error
-);
-
-export const selectSignUpDetails = createSelector(
-  selectUserState,
-  (state: UserState) => state.details
 );
 
 export const selectIsUserUpdated = createSelector(

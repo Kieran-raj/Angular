@@ -41,16 +41,12 @@ import { updatesReducer } from './shared/data-state/reducers/updates.reducer';
 import { GridActionsComponent } from './components/grid-actions/grid-actions.component';
 import { ExpensesLineChartTooltipComponent } from './expenses/line-chart-tooltip/expenses-line-chart-tooltip.component';
 import { ExpensesCreateModalComponent } from './expenses/expenses-create-modal/expenses-create-modal.component';
-import { AuthService } from './shared/auth/auth.service';
-import { AuthGuard } from './shared/auth/auth.guard';
-import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { userReducer } from './shared/data-state/reducers/user.reducer';
 import { UserEffect } from './shared/data-state/effects/user.effect';
 import { NetFlowBarChartComponent } from './expenses/net-flow-bar-chart/net-flow-bar-chart.component';
 import { NetFlowModalComponent } from './expenses/net-flow-modal/net-flow-modal.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { categoryReducer } from './shared/data-state/reducers/category.reducer';
 import { CategoryEffect } from './shared/data-state/effects/category.effect';
 import { UserSettingsComponent } from './users/user-settings/user-settings.component';
@@ -61,6 +57,9 @@ import { BuinessRuleContext } from './shared/business-rules/business-rule-contex
 import { ProfileSettingsBusinessRule } from './shared/business-rules/rules/ProfileSettingsBusinessRule';
 import { DeleteAccountModalComponent } from './users/delete-account-modal/delete-account-modal.component';
 import { ChartDropDownComponent } from './expenses/chart-drop-down/chart-drop-down.component';
+import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
+import { UnauthorisedComponent } from './components/unauthorised/unauthorised.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,27 +78,33 @@ import { ChartDropDownComponent } from './expenses/chart-drop-down/chart-drop-do
     GridActionsComponent,
     ExpensesLineChartTooltipComponent,
     ExpensesCreateModalComponent,
-    LoginComponent,
     NetFlowBarChartComponent,
     NetFlowModalComponent,
     PieChartComponent,
-    SignUpComponent,
     UserSettingsComponent,
     ProfileSettingsComponent,
     NotificationSettingsComponent,
     DeleteAccountModalComponent,
-    ChartDropDownComponent
+    ChartDropDownComponent,
+    UnauthorisedComponent
   ],
   imports: [
     BrowserModule,
+    AuthModule.forRoot({
+      domain: environment.domain,
+      clientId: environment.clientId,
+      authorizationParams: {
+        audience: environment.audience,
+        redirect_uri: window.location.origin
+      }
+    }),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AgGridModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
-      { path: 'signup', component: SignUpComponent },
+      { path: 'unauthorised', component: UnauthorisedComponent },
       {
         path: 'home',
         component: HomePageComponent,
@@ -157,7 +162,6 @@ import { ChartDropDownComponent } from './expenses/chart-drop-down/chart-drop-do
   ],
   providers: [
     ChartHelper,
-    AuthService,
     AuthGuard,
     BuinessRuleContext,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
