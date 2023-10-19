@@ -60,7 +60,8 @@ import { ChartDropDownComponent } from './expenses/chart-drop-down/chart-drop-do
 import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { UnauthorisedComponent } from './components/unauthorised/unauthorised.component';
 import { UpcomingGridComponent } from './expenses/upcoming-grid/upcoming-grid.component';
-import { CreateDeleteModalComponent } from './expenses/upcoming-grid/create-delete-modal/create-delete-modal.component';
+import { DeleteModalComponent } from './expenses/upcoming-grid/create-delete-modal/delete-modal.component';
+import { CreateModalComponent } from './expenses/upcoming-grid/create-modal/create-modal.component';
 
 @NgModule({
   declarations: [
@@ -89,8 +90,9 @@ import { CreateDeleteModalComponent } from './expenses/upcoming-grid/create-dele
     DeleteAccountModalComponent,
     ChartDropDownComponent,
     UnauthorisedComponent,
-    CreateDeleteModalComponent,
-    UpcomingGridComponent
+    DeleteModalComponent,
+    UpcomingGridComponent,
+    CreateModalComponent
   ],
   imports: [
     BrowserModule,

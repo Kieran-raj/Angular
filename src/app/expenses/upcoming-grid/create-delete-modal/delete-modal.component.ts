@@ -14,12 +14,12 @@ import { selectUserOptionState } from 'src/app/shared/data-state/selectors/user.
 import { UserState } from 'src/app/shared/data-state/states/user.state';
 
 @Component({
-  selector: 'app-create-delete-modal',
-  templateUrl: './create-delete-modal.component.html',
-  styleUrls: ['./create-delete-modal.component.scss'],
+  selector: 'app-delete-modal',
+  templateUrl: './delete-modal.component.html',
+  styleUrls: ['./delete-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CreateDeleteModalComponent implements OnInit, OnDestroy {
+export class DeleteModalComponent implements OnInit, OnDestroy {
   /**
    * Warning triangle
    * @type {IconDefinition}
@@ -57,7 +57,7 @@ export class CreateDeleteModalComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(
-    private dialogInstance: MatDialogRef<CreateDeleteModalComponent>,
+    private dialogInstance: MatDialogRef<DeleteModalComponent>,
     private userStore: Store<UserState>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {

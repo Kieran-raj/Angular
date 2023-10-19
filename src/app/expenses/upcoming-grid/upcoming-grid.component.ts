@@ -10,7 +10,7 @@ import {
   MatDialogConfig,
   MatDialogRef
 } from '@angular/material/dialog';
-import { CreateDeleteModalComponent } from './create-delete-modal/create-delete-modal.component';
+import { DeleteModalComponent } from './create-delete-modal/delete-modal.component';
 import { UserState } from 'src/app/shared/data-state/states/user.state';
 import { selectUserOptionState } from 'src/app/shared/data-state/selectors/user.selectors';
 import { Observable, Subscription } from 'rxjs';
@@ -49,7 +49,7 @@ export class UpcomingGridComponent implements OnInit, OnDestroy {
    */
   public userOptionState$ = this.userStore.select(selectUserOptionState);
 
-  private dialogInstance: MatDialogRef<CreateDeleteModalComponent, any>;
+  private dialogInstance: MatDialogRef<DeleteModalComponent, any>;
 
   /**
    * Subscriptions
@@ -86,7 +86,7 @@ export class UpcomingGridComponent implements OnInit, OnDestroy {
     };
 
     this.dialogInstance = this.dialogService.open(
-      CreateDeleteModalComponent,
+      DeleteModalComponent,
       dialogConfig
     );
   }
