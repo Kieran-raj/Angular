@@ -5,6 +5,7 @@ import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
+import { UpcomingExpense } from 'src/app/shared/models/upcoming-expense';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,14 @@ export class TransactionsService {
   getMonthBreakDown(month: string, year: string, userId: string) {
     return this.http.get<CategoricalAmounts[]>(
       `${this.url}/expense/monthly-breakdown?month=${month}&year=${year}&userId=${userId}`
+    );
+  }
+
+  getUserUpcomingExpenses(
+    userId: string | null = null
+  ): Observable<UpcomingExpense[]> {
+    return this.http.get<UpcomingExpense[]>(
+      `${this.url}/user/upcoming-expenses?userId=${userId}`
     );
   }
 }

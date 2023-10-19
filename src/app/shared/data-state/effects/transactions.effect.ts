@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs';
+import { catchError, map, mergeMap, of } from 'rxjs';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
@@ -17,9 +17,15 @@ import {
   loadMonthlyInsAndOuts,
   loadMonthlyInsAndOutsSuccess,
   loadMonthlyBreakDown,
-  loadMonthlyBreakDownSuccess
+  loadMonthlyBreakDownSuccess,
+  loadUserUpcomingExpenses,
+  loadUserUpcomingExpensesSuccess,
+  loadUserUpcomingExpensesFailed
 } from '../actions/transactions.action';
 import { ExpensesAuthService } from '../../auth/expenses-auth.service';
+import { UpcomingExpense } from '../../models/upcoming-expense';
+import { HttpErrorResponse } from '@angular/common/http';
+import { deleteUserOptionSuccess } from '../actions/user.action';
 
 @Injectable()
 export class TransactionsEffect {
@@ -52,7 +58,7 @@ export class TransactionsEffect {
       ofType(loadDailyExpenses),
       mergeMap(() =>
         this.transactionService
-          .getDailyAmounts(this.expensesAuthService.domainUser.id)
+          .getDailyAmounts(this.expensesAuthService.domainUser?.id)
           .pipe(
             map((dailyAmounts: DailyAmount[]) =>
               loadDailyExpensesSuccess({
@@ -69,7 +75,7 @@ export class TransactionsEffect {
       ofType(loadCategoricalAmounts),
       mergeMap(() =>
         this.transactionService
-          .getCategoricalAmounts(this.expensesAuthService.domainUser.id)
+          .getCategoricalAmounts(this.expensesAuthService.domainUser?.id)
           .pipe(
             map((categoricalAmounts: CategoricalAmounts[]) =>
               loadCategoricalAmountsSuccess({
@@ -86,7 +92,7 @@ export class TransactionsEffect {
       ofType(loadMonthlyInsAndOuts),
       mergeMap(() =>
         this.transactionService
-          .getMonthlyInOuts(this.expensesAuthService.domainUser.id)
+          .getMonthlyInOuts(this.expensesAuthService.domainUser?.id)
           .pipe(
             map((data: MonthlyInOut[]) =>
               loadMonthlyInsAndOutsSuccess({
@@ -106,13 +112,31 @@ export class TransactionsEffect {
           .getMonthBreakDown(
             action.month,
             action.year,
-            this.expensesAuthService.domainUser.id
+            this.expensesAuthService.domainUser?.id
           )
           .pipe(
             map((data: CategoricalAmounts[]) =>
               loadMonthlyBreakDownSuccess({
                 amounts: data
               })
+            ),
+            catchError((error: HttpErrorResponse) =>
+              of(loadUserUpcomingExpensesFailed())
+            )
+          )
+      )
+    )
+  );
+
+  loadUserUpcomingExpenses$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadUserUpcomingExpenses, deleteUserOptionSuccess),
+      mergeMap(() =>
+        this.transactionService
+          .getUserUpcomingExpenses(this.expensesAuthService.domainUser?.id)
+          .pipe(
+            map((data: UpcomingExpense[]) =>
+              loadUserUpcomingExpensesSuccess({ expenses: data })
             )
           )
       )

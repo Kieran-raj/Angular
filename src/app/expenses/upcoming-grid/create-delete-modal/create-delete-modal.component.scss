@@ -1,0 +1,17 @@
+.dialog-button {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
+}
+
+#delete-button {
+  @extend .dialog-button;
+  background-color: #f24c3d;
+}
+
+#cancel-button {
+  opacity: 40%;
+  color: #000;
+}

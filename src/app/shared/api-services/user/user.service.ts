@@ -41,4 +41,19 @@ export class UserSerivce {
 
     return this.http.post(`${this.url}/user/delete`, user, options);
   }
+
+  deleteUserOptions(optionIds: string[]): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    const options = { headers };
+
+    const body = {
+      userOptionIds: optionIds
+    };
+
+    return this.http.post(`${this.url}/user/delete-options`, body, options);
+  }
 }

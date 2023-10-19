@@ -43,3 +43,8 @@ export const selectMonthlyBreakdown = createSelector(
   selectTransactionsState,
   (state: TransactionState) => state.monthlyBreakdown
 );
+
+export const selectUserUpcomingExpenses = createSelector(
+  selectTransactionsState,
+  (state: TransactionState) => state.upcomingExpenses
+);

@@ -1,8 +1,8 @@
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
-import { Category } from 'src/app/shared/models/category';
 import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
+import { UpcomingExpense } from '../../models/upcoming-expense';
 
 export interface TransactionState {
   /**
@@ -25,11 +25,6 @@ export interface TransactionState {
    */
   chosenExpense: Expense | null;
 
-  // /**
-  //  * Categories
-  //  */
-  // categories: Category[] | null;
-
   /**
    * Monthly Ins and Outs
    */
@@ -39,4 +34,9 @@ export interface TransactionState {
    * Monthly Breakdown
    */
   monthlyBreakdown: CategoricalAmounts[] | null;
+
+  /**
+   * Upcoming expenses
+   */
+  upcomingExpenses: UpcomingExpense[] | null;
 }

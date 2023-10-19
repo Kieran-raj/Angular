@@ -29,3 +29,8 @@ export const selectIsUserDeleted = createSelector(
   selectUserState,
   (state: UserState) => state.isUserDeleted
 );
+
+export const selectUserOptionState = createSelector(
+  selectUserState,
+  (state: UserState) => state.userOptionState
+);

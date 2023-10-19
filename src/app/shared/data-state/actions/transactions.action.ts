@@ -4,6 +4,7 @@ import { DailyAmount } from 'src/app/shared/models/daily-expense';
 import { Expense } from 'src/app/shared/models/expense';
 import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
 import { User } from 'src/app/shared/models/user';
+import { UpcomingExpense } from '../../models/upcoming-expense';
 
 const expensesPrefix = '[Expenses Transactions] - ';
 
@@ -60,3 +61,16 @@ export const loadMonthlyBreakDownSuccess = createAction(
 );
 
 export const clearState = createAction(`${expensesPrefix}  Clearing State`);
+
+export const loadUserUpcomingExpenses = createAction(
+  `${expensesPrefix} Load User Upcoming Expenses`
+);
+
+export const loadUserUpcomingExpensesSuccess = createAction(
+  `${expensesPrefix} Load User Upcoming Expenses Success`,
+  props<{ expenses: UpcomingExpense[] }>()
+);
+
+export const loadUserUpcomingExpensesFailed = createAction(
+  `${expensesPrefix} Load User Upcoming Expenses Failed`
+);

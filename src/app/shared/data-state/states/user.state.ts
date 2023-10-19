@@ -1,4 +1,5 @@
 import { User } from 'src/app/shared/models/user';
+import { UserOptionState } from './user/user-option.state';
 
 export interface UserState {
   /**
@@ -28,4 +29,9 @@ export interface UserState {
    * Had the user been deleted
    */
   isUserDeleted: boolean | null;
+
+  /**
+   * User Option state
+   */
+  userOptionState: UserOptionState | null;
 }

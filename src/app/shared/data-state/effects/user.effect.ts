@@ -6,6 +6,9 @@ import {
   deleteUserAccount,
   deleteUserAccountFailure,
   deleteUserAccountSuccess,
+  deleteUserOption,
+  deleteUserOptionFailure,
+  deleteUserOptionSuccess,
   updateUserDetails,
   updateUserDetailsFailure,
   updateUserDetailsSuccess
@@ -39,6 +42,22 @@ export class UserEffect {
           }),
           catchError((error: HttpErrorResponse) => {
             return of(deleteUserAccountFailure({ error: error }));
+          })
+        );
+      })
+    )
+  );
+
+  deleteUserOptions$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteUserOption),
+      mergeMap((action) => {
+        return this.userService.deleteUserOptions(action.userOptionIds).pipe(
+          map(() => {
+            return deleteUserOptionSuccess();
+          }),
+          catchError((error: HttpErrorResponse) => {
+            return of(deleteUserOptionFailure({ error: error }));
           })
         );
       })

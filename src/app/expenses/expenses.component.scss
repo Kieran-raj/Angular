@@ -20,39 +20,24 @@
 }
 
 .grid {
-  height: 48rem;
+  height: 48em;
   width: 100%;
   margin-left: 0;
   margin-right: 0;
   padding-right: 0;
   padding-left: 0;
   padding-top: 0.5rem;
-  padding-bottom: 16rem;
+  padding-bottom: 14rem;
 }
 
 #pie-chart-body {
   width: fit-content !important;
 }
 
-#chart-side-ba {
+#chart-side-bar {
   grid-column-end: span 4;
 }
 
 #dashboard-panels {
-  height: 100%;
-}
-
-// This needs to be change to have the ability to scroll in the data window. ignore the nav bar
-/* Media Queries*/
-@media screen and (max-width: 2000px) {
-  .grid {
-    height: 44rem;
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    padding-right: 0;
-    padding-left: 0;
-    padding-top: 0.5rem;
-    padding-bottom: 16rem;
-  }
+  height: 95vh;
 }

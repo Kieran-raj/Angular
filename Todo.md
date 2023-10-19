@@ -79,7 +79,7 @@
 12. ~~Add Category service~~ &#x2611;
 13. Pull data-state related to log in out into separate
 14. ~~Refactor end points to allow for userIds~~ &#x2611;
-15. Log in and sign up form, have some shared logic, so pull out into separate file
+15. ~~Log in and sign up form, have some shared logic, so pull out into separate file~~ (No longer needed due to using Auth0) &#x2611;
 16. Upgrade angular
 17. Maybe change nav bar to angular material
 18. ~~Pull out all user into different its own component~~ &#x2611;
@@ -104,12 +104,11 @@
 7. ~~Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)~~ &#x2611;
 8. Upcoming transactions
 9. ~~When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)~~ &#x2611;
-10. ~~User profile settings~~ &#x2611;
+10. User profile settings - brought back as need to integrate with AuthO
 11. User notification settings
 12. ~~Delete account~~&#x2611;
 13. Change password
 14. Allow for demo mode
-15. Make it compatible for iphone
 
 ---
 
