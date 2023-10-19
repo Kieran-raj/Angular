@@ -10,7 +10,7 @@ import {
   MatDialogConfig,
   MatDialogRef
 } from '@angular/material/dialog';
-import { DeleteModalComponent } from './create-delete-modal/delete-modal.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { UserState } from 'src/app/shared/data-state/states/user.state';
 import { selectUserOptionState } from 'src/app/shared/data-state/selectors/user.selectors';
 import { Observable, Subscription } from 'rxjs';
