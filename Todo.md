@@ -90,6 +90,7 @@
 23. ~~Refactor login to its own route, that way there is more control over loading and make sure no render occurs before user info is set. Also call seems to be slow because the user-info call is slow which is likely due to the image size~~ (Need to try with new photo) &#x2611;
 24. Make users and expenses into their own modules. That way we can control the imports a lot
 25. Use business rule when dealing with create and update modal
+26. Convert all bootstrap models to angular material
 
 ---
 

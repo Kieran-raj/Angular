@@ -74,7 +74,11 @@
               </button>
 
               <mat-menu #dropDownMenu="matMenu">
-                <button mat-menu-item id="chart-nav-new-dropdown-item">
+                <button
+                  mat-menu-item
+                  id="chart-nav-new-dropdown-item"
+                  (click)="openDialog('CreateUserOptionComponent')"
+                >
                   <mat-icon>create</mat-icon>
                   <span>New recurring transaction</span>
                 </button>

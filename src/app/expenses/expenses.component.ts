@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ComponentRef,
   ElementRef,
   OnInit,
   ViewChild,
@@ -37,6 +38,9 @@ import { UpdateState } from '../shared/data-state/states/update.state';
 import { selectUserInfo } from '../shared/data-state/selectors/user.selectors';
 import { UserState } from '../shared/data-state/states/user.state';
 import { User } from '../shared/models/user';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ComponentType } from '@angular/cdk/portal';
+import { CreateModalComponent } from './upcoming-grid/create-modal/create-modal.component';
 
 @Component({
   selector: 'app-expenses',
@@ -139,6 +143,16 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   public user$ = this.userStore.select(selectUserInfo);
 
+  private dialogComponents: { [key: string]: any } = {
+    CreateUserOptionComponent: CreateModalComponent
+  };
+
+  /**
+   * Dialog instance
+   * @type {MatDialogRef<any, any>}
+   */
+  private dialogInstance: MatDialogRef<any, any>;
+
   /**
    * Successful update
    * @type {boolean}
@@ -156,7 +170,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private updateStore: Store<UpdateState>,
     private userStore: Store<UserState>,
     private chartHelper: ChartHelper,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private dialogService: MatDialog
   ) {
     this.transactionStore.dispatch(loadDailyExpenses());
 
@@ -260,6 +275,16 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  public openDialog(componentName: string) {
+    if (this.dialogComponents[componentName] == null) {
+      console.log("Component doesn't exisit");
+    }
+
+    this.dialogInstance = this.dialogService.open(
+      this.dialogComponents[componentName]
+    );
   }
 
   private openModal(content: any) {

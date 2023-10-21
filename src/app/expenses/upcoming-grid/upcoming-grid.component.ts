@@ -67,7 +67,6 @@ export class UpcomingGridComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dialogInstance?.afterClosed().subscribe((data) => {
-      console.log(data);
       this.transactionStore.dispatch(loadUserUpcomingExpenses());
     });
   }
