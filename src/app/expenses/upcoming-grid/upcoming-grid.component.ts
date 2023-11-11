@@ -1,21 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadUserUpcomingExpenses } from 'src/app/shared/data-state/actions/transactions.action';
-import { selectUserUpcomingExpenses } from 'src/app/shared/data-state/selectors/transactions.selectors';
-import { TransactionState } from 'src/app/shared/data-state/states/transactions.state';
+import { loadUserUpcomingExpenses } from '@shared/data-state/actions/transactions.action';
+import { selectUserUpcomingExpenses } from '@shared/data-state/selectors/transactions.selectors';
+import { TransactionState } from '@shared/data-state/states/transactions.state';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { UpcomingExpense } from 'src/app/shared/models/upcoming-expense';
+import { UpcomingExpense } from '@shared/models/upcoming-expense';
 import {
   MatDialog,
   MatDialogConfig,
   MatDialogRef
 } from '@angular/material/dialog';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
-import { UserState } from 'src/app/shared/data-state/states/user.state';
-import { selectUserOptionState } from 'src/app/shared/data-state/selectors/user.selectors';
-import { Observable, Subscription } from 'rxjs';
-import { UserOptionState } from 'src/app/shared/data-state/states/user/user-option.state';
-import { addUserOptionToState } from 'src/app/shared/data-state/actions/user.action';
+import { UserState } from '@shared/data-state/states/user.state';
+import { selectUserOptionState } from '@shared/data-state/selectors/user.selectors';
+import { Subscription } from 'rxjs';
+import { addUserOptionToState } from '@shared/data-state/actions/user.action';
 
 @Component({
   selector: 'app-upcoming-grid',
@@ -65,11 +64,7 @@ export class UpcomingGridComponent implements OnInit, OnDestroy {
     this.transactionStore.dispatch(loadUserUpcomingExpenses());
   }
 
-  ngOnInit(): void {
-    this.dialogInstance?.afterClosed().subscribe((data) => {
-      this.transactionStore.dispatch(loadUserUpcomingExpenses());
-    });
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

@@ -11,10 +11,15 @@ import {
   deleteUserOption,
   deleteUserOptionSuccess,
   deleteUserOptionFailure,
-  addUserOptionToState
-} from '../actions/user.action';
-import { UserState } from '../states/user.state';
-import { UserOptionState } from '../states/user/user-option.state';
+  addUserOptionToState,
+  addUpdateUserOption,
+  addUpdateUserOptionFailure,
+  addUpdateUserOptionSuccess,
+  clearAddUpdateUserOptionsState
+} from '@shared/data-state/actions/user.action';
+
+import { UserState } from '@shared/data-state/states/user.state';
+import { UserOptionState } from '@shared/data-state/states/user/user-option.state';
 
 export const initialUser: UserState = {
   userToken: null,
@@ -113,18 +118,19 @@ export const userReducer = createReducer(
 
     return clone;
   }),
-  on(deleteUserOptionFailure, (state, action) => {
+  on(deleteUserOptionFailure, (state, action): UserState => {
     const clone = JSON.parse(JSON.stringify(state));
     const userOptions = clone.userOptionState;
 
     const errorDetails = {
-      message: action.error.message,
+      message:
+        "Couldn't delete your reccuring transaction. Please try again later.",
       statusCode: action.error.status
     };
 
-    userOptions['delete'].isComplete = false;
+    userOptions['delete'].isComplete = true;
     userOptions['delete'].isProcessing = false;
-    userOptions['error'].error = errorDetails;
+    userOptions['delete'].error = errorDetails;
     clone.userOptionState = userOptions;
 
     return clone;
@@ -135,7 +141,7 @@ export const userReducer = createReducer(
       isUserDeleted: true
     };
   }),
-  on(deleteUserAccountFailure, (state, action) => {
+  on(deleteUserAccountFailure, (state, action): UserState => {
     const errorDetails = {
       message: action.error.message,
       statusCode: action.error.status
@@ -145,5 +151,56 @@ export const userReducer = createReducer(
       error: errorDetails,
       isUserDeleted: null
     };
+  }),
+  on(addUpdateUserOption, (state, action): UserState => {
+    const clone = JSON.parse(JSON.stringify(state));
+    const userOptions = clone.userOptionState ?? {};
+
+    if (Object.keys(userOptions).length > 0) {
+      userOptions[action.action].isComplete = false;
+      userOptions[action.action].isProcessing = true;
+      clone.userOptionState = userOptions;
+
+      return clone;
+    }
+
+    userOptions[action.action] = {} as UserOptionState;
+    userOptions[action.action].isComplete = false;
+    userOptions[action.action].isProcessing = true;
+    clone.userOptionState = userOptions;
+
+    return clone;
+  }),
+  on(addUpdateUserOptionSuccess, (state, _): UserState => {
+    const clone = JSON.parse(JSON.stringify(state));
+    const userOptions = clone.userOptionState;
+
+    userOptions['add'].isComplete = true;
+    userOptions['add'].isProcessing = false;
+    userOptions['add'].error = null;
+    clone.userOptionState = userOptions;
+
+    return clone;
+  }),
+  on(addUpdateUserOptionFailure, (state, action): UserState => {
+    const clone = JSON.parse(JSON.stringify(state)) as UserState;
+
+    const userOptions = clone.userOptionState as UserOptionState;
+    const error = {
+      message: action.error.message,
+      statusCode: action.error.status
+    };
+
+    userOptions[action.action].error = error;
+    userOptions[action.action].isComplete = true;
+    userOptions[action.action].isProcessing = false;
+
+    clone.userOptionState = userOptions;
+    return clone;
+  }),
+  on(clearAddUpdateUserOptionsState, (state): UserState => {
+    const clone = JSON.parse(JSON.stringify(state)) as UserState;
+    clone.userOptionState = null;
+    return clone;
   })
 );

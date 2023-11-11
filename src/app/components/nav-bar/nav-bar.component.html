@@ -89,6 +89,7 @@
         "
       >
         <button
+          disabled="true"
           class="btn shadow-none"
           [routerLink]="['user/', getUserPath(user$ | async), 'profile']"
         >
@@ -97,7 +98,7 @@
               <fa-icon [icon]="faGear"></fa-icon>
             </div>
             <div class="col-7 nav-bar-item-text">
-              <span>Settings</span>
+              <span><s>Settings</s></span>
             </div>
           </div>
         </button>

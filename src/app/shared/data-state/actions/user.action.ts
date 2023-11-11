@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/shared/models/user';
-import { UserOption } from '../../models/user-option';
+import { User } from '@shared/models/user';
+import { UserOption } from '@shared/models/user-option';
 
 const userPrefix = `[User] - `;
 
@@ -44,6 +44,24 @@ export const deleteUserAccountSuccess = createAction(
 export const deleteUserAccountFailure = createAction(
   `${userPrefix} Delete User Account Failure`,
   props<{ error: HttpErrorResponse }>()
+);
+
+export const addUpdateUserOption = createAction(
+  `${userPrefix} Add / Create User Option`,
+  props<{ action: string; userOption: UserOption }>()
+);
+
+export const addUpdateUserOptionSuccess = createAction(
+  `${userPrefix} Add / Create User Option Success`
+);
+
+export const addUpdateUserOptionFailure = createAction(
+  `${userPrefix} Add / Create User Option Failure`,
+  props<{ error: HttpErrorResponse; action: string }>()
+);
+
+export const clearAddUpdateUserOptionsState = createAction(
+  `${userPrefix} Clear Add / Create User Options`
 );
 
 export const addUserOptionToState = createAction(

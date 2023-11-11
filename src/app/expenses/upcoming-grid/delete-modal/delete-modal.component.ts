@@ -9,9 +9,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { deleteUserOption } from 'src/app/shared/data-state/actions/user.action';
-import { selectUserOptionState } from 'src/app/shared/data-state/selectors/user.selectors';
-import { UserState } from 'src/app/shared/data-state/states/user.state';
+import {
+  clearAddUpdateUserOptionsState,
+  deleteUserOption
+} from '@shared/data-state/actions/user.action';
+import { selectUserOptionState } from '@shared/data-state/selectors/user.selectors';
+import { UserState } from '@shared/data-state/states/user.state';
 
 @Component({
   selector: 'app-delete-modal',
@@ -45,6 +48,18 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
   public userOptionState$ = this.userStore.select(selectUserOptionState);
 
   /**
+   * Display message
+   * @type {string}
+   */
+  public message =
+    'Are you sure you want to delete this recurring expense? This <b>cannot</b> be recovered.';
+
+  public error: {
+    message: string | null;
+    statusCode: number | null;
+  } | null;
+
+  /**
    * Selected rowId
    * @type {string}
    */
@@ -67,8 +82,10 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
         if (data !== null) {
           this.isComplete = data['delete'].isComplete;
           this.isProcessing = data['delete'].isProcessing;
-          if (this.isComplete) {
-            this.dialogInstance.close({ isComplete: true });
+
+          if (data['delete'].error) {
+            this.error = data['delete'].error ?? null;
+            this.message = data['delete'].error?.message ?? '';
           }
         }
       })
@@ -90,6 +107,7 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.userStore.dispatch(clearAddUpdateUserOptionsState());
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

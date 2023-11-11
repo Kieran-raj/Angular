@@ -1,0 +1,21 @@
+input.ng-invalid {
+  border: red 2px solid;
+}
+
+select.ng-invalid {
+  border: red 2px solid;
+}
+
+.mat-button-disabled {
+  opacity: 40%;
+}
+
+#create-button {
+  background-color: #005da6;
+  color: white;
+  font-family: Helvetica;
+}
+
+::ng-deep .mat-button-focus-overlay {
+  display: none;
+}

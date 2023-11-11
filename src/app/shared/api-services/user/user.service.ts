@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../../models/user';
+import { User } from '@shared/models/user';
+import { UserOption } from '@shared/models/user-option';
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +56,19 @@ export class UserSerivce {
     };
 
     return this.http.post(`${this.url}/user/delete-options`, body, options);
+  }
+
+  addUpdateUserOptions(userOption: UserOption): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    const options = { headers };
+    return this.http.post(
+      `${this.url}/user/add-update-user-option`,
+      userOption,
+      options
+    );
   }
 }

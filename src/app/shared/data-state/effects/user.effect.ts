@@ -1,8 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 import {
+  addUpdateUserOption,
+  addUpdateUserOptionFailure,
+  addUpdateUserOptionSuccess,
   deleteUserAccount,
   deleteUserAccountFailure,
   deleteUserAccountSuccess,
@@ -15,6 +18,7 @@ import {
 } from '../actions/user.action';
 import { UserSerivce } from 'src/app/shared/api-services/user/user.service';
 import { User } from 'src/app/shared/models/user';
+import { ExpensesAuthService } from '../../auth/expenses-auth.service';
 
 @Injectable()
 export class UserEffect {
@@ -64,8 +68,30 @@ export class UserEffect {
     )
   );
 
+  addUpdateUserOptions$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addUpdateUserOption),
+      switchMap((action) => {
+        const userOption = JSON.parse(JSON.stringify(action.userOption));
+        userOption.UserId = this.expensesAuthService.domainUser.id;
+        return this.userService.addUpdateUserOptions(userOption).pipe(
+          map(() => addUpdateUserOptionSuccess()),
+          catchError((error: HttpErrorResponse) =>
+            of(
+              addUpdateUserOptionFailure({
+                error: error,
+                action: action.action
+              })
+            )
+          )
+        );
+      })
+    )
+  );
+
   constructor(
     private actions$: Actions,
-    private userService: UserSerivce
+    private userService: UserSerivce,
+    private expensesAuthService: ExpensesAuthService
   ) {}
 }

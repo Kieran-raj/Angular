@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
-import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
-import { DailyAmount } from 'src/app/shared/models/daily-expense';
-import { Expense } from 'src/app/shared/models/expense';
-import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
+import { CategoricalAmounts } from '@shared/models/categorical-amounts';
+import { DailyAmount } from '@shared/models/daily-expense';
+import { Expense } from '@shared/models/expense';
+import { MonthlyInOut } from '@shared/models/monthly-ins-outs';
 import { TransactionsService } from '../../../expenses/api-services/transaction.service';
 
 import {
@@ -25,7 +25,6 @@ import {
 import { ExpensesAuthService } from '../../auth/expenses-auth.service';
 import { UpcomingExpense } from '../../models/upcoming-expense';
 import { HttpErrorResponse } from '@angular/common/http';
-import { deleteUserOptionSuccess } from '../actions/user.action';
 
 @Injectable()
 export class TransactionsEffect {
@@ -120,6 +119,7 @@ export class TransactionsEffect {
                 amounts: data
               })
             ),
+            // using wrong action here.
             catchError((error: HttpErrorResponse) =>
               of(loadUserUpcomingExpensesFailed())
             )
@@ -130,7 +130,7 @@ export class TransactionsEffect {
 
   loadUserUpcomingExpenses$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadUserUpcomingExpenses, deleteUserOptionSuccess),
+      ofType(loadUserUpcomingExpenses),
       mergeMap(() =>
         this.transactionService
           .getUserUpcomingExpenses(this.expensesAuthService.domainUser?.id)

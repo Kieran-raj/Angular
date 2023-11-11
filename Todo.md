@@ -110,6 +110,7 @@
 12. ~~Delete account~~&#x2611;
 13. Change password
 14. Allow for demo mode
+15. Add some error handle on all CRUD operations
 
 ---
 

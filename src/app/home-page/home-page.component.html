@@ -1,2 +1,31 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
-<div class="container"></div>
+<div class="d-flex align-items-center container">
+  <div class="">
+    <main>
+      <section class="content">
+        <h2>Discover the world of...</h2>
+        <h1>Managing your expenses</h1>
+        <p>
+          Help with your expense tracking. Catergorise however you choose with
+          custom catergoies and even add any reocurring in goings and out goings
+          you may have.
+        </p>
+
+        <button (click)="navigate('/expenses')" class="btn cta">
+          Get started now!
+        </button>
+      </section>
+
+      <section class="features">
+        <h2>Our features</h2>
+
+        <ul>
+          <li><i class="fa fa-check"></i>Custom categories.</li>
+          <li><i class="fa fa-check"></i>Add expenses very easily.</li>
+          <li><i class="fa fa-check"></i>Monthly breakdowns.</li>
+          <li><i class="fa fa-check"></i>Recurring ingoings and outgoings.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</div>
