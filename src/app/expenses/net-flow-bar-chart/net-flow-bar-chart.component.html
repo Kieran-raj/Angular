@@ -1,5 +1,5 @@
 <div *ngIf="monthlyInAndOuts$ | async; let data">
-  <!-- <app-bar-chart
+  <app-bar-chart
     [sourceData]="sourceData"
     [showYAxis]="false"
     [showYAxisLabel]="false"
@@ -7,7 +7,7 @@
     [customToolTipTemplate]="barChartToolTipRef"
     [colorsCallback]="colors"
     (selected)="onSelection($event)"
-  ></app-bar-chart> -->
+  ></app-bar-chart>
 </div>
 
 <ng-template #barChartToolTipRef let-model="model">

@@ -61,7 +61,7 @@ export class CreateModalComponent implements OnInit, OnDestroy, AfterViewInit {
       Validators.pattern('^[0-9]*(.[0-9]{0,2})?$')
     ]),
     frequency: new FormControl(null, [Validators.required]),
-    isOutGoing: new FormControl(null, [])
+    isOutgoing: new FormControl(null, [])
   });
 
   public userOptionActionState$ = this.userStore.select(
@@ -117,7 +117,7 @@ export class CreateModalComponent implements OnInit, OnDestroy, AfterViewInit {
     };
 
     userOption.MetaData = {
-      IsOutGoing: this.formGroup.controls['isOutGoing'].value ?? false,
+      IsOutgoing: this.formGroup.controls['isOutgoing'].value ?? false,
       Frequency: this.formGroup.controls['frequency'].value
     };
 

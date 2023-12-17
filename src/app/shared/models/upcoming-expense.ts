@@ -17,7 +17,7 @@ export interface UpcomingExpense {
   /**
    * Is outgoing
    */
-  isOutGoing: boolean;
+  isOutgoing: boolean;
 
   /**
    * Type

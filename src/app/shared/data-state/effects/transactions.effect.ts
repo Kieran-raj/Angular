@@ -118,10 +118,6 @@ export class TransactionsEffect {
               loadMonthlyBreakDownSuccess({
                 amounts: data
               })
-            ),
-            // using wrong action here.
-            catchError((error: HttpErrorResponse) =>
-              of(loadUserUpcomingExpensesFailed())
             )
           )
       )
@@ -137,6 +133,9 @@ export class TransactionsEffect {
           .pipe(
             map((data: UpcomingExpense[]) =>
               loadUserUpcomingExpensesSuccess({ expenses: data })
+            ),
+            catchError((error: HttpErrorResponse) =>
+              of(loadUserUpcomingExpensesFailed({ error: error }))
             )
           )
       )

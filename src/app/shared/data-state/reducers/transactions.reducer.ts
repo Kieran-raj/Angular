@@ -13,8 +13,8 @@ import {
   loadUserUpcomingExpenses,
   loadUserUpcomingExpensesSuccess,
   loadUserUpcomingExpensesFailed
-} from '../actions/transactions.action';
-import { TransactionState } from '../states/transactions.state';
+} from '@shared/data-state/actions/transactions.action';
+import { TransactionState } from '@shared/data-state/states/transactions.state';
 
 export const intitialTransactions: TransactionState = {
   expenses: null,
@@ -33,48 +33,48 @@ export const transactionsReducer = createReducer(
       ...state
     };
   }),
-  on(loadDailyExpensesSuccess, (state, action) => {
+  on(loadDailyExpensesSuccess, (state, action): TransactionState => {
     return {
       ...state,
       dailyTransactions: action.transactions
     };
   }),
-  on(loadExpenses, (state) => {
+  on(loadExpenses, (state): TransactionState => {
     return {
       ...state
     };
   }),
-  on(loadExpensesSuccess, (state, action) => {
+  on(loadExpensesSuccess, (state, action): TransactionState => {
     return {
       ...state,
       expenses: action.expenses
     };
   }),
-  on(addChosenExpenseToState, (state, action) => {
+  on(addChosenExpenseToState, (state, action): TransactionState => {
     return {
       ...state,
       chosenExpense: action.expense
     };
   }),
-  on(loadCategoricalAmounts, (state) => {
+  on(loadCategoricalAmounts, (state): TransactionState => {
     return {
       ...state
     };
   }),
-  on(loadCategoricalAmountsSuccess, (state, action) => {
+  on(loadCategoricalAmountsSuccess, (state, action): TransactionState => {
     return {
       ...state,
       categoricalAmounts: action.transactions
     };
   }),
 
-  on(loadMonthlyInsAndOutsSuccess, (state, action) => {
+  on(loadMonthlyInsAndOutsSuccess, (state, action): TransactionState => {
     return {
       ...state,
       monthlyInsAndOuts: action.monthlyInsAndOuts
     };
   }),
-  on(loadMonthlyBreakDownSuccess, (state, action) => {
+  on(loadMonthlyBreakDownSuccess, (state, action): TransactionState => {
     return {
       ...state,
       monthlyBreakdown: action.amounts
@@ -83,13 +83,13 @@ export const transactionsReducer = createReducer(
   on(clearState, () => {
     return intitialTransactions;
   }),
-  on(loadUserUpcomingExpensesSuccess, (state, action) => {
+  on(loadUserUpcomingExpensesSuccess, (state, action): TransactionState => {
     return {
       ...state,
       upcomingExpenses: action.expenses
     };
   }),
-  on(loadUserUpcomingExpensesFailed, (state, __) => {
+  on(loadUserUpcomingExpensesFailed, (state, action): TransactionState => {
     return {
       ...state,
       upcomingExpenses: null
