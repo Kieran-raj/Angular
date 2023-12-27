@@ -13,7 +13,7 @@ import {
   clearAddUpdateUserOptionsState,
   deleteUserOption
 } from '@shared/data-state/actions/user.action';
-import { selectUserOptionState } from '@shared/data-state/selectors/user.selectors';
+import { selectUserOptionAction } from '@shared/data-state/selectors/user.selectors';
 import { UserState } from '@shared/data-state/states/user.state';
 
 @Component({
@@ -45,7 +45,9 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
    * User option state
    * @type {Observable<UserOptionState>}
    */
-  public userOptionState$ = this.userStore.select(selectUserOptionState);
+  public userOptionState$ = this.userStore.select(
+    selectUserOptionAction('delete')
+  );
 
   /**
    * Display message
@@ -80,12 +82,16 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userOptionState$.subscribe((data) => {
         if (data !== null) {
-          this.isComplete = data['delete'].isComplete;
-          this.isProcessing = data['delete'].isProcessing;
+          this.isComplete = data.isComplete;
+          this.isProcessing = data.isProcessing;
 
-          if (data['delete'].error) {
-            this.error = data['delete'].error ?? null;
-            this.message = data['delete'].error?.message ?? '';
+          if (data.error) {
+            this.error = data.error ?? null;
+            this.message = data.error?.message ?? '';
+          }
+
+          if (data.isComplete && !data.isProcessing && data.error == null) {
+            this.onClose();
           }
         }
       })

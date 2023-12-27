@@ -83,6 +83,10 @@ export class CreateModalComponent implements OnInit, OnDestroy, AfterViewInit {
           if (data.error) {
             this.error = data.error ?? null;
           }
+
+          if (data.isComplete && !data.isProcessing && data.error === null) {
+            this.onCancel();
+          }
         }
       })
     );
