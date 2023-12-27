@@ -121,8 +121,3 @@
 3. Fix nav bar width to fit on an ipad
 
 ---
-
-#### Finish off
-
-1. Upcoming-transactions
-2. Make sure charts arent complaining in console
