@@ -1,0 +1,25 @@
+<div class="upcoming-table">
+  <table class="table">
+    <tbody *ngIf="upcomingExpenses$ | async; let items">
+      <tr *ngFor="let item of items" class="dirty-row">
+        <td scope="row">{{ item.name }}</td>
+        <td>{{ item.type }}</td>
+        <td>{{ item.amount | currency: "GBP" }}</td>
+        <td>{{ item.date | date: "d/M/y" }}</td>
+        <td>
+          <button
+            class="btn border-0 shadow-none"
+            id="action-delete-icon"
+            (click)="deleteItem(item)"
+          >
+            <fa-icon
+              [icon]="deleteButtonIcon"
+              [title]="deleteButtonIconTooltip"
+              size="lg"
+            ></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

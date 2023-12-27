@@ -1,9 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
-import { DailyAmount } from 'src/app/shared/models/daily-expense';
-import { Expense } from 'src/app/shared/models/expense';
-import { MonthlyInOut } from 'src/app/shared/models/monthly-ins-outs';
-import { User } from 'src/app/shared/models/user';
+import { CategoricalAmounts } from '@shared/models/categorical-amounts';
+import { DailyAmount } from '@shared/models/daily-expense';
+import { Expense } from '@shared/models/expense';
+import { MonthlyInOut } from '@shared/models/monthly-ins-outs';
+import { User } from '@shared/models/user';
+import { UpcomingExpense } from '@shared/models/upcoming-expense';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const expensesPrefix = '[Expenses Transactions] - ';
 
@@ -60,3 +62,17 @@ export const loadMonthlyBreakDownSuccess = createAction(
 );
 
 export const clearState = createAction(`${expensesPrefix}  Clearing State`);
+
+export const loadUserUpcomingExpenses = createAction(
+  `${expensesPrefix} Load User Upcoming Expenses`
+);
+
+export const loadUserUpcomingExpensesSuccess = createAction(
+  `${expensesPrefix} Load User Upcoming Expenses Success`,
+  props<{ expenses: UpcomingExpense[] }>()
+);
+
+export const loadUserUpcomingExpensesFailed = createAction(
+  `${expensesPrefix} Load User Upcoming Expenses Failed`,
+  props<{ error: HttpErrorResponse }>()
+);

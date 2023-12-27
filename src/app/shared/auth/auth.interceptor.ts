@@ -6,11 +6,11 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserState } from '../data-state/states/user.state';
+import { ExpensesAuthService } from './expenses-auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private readonly authService: ExpensesAuthService) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -19,6 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const accessToken = localStorage.getItem('access_token');
 
     if (accessToken) {
+      request.headers.append('UserId', this.authService.domainUser?.id);
       if (!request.url.includes('token')) {
         const requestClone = request.clone({
           headers: request.headers.set('Authorization', 'Bearer ' + accessToken)

@@ -1,0 +1,88 @@
+<h2 mat-dialog-title style="color: #233d53">Create</h2>
+<div mat-dialog-content>
+  <div class="alert alert-danger" role="alter" *ngIf="error">
+    <div class="row">
+      <div class="col-2">
+        <fa-icon [icon]="faInfoTriangle" size="2x"></fa-icon>
+      </div>
+      <div class="col-9">
+        Your new option couldn't be added. Please try again later.
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="formGroup">
+    <div class="form-floating mb-2">
+      <input
+        class="form-control shadow-none"
+        id="option-name-input"
+        type="text"
+        formControlName="optionName"
+      />
+      <label for="option-name-input">Name</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input
+        class="form-control shadow-none"
+        id="option-type-input"
+        type="text"
+        formControlName="optionType"
+      />
+      <label for="option-type-input">Type - eg direct debit</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input
+        class="form-control shadow-none"
+        id="option-value-input"
+        type="number"
+        formControlName="optionValue"
+        min="1"
+      />
+      <label for="option-value-input">Amount</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <select
+        class="form-control shadow-none"
+        formControlName="frequency"
+        id="select-frequency-dropdown"
+      >
+        <option>Daily</option>
+        <option>Monthly</option>
+        <option>Yearly</option>
+      </select>
+      <label for="select-frequency-dropdown">Frequency</label>
+    </div>
+    <div class="mb-2">
+      <mat-checkbox color="primary" formControlName="isOutgoing"
+        >Is outgoing?</mat-checkbox
+      >
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button
+    *ngIf="!isProcessing"
+    mat-button
+    class="dialog-button"
+    id="cancel-button"
+    (click)="onCancel()"
+  >
+    Cancel
+  </button>
+  <button
+    *ngIf="!isProcessing"
+    class="dialog-button"
+    id="create-button"
+    color="primary"
+    [disabled]="isCreateButtonDisabled$ | async"
+    mat-button
+    (click)="onCreateCallback()"
+  >
+    Create
+  </button>
+  <div *ngIf="isProcessing && !isComplete">
+    <mat-spinner [diameter]="35" [strokeWidth]="5"></mat-spinner>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
   TemplateRef,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { LineData } from 'src/app/shared/models/line-data';
 import { chartSettings } from 'src/app/shared/settings/chart-settings';
@@ -14,7 +14,7 @@ import * as shape from 'd3-shape';
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class LineChartComponent implements OnInit {
   /**
@@ -67,7 +67,7 @@ export class LineChartComponent implements OnInit {
 
   view: any = [
     chartSettings.lineChart.xViewSize,
-    chartSettings.lineChart.yViewSize,
+    chartSettings.lineChart.yViewSize
   ];
 
   // view: any = [1350, 500];

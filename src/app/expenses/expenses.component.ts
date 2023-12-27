@@ -10,21 +10,21 @@ import {
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
-import { LineData } from '../shared/models/line-data';
+import { LineData } from '@shared/models/line-data';
 import {
   loadCategoricalAmounts,
   loadDailyExpenses,
   loadMonthlyInsAndOuts,
   loadExpenses
-} from '../shared/data-state/actions/transactions.action';
+} from '@shared/data-state/actions/transactions.action';
 import {
   selectCategoricalAmounts,
   selectDailyTransactions
-} from '../shared/data-state/selectors/transactions.selectors';
-import { selectModalAction } from '../shared/data-state/selectors/updates.selectors';
-import { TransactionState } from '../shared/data-state/states/transactions.state';
-import { ChartHelper } from '../shared/helper-functions/chart-functions';
-import { PieData } from '../shared/models/pie-data';
+} from '@shared/data-state/selectors/transactions.selectors';
+import { selectModalAction } from '@shared/data-state/selectors/updates.selectors';
+import { TransactionState } from '@shared/data-state/states/transactions.state';
+import { ChartHelper } from '@shared/helper-functions/chart-functions';
+import { PieData } from '@shared/models/pie-data';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowsRotate,
@@ -32,11 +32,17 @@ import {
   faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { DailyAmount } from '../shared/models/daily-expense';
-import { UpdateState } from '../shared/data-state/states/update.state';
-import { selectUserInfo } from '../shared/data-state/selectors/user.selectors';
-import { UserState } from '../shared/data-state/states/user.state';
-import { User } from '../shared/models/user';
+import { DailyAmount } from '@shared/models/daily-expense';
+import { UpdateState } from '@shared/data-state/states/update.state';
+import { selectUserInfo } from '@shared/data-state/selectors/user.selectors';
+import { UserState } from '@shared/data-state/states/user.state';
+import { User } from '@shared/models/user';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from '@angular/material/dialog';
+import { CreateModalComponent } from './upcoming-grid/create-modal/create-modal.component';
 
 @Component({
   selector: 'app-expenses',
@@ -139,6 +145,16 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   public user$ = this.userStore.select(selectUserInfo);
 
+  private dialogComponents: { [key: string]: any } = {
+    CreateUserOptionComponent: CreateModalComponent
+  };
+
+  /**
+   * Dialog instance
+   * @type {MatDialogRef<any, any>}
+   */
+  private dialogInstance: MatDialogRef<any, any>;
+
   /**
    * Successful update
    * @type {boolean}
@@ -156,7 +172,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private updateStore: Store<UpdateState>,
     private userStore: Store<UserState>,
     private chartHelper: ChartHelper,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private dialogService: MatDialog
   ) {
     this.transactionStore.dispatch(loadDailyExpenses());
 
@@ -260,6 +277,21 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  public openDialog(componentName: string) {
+    if (this.dialogComponents[componentName] == null) {
+      console.log("Component doesn't exisit");
+    }
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '20rem';
+
+    this.dialogInstance = this.dialogService.open(
+      this.dialogComponents[componentName],
+      dialogConfig
+    );
   }
 
   private openModal(content: any) {
