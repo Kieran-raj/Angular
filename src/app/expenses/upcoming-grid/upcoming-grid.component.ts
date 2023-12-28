@@ -15,6 +15,7 @@ import { UserState } from '@shared/data-state/states/user.state';
 import { selectUserOptionState } from '@shared/data-state/selectors/user.selectors';
 import { Subscription } from 'rxjs';
 import { addUserOptionToState } from '@shared/data-state/actions/user.action';
+import { ExpensesAuthService } from '@shared/auth/expenses-auth.service';
 
 @Component({
   selector: 'app-upcoming-grid',
@@ -58,10 +59,17 @@ export class UpcomingGridComponent implements OnInit, OnDestroy {
 
   constructor(
     private transactionStore: Store<TransactionState>,
+    private expensesAuthService: ExpensesAuthService,
     private userStore: Store<UserState>,
     private dialogService: MatDialog
   ) {
-    this.transactionStore.dispatch(loadUserUpcomingExpenses());
+    this.subscriptions.push(
+      this.expensesAuthService.user$.subscribe((user) => {
+        if (user) {
+          this.transactionStore.dispatch(loadUserUpcomingExpenses());
+        }
+      })
+    );
   }
 
   ngOnInit(): void {}

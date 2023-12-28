@@ -6,6 +6,10 @@ select.ng-invalid {
   border: red 2px solid;
 }
 
+label {
+  margin-left: 0.5rem;
+}
+
 .mat-button-disabled {
   opacity: 40%;
 }

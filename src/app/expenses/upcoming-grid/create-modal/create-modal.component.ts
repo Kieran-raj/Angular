@@ -61,7 +61,8 @@ export class CreateModalComponent implements OnInit, OnDestroy, AfterViewInit {
       Validators.pattern('^[0-9]*(.[0-9]{0,2})?$')
     ]),
     frequency: new FormControl(null, [Validators.required]),
-    isOutgoing: new FormControl(null, [])
+    isOutgoing: new FormControl(null, []),
+    startDate: new FormControl(null, [Validators.required])
   });
 
   public userOptionActionState$ = this.userStore.select(
@@ -124,6 +125,9 @@ export class CreateModalComponent implements OnInit, OnDestroy, AfterViewInit {
       IsOutgoing: this.formGroup.controls['isOutgoing'].value ?? false,
       Frequency: this.formGroup.controls['frequency'].value
     };
+
+    userOption.StartDateTime = this.formGroup.controls['startDate']
+      .value as Date;
 
     this.userStore.dispatch(
       addUpdateUserOption({ action: 'add', userOption: userOption })

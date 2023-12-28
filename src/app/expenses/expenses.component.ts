@@ -43,6 +43,7 @@ import {
   MatDialogRef
 } from '@angular/material/dialog';
 import { CreateModalComponent } from './upcoming-grid/create-modal/create-modal.component';
+import { ExpensesAuthService } from '@shared/auth/expenses-auth.service';
 
 @Component({
   selector: 'app-expenses',
@@ -173,23 +174,22 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private userStore: Store<UserState>,
     private chartHelper: ChartHelper,
     private modalService: NgbModal,
-    private dialogService: MatDialog
+    private dialogService: MatDialog,
+    private expensesAuthService: ExpensesAuthService
   ) {
-    this.transactionStore.dispatch(loadDailyExpenses());
-
     this.subscriptions.push(
-      this.user$.subscribe((user: User | null) => {
-        this.transactionStore.dispatch(
-          loadExpenses({
-            user: user
-          })
-        );
+      this.expensesAuthService.user$.subscribe((user) => {
+        if (user) {
+          this.transactionStore.dispatch(loadDailyExpenses());
+
+          this.transactionStore.dispatch(loadExpenses());
+
+          this.transactionStore.dispatch(loadCategoricalAmounts());
+
+          this.transactionStore.dispatch(loadMonthlyInsAndOuts());
+        }
       })
     );
-
-    this.transactionStore.dispatch(loadCategoricalAmounts());
-
-    this.transactionStore.dispatch(loadMonthlyInsAndOuts());
   }
 
   ngOnInit(): void {
@@ -286,7 +286,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
 
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.width = '20rem';
+    dialogConfig.width = '40rem';
+    dialogConfig.maxWidth = '60rem';
 
     this.dialogInstance = this.dialogService.open(
       this.dialogComponents[componentName],

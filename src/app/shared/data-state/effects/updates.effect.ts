@@ -47,9 +47,7 @@ export class UpdatesEffect {
           map(() => {
             this.transactionStore.dispatch(loadDailyExpenses());
 
-            this.transactionStore.dispatch(
-              loadExpenses({ user: this.authService.domainUser })
-            );
+            this.transactionStore.dispatch(loadExpenses());
 
             this.transactionStore.dispatch(loadMonthlyInsAndOuts());
 
@@ -71,9 +69,7 @@ export class UpdatesEffect {
           map(() => {
             this.transactionStore.dispatch(loadCategoricalAmounts());
             this.transactionStore.dispatch(loadDailyExpenses());
-            this.transactionStore.dispatch(
-              loadExpenses({ user: this.authService.domainUser })
-            );
+            this.transactionStore.dispatch(loadExpenses());
 
             return deleteTransactionSuccess();
           })

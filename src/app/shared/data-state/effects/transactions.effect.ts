@@ -31,23 +31,16 @@ export class TransactionsEffect {
   loadExpenses$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadExpenses),
-      mergeMap((action) => {
-        if (action?.user) {
-          return this.transactionService.getUserExpenses(action.user.id).pipe(
+      mergeMap(() => {
+        return this.transactionService
+          .getUserExpenses(this.expensesAuthService.domainUser?.id)
+          .pipe(
             map((expenses: Expense[]) => {
               return loadExpensesSuccess({
                 expenses: expenses
               });
             })
           );
-        }
-        return this.transactionService.getAllExpenses().pipe(
-          map((expenses: Expense[]) => {
-            return loadExpensesSuccess({
-              expenses: expenses
-            });
-          })
-        );
       })
     )
   );
@@ -55,8 +48,8 @@ export class TransactionsEffect {
   loadDailyExpense$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadDailyExpenses),
-      mergeMap(() =>
-        this.transactionService
+      mergeMap(() => {
+        return this.transactionService
           .getDailyAmounts(this.expensesAuthService.domainUser?.id)
           .pipe(
             map((dailyAmounts: DailyAmount[]) =>
@@ -64,8 +57,8 @@ export class TransactionsEffect {
                 transactions: dailyAmounts
               })
             )
-          )
-      )
+          );
+      })
     )
   );
 
