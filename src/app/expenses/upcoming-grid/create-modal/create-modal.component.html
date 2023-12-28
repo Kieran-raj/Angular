@@ -11,49 +11,66 @@
     </div>
   </div>
   <form [formGroup]="formGroup">
-    <div class="form-floating mb-2">
-      <input
-        class="form-control shadow-none"
-        id="option-name-input"
-        type="text"
-        formControlName="optionName"
-      />
-      <label for="option-name-input">Name</label>
+    <div class="row">
+      <div class="form-floating mb-2 col-12 col-sm-6">
+        <input
+          class="form-control shadow-none"
+          id="option-name-input"
+          type="text"
+          formControlName="optionName"
+        />
+        <label for="option-name-input">Name</label>
+      </div>
+
+      <div class="form-floating mb-2 col-12 col-sm-6">
+        <input
+          class="form-control shadow-none"
+          id="option-type-input"
+          type="text"
+          formControlName="optionType"
+        />
+        <label for="option-type-input">Type - eg direct debit</label>
+      </div>
     </div>
 
-    <div class="form-floating mb-2">
-      <input
-        class="form-control shadow-none"
-        id="option-type-input"
-        type="text"
-        formControlName="optionType"
-      />
-      <label for="option-type-input">Type - eg direct debit</label>
+    <div class="row">
+      <div class="form-floating mb-2 col-12 col-sm-6">
+        <input
+          class="form-control shadow-none"
+          id="option-value-input"
+          type="number"
+          formControlName="optionValue"
+          min="1"
+        />
+        <label for="option-value-input">Amount</label>
+      </div>
+
+      <div class="form-floating mb-2 col-12 col-sm-6">
+        <select
+          class="form-control shadow-none"
+          formControlName="frequency"
+          id="select-frequency-dropdown"
+        >
+          <option>Daily</option>
+          <option>Monthly</option>
+          <option>Yearly</option>
+        </select>
+        <label for="select-frequency-dropdown">Frequency</label>
+      </div>
     </div>
 
-    <div class="form-floating mb-2">
-      <input
-        class="form-control shadow-none"
-        id="option-value-input"
-        type="number"
-        formControlName="optionValue"
-        min="1"
-      />
-      <label for="option-value-input">Amount</label>
+    <div class="row">
+      <div class="form-floating mb-2 col-12 col-sm-6">
+        <input
+          class="form-control shadow-none"
+          id="dateInput"
+          type="date"
+          formControlName="startDate"
+        />
+        <label for="dateInput">Start From</label>
+      </div>
     </div>
 
-    <div class="form-floating mb-2">
-      <select
-        class="form-control shadow-none"
-        formControlName="frequency"
-        id="select-frequency-dropdown"
-      >
-        <option>Daily</option>
-        <option>Monthly</option>
-        <option>Yearly</option>
-      </select>
-      <label for="select-frequency-dropdown">Frequency</label>
-    </div>
     <div class="mb-2">
       <mat-checkbox color="primary" formControlName="isOutgoing"
         >Is outgoing?</mat-checkbox

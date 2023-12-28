@@ -9,10 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 const expensesPrefix = '[Expenses Transactions] - ';
 
-export const loadExpenses = createAction(
-  `${expensesPrefix} Load Expenses`,
-  props<{ user: User | null }>()
-);
+export const loadExpenses = createAction(`${expensesPrefix} Load Expenses`);
 
 export const loadExpensesSuccess = createAction(
   `${expensesPrefix} Load Expenses Success`,

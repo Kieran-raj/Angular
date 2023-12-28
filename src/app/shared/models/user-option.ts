@@ -31,4 +31,9 @@ export interface UserOption {
    * MetaData
    */
   MetaData: { [key: string]: any };
+
+  /**
+   * Start Date Time
+   */
+  StartDateTime: Date;
 }

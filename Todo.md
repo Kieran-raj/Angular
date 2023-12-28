@@ -103,7 +103,7 @@
 5. ~~Allow the creation of new users~~ &#x2611;
 6. Allow the users to edit any monthly subscriptions that they want
 7. ~~Make all graphs line graphs, with different ticks for monthly values (1m = last 30 days, 6m = last 180 days, 1y = last 365 days)~~ &#x2611;
-8. Upcoming transactions
+8. ~~Upcoming transactions~~
 9. ~~When clicking on ins and out, a breakdown of that month should show. Potential pie-chart showing category (another modal)~~ &#x2611;
 10. User profile settings - brought back as need to integrate with AuthO
 11. User notification settings
@@ -116,8 +116,8 @@
 
 #### Styling
 
-1. Change show/hide password to use an icon
-2. Maybe change the log in and sign up model. Maybe use lines and not boxes
+1. ~~Change show/hide password to use an icon~~ (Not longer needed due to not coding)
+2. ~~Maybe change the log in and sign up model. Maybe use lines and not boxes~~ (Not longer needed due to not coding)
 3. Fix nav bar width to fit on an ipad
 
 ---
