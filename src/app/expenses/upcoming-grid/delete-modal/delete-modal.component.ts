@@ -53,8 +53,7 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
    * Display message
    * @type {string}
    */
-  public message =
-    'Are you sure you want to delete this recurring expense? This <b>cannot</b> be recovered.';
+  public message = 'Confirm deletion. They <b>cannot</b> be recovered.';
 
   public error: {
     message: string | null;
@@ -65,7 +64,7 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
    * Selected rowId
    * @type {string}
    */
-  private rowId: string;
+  private rowIds: string[];
 
   /**
    * Subscriptions
@@ -78,7 +77,7 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
     private userStore: Store<UserState>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
-    this.rowId = data.rowId;
+    this.rowIds = data.rowIds;
     this.subscriptions.push(
       this.userOptionState$.subscribe((data) => {
         if (data !== null) {
@@ -103,9 +102,7 @@ export class DeleteModalComponent implements OnInit, OnDestroy {
   }
 
   public onDeleteCallback(): void {
-    const ids = [];
-    ids.push(this.rowId);
-    this.userStore.dispatch(deleteUserOption({ userOptionIds: ids }));
+    this.userStore.dispatch(deleteUserOption({ userOptionIds: this.rowIds }));
   }
 
   public onClose(): void {

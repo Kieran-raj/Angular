@@ -60,6 +60,7 @@
 45. ~~Need to add first name and last name to state and User object~~ &#x2611;
 46. If you want to save, what should do?
 47. ~~Monthly breakdown not working properly~~ &#x2611;
+48. Tooltip on grid to show descirption in full
 
 ---
 
@@ -91,6 +92,11 @@
 24. Make users and expenses into their own modules. That way we can control the imports a lot
 25. Use business rule when dealing with create and update modal
 26. Convert all bootstrap models to angular material
+27. Colours for charts and categories needs to be fixed (come up with some auto generated)
+28. ~~Need to fix display all card on the same page on phone~~ &#x2611;
+29. Fix home page too
+30. ~~Fix scrolling~~ &#x2611;
+31. Line chart different time ranges needs to be fixed. Need to find the range in which the values should exist
 
 ---
 
@@ -118,6 +124,5 @@
 
 1. ~~Change show/hide password to use an icon~~ (Not longer needed due to not coding)
 2. ~~Maybe change the log in and sign up model. Maybe use lines and not boxes~~ (Not longer needed due to not coding)
-3. Fix nav bar width to fit on an ipad
 
 ---

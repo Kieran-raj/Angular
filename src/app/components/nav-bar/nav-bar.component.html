@@ -10,7 +10,7 @@
     <div class="row" id="user-banner">
       <div id="nav-bar-header-text">{{ (user$ | async)?.nickname }}</div>
     </div>
-    <hr />
+    <hr id="user-logo-line-break" />
 
     <div class="row nav-bar-item-button">
       <div
@@ -22,11 +22,11 @@
       >
         <button class="btn shadow-none" (click)="navigate('/home')">
           <div class="row">
-            <div class="col-5 nav-bar-item-icon">
+            <div class="col-4 px-0 nav-bar-item-icon">
               <fa-icon [icon]="faHome"></fa-icon>
             </div>
-            <div class="col-7 nav-bar-item-text">
-              <span>Home</span>
+            <div class="col-8 nav-bar-item-text">
+              <span class="text-center">Home</span>
             </div>
           </div>
         </button>
@@ -42,12 +42,15 @@
         "
       >
         <button class="btn shadow-none" (click)="navigate('/expenses')">
-          <div class="row" style="padding-left: 0.3rem">
-            <div class="col-5 nav-bar-item-icon" style="width: fit-content">
+          <div class="row">
+            <div
+              class="col-4 px-0 nav-bar-item-icon"
+              style="width: fit-content"
+            >
               <fa-icon [icon]="faGrid"></fa-icon>
             </div>
-            <div class="col-7 nav-bar-item-text">
-              <span style="padding-left: 0.3rem">Dashboard</span>
+            <div class="col-8 nav-bar-item-text">
+              <span class="text-center">Dashboard</span>
             </div>
           </div>
         </button>
@@ -68,11 +71,11 @@
           (click)="navigate('/stocks')"
         >
           <div class="row">
-            <div class="col-5 nav-bar-item-icon">
+            <div class="col-5 px-0 nav-bar-item-icon">
               <fa-icon [icon]="faChart"></fa-icon>
             </div>
-            <div class="col-7 nav-bar-item-text">
-              <span><s>Stocks</s></span>
+            <div class="col-7 px-0 nav-bar-item-text">
+              <span class="text-center"><s>Stocks</s></span>
             </div>
           </div>
         </button>
@@ -94,11 +97,11 @@
           [routerLink]="['user/', getUserPath(user$ | async), 'profile']"
         >
           <div class="row">
-            <div class="col-5 nav-bar-item-icon">
+            <div class="col-5 px-0 nav-bar-item-icon">
               <fa-icon [icon]="faGear"></fa-icon>
             </div>
-            <div class="col-7 nav-bar-item-text">
-              <span><s>Settings</s></span>
+            <div class="col-7 px-0 nav-bar-item-text">
+              <span class="text-center"><s>Settings</s></span>
             </div>
           </div>
         </button>
@@ -106,14 +109,14 @@
     </div>
 
     <div class="row nav-bar-item-button">
-      <div class="col" id="nav-sign-out">
+      <div>
         <button class="btn shadow-none" (click)="signOut()">
           <div class="row">
-            <div class="col-5 nav-bar-item-icon">
+            <div class="col-5 px-0 nav-bar-item-icon">
               <fa-icon [icon]="faSignOut"></fa-icon>
             </div>
-            <div class="col-7 nav-bar-item-text">
-              <span>Sign Out</span>
+            <div class="col-7 px-0 nav-bar-item-text">
+              <span class="text-center">Sign Out</span>
             </div>
           </div>
         </button>

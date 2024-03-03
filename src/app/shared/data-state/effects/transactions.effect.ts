@@ -25,6 +25,7 @@ import {
 import { ExpensesAuthService } from '../../auth/expenses-auth.service';
 import { UpcomingExpense } from '../../models/upcoming-expense';
 import { HttpErrorResponse } from '@angular/common/http';
+import { deleteUserOptionSuccess } from '../actions/user.action';
 
 @Injectable()
 export class TransactionsEffect {
@@ -119,7 +120,7 @@ export class TransactionsEffect {
 
   loadUserUpcomingExpenses$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadUserUpcomingExpenses),
+      ofType(loadUserUpcomingExpenses, deleteUserOptionSuccess),
       mergeMap(() =>
         this.transactionService
           .getUserUpcomingExpenses(this.expensesAuthService.domainUser?.id)

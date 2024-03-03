@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   Input,
   OnInit,
@@ -65,12 +64,6 @@ export class LineChartComponent implements OnInit {
   @Input()
   public curve = shape.curveCardinal.tension(0.51);
 
-  view: any = [
-    chartSettings.lineChart.xViewSize,
-    chartSettings.lineChart.yViewSize
-  ];
-
-  // view: any = [1350, 500];
   xAxisLabel = chartSettings.lineChart.xAxisLabel;
   yAxisLabel = chartSettings.lineChart.yAxisLabel;
   legend = chartSettings.lineChart.legend;
@@ -94,5 +87,10 @@ export class LineChartComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (window.innerWidth <= 500) {
+      this.xAxisLabel = '';
+      this.curve = shape.curveCardinal.tension(0.2);
+    }
+  }
 }

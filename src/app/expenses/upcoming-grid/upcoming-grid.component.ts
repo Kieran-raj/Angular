@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadUserUpcomingExpenses } from '@shared/data-state/actions/transactions.action';
 import { selectUserUpcomingExpenses } from '@shared/data-state/selectors/transactions.selectors';
@@ -22,7 +29,14 @@ import { ExpensesAuthService } from '@shared/auth/expenses-auth.service';
   templateUrl: './upcoming-grid.component.html',
   styleUrls: ['./upcoming-grid.component.scss']
 })
-export class UpcomingGridComponent implements OnInit, OnDestroy {
+export class UpcomingGridComponent implements OnInit, OnDestroy, OnChanges {
+  /**
+   * Is selecting transactions
+   * @type {boolean}
+   */
+  @Input()
+  public isSelectingTransactions = false;
+
   /**
    * Delete button icon.
    * @type {IconDefinition}
@@ -48,6 +62,12 @@ export class UpcomingGridComponent implements OnInit, OnDestroy {
    * @type {Observable<UserOptionState>}
    */
   public userOptionState$ = this.userStore.select(selectUserOptionState);
+
+  /**
+   * Selected transactions
+   * @type {Set<UpcomingExpense>}
+   */
+  public selectedItems: Set<UpcomingExpense> = new Set();
 
   private dialogInstance: MatDialogRef<DeleteModalComponent, any>;
 
@@ -78,18 +98,49 @@ export class UpcomingGridComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  public deleteItem(item: UpcomingExpense) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['isSelectingTransactions'].currentValue) {
+      this.selectedItems = new Set<UpcomingExpense>();
+    }
+  }
+
+  public delete() {
+    const optionsIds: string[] = [];
+
+    this.selectedItems.forEach((s) => optionsIds.push(s.id));
     this.userStore.dispatch(
-      addUserOptionToState({ userOptionId: item.id, action: 'delete' })
+      addUserOptionToState({
+        userOptionIds: optionsIds,
+        action: 'delete'
+      })
     );
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      rowId: item.id
+      rowIds: optionsIds
     };
 
     this.dialogInstance = this.dialogService.open(
       DeleteModalComponent,
       dialogConfig
     );
+  }
+
+  public selectItem(item: UpcomingExpense) {
+    if (this.selectedItems.has(item)) {
+      this.selectedItems.delete(item);
+    } else {
+      this.selectedItems.add(item);
+    }
+  }
+
+  public getDaysNextTransaction(date: string) {
+    const itemDate = new Date(date).getTime();
+
+    const currentDate = new Date().getTime();
+
+    const difference = Math.abs(currentDate - itemDate);
+
+    return Math.floor(difference / (1000 * 60 * 60 * 24));
   }
 }

@@ -36,11 +36,16 @@ $Angular-theme: mat.define-light-theme(
 
 @import "~bootstrap/scss/bootstrap";
 
+:root {
+  --doc-height: 100%;
+}
+
 html,
 body {
   height: 100%;
+  height: var(--doc-height);
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
   background-color: #f8f9fd;
 }
 body {
@@ -115,20 +120,13 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
   background-color: #a8bbbf !important;
 }
 
-/*Media Queries*/
+// /*Media Queries*/
 @media screen and (max-width: 1200px) {
-  body {
-    height: 100%;
-    overflow: scroll;
-  }
-
   .ag-body-horizontal-scroll {
     display: flex !important;
   }
-}
 
-@media screen and (max-width: 900px) {
-  app-nav-bar {
-    display: none;
+  .offcanvas-start {
+    width: fit-content;
   }
 }

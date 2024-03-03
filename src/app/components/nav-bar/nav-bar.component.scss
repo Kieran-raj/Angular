@@ -41,13 +41,13 @@ img {
   color: #233d53;
   box-shadow: none;
   width: 100%;
-  padding-right: 0px !important;
 }
 
 #side-nav-bar {
   background-color: white;
   color: #063a5b;
   padding-left: 2px;
+  box-shadow: 10px 0 15px -10px rgba(0, 0, 0, 0.5);
 }
 
 #nav-bar-header-text {
@@ -74,38 +74,14 @@ img {
 }
 
 /* Media Queries*/
-@media screen and (max-width: 1080px) {
-  #nav-bar-header-text {
-    font-size: large;
+@media screen and (max-width: 1200px) {
+  #user-banner {
+    display: none;
   }
 
-  .nav-bar-item-icon {
-    padding: 0%;
-  }
-}
-
-/* Media Queries*/
-@media screen and (max-width: 1080px) {
-  #nav-bar-header-text {
-    font-size: large;
-  }
-
-  .nav-bar-item-icon {
-    padding: 0%;
-  }
-}
-
-@media screen and (min-width: 2000px) {
-  #nav-bar-header-text {
-    font-size: x-large;
-  }
-
-  .nav-bar-item-text {
-    font-size: large;
-  }
-
-  .nav-bar-item-icon {
-    padding: 0%;
-    font-size: large;
+  #user-photo {
+    margin-top: 2rem;
+    height: 60px;
+    width: 60px;
   }
 }

@@ -1,5 +1,5 @@
-<div class="row mb-2" id="period-nav-buttons">
-  <div *ngFor="let choice of periodChoices" class="col-auto">
+<div class="row" id="period-nav-buttons">
+  <div *ngFor="let choice of periodChoices" class="col-auto" id="button-choice">
     <div class="row">
       <button
         type="button"
@@ -15,8 +15,5 @@
       id="toggle-indicator"
       *ngIf="chartPeriodChoice === choice"
     ></div>
-  </div>
-  <div class="col-auto">
-    <div class="mt-2" style="font-size: small; opacity: 0.4">Average</div>
   </div>
 </div>

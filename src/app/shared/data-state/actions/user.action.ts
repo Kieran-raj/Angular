@@ -66,7 +66,7 @@ export const clearAddUpdateUserOptionsState = createAction(
 
 export const addUserOptionToState = createAction(
   `${userPrefix} Add User Option To State`,
-  props<{ userOptionId: string; action: string }>()
+  props<{ userOptionIds: string[]; action: string }>()
 );
 
 export const deleteUserOption = createAction(
