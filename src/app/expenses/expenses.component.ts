@@ -8,7 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, filter } from 'rxjs';
 import { DateFilterComponent } from '../components/date-filter/date-filter.component';
 import { LineData } from '@shared/models/line-data';
 import {
@@ -25,18 +25,27 @@ import { selectModalAction } from '@shared/data-state/selectors/updates.selector
 import { TransactionState } from '@shared/data-state/states/transactions.state';
 import { ChartHelper } from '@shared/helper-functions/chart-functions';
 import { PieData } from '@shared/models/pie-data';
-import { IconDefinition } from '@fortawesome/free-regular-svg-icons';
+import {
+  IconDefinition,
+  faCalendar
+} from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowsRotate,
   faChartLine,
   faXmark
 } from '@fortawesome/free-solid-svg-icons';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModal,
+  NgbModalRef,
+  NgbOffcanvasRef
+} from '@ng-bootstrap/ng-bootstrap';
 import { DailyAmount } from '@shared/models/daily-expense';
 import { UpdateState } from '@shared/data-state/states/update.state';
-import { selectUserInfo } from '@shared/data-state/selectors/user.selectors';
+import {
+  selectUserInfo,
+  selectUserOptionAction
+} from '@shared/data-state/selectors/user.selectors';
 import { UserState } from '@shared/data-state/states/user.state';
-import { User } from '@shared/models/user';
 import {
   MatDialog,
   MatDialogConfig,
@@ -44,6 +53,10 @@ import {
 } from '@angular/material/dialog';
 import { CreateModalComponent } from './upcoming-grid/create-modal/create-modal.component';
 import { ExpensesAuthService } from '@shared/auth/expenses-auth.service';
+
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NavBarComponent } from '../components/nav-bar/nav-bar.component';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-expenses',
@@ -72,6 +85,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   public faXmark: IconDefinition = faXmark;
   public faArrows: IconDefinition = faArrowsRotate;
   public faChartLine: IconDefinition = faChartLine;
+  public faCalendar: IconDefinition = faCalendar;
 
   /**
    * What is the chosen granularity for the chart.
@@ -146,6 +160,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   public user$ = this.userStore.select(selectUserInfo);
 
+  /**
+   * Is multiple selection activated for upcoming transactions
+   * @type {boolean}
+   */
+  public isMultipleSelectionUpcomingTransactions = false;
+
   private dialogComponents: { [key: string]: any } = {
     CreateUserOptionComponent: CreateModalComponent
   };
@@ -155,6 +175,8 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    * @type {MatDialogRef<any, any>}
    */
   private dialogInstance: MatDialogRef<any, any>;
+
+  private offCanvasRef: NgbOffcanvasRef;
 
   /**
    * Successful update
@@ -175,7 +197,9 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     private chartHelper: ChartHelper,
     private modalService: NgbModal,
     private dialogService: MatDialog,
-    private expensesAuthService: ExpensesAuthService
+    private expensesAuthService: ExpensesAuthService,
+    private offCanvcasService: NgbOffcanvas,
+    private router: Router
   ) {
     this.subscriptions.push(
       this.expensesAuthService.user$.subscribe((user) => {
@@ -210,13 +234,25 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     );
 
     this.subscriptions.push(
+      this.userStore
+        .select(selectUserOptionAction('delete'))
+        .subscribe((data: any) => {
+          if (data?.isComplete) {
+            this.isMultipleSelectionUpcomingTransactions = false;
+          }
+        })
+    );
+
+    this.subscriptions.push(
       this.dailyAmounts$.subscribe(
         (results: DailyAmount[] | undefined | null) => {
           const mappedDailyAmountsToNgxCharts = results?.map(
             (dailyAmount: DailyAmount) => {
               return {
                 value: dailyAmount.amount,
-                name: dailyAmount.date.split('T')[0]
+                name: this.chartHelper.convertDateToUserFriendly(
+                  dailyAmount.date.split('T')[0]
+                )
               };
             }
           );
@@ -228,21 +264,42 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
             }
           ];
 
-          this.dailyData = lineData;
+          if (this.isMobileDevice()) {
+            this.dailyData = lineData.flatMap((sd: LineData) => {
+              return {
+                name: sd.name,
+                series: sd.series?.slice(-20)
+              };
+            });
+            this.xAxisTicks = this.chartHelper.generateLineXTicks(
+              8,
+              this.dailyData.find((d) => d.name === 'Transactions')?.series
+            );
+          } else {
+            this.dailyData = lineData;
 
-          this.chartData$.next(lineData);
+            this.xAxisTicks = this.chartHelper.generateLineXTicks(
+              12,
+              mappedDailyAmountsToNgxCharts
+            );
+          }
+
+          this.chartData$.next(this.dailyData);
 
           if (mappedDailyAmountsToNgxCharts) {
             this.isLineDataLoading =
               mappedDailyAmountsToNgxCharts.length > 0 ? false : true;
           }
-
-          this.xAxisTicks = this.chartHelper.generateLineXTicks(
-            12,
-            mappedDailyAmountsToNgxCharts
-          );
         }
       )
+    );
+
+    this.subscriptions.push(
+      this.router.events
+        .pipe(filter((event) => event instanceof NavigationStart))
+        .subscribe((_) => {
+          this.offCanvasRef.close();
+        })
     );
   }
 
@@ -295,6 +352,18 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
     );
   }
 
+  public setMutlipleSelection(value: boolean) {
+    this.isMultipleSelectionUpcomingTransactions = value;
+  }
+
+  public launchMobileNavBar() {
+    this.offCanvasRef = this.offCanvcasService.open(NavBarComponent);
+  }
+
+  private isMobileDevice() {
+    return window.innerWidth <= 500;
+  }
+
   private openModal(content: any) {
     this.modalInstance = this.modalService.open(content);
   }
@@ -318,7 +387,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
         tickInterval = 12;
         break;
       }
-      case '1m': {
+      case '1y': {
         data = this.dailyData[0].series?.slice(
           Math.max(this.dailyData[0].series.length - 365, 0)
         );

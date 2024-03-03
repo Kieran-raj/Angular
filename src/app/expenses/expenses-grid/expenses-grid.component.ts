@@ -10,11 +10,13 @@ import { AgGridAngular } from 'ag-grid-angular';
 import {
   CellClickedEvent,
   ColDef,
+  ColumnApi,
+  GridApi,
   GridReadyEvent,
   ValueFormatterParams,
   ValueGetterParams
 } from 'ag-grid-community';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { GridActionsComponent } from 'src/app/components/grid-actions/grid-actions.component';
 import { Expense } from 'src/app/shared/models/expense';
 import { addChosenExpenseToState } from '../../shared/data-state/actions/transactions.action';
@@ -43,7 +45,7 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
 
   public columnDefs: ColDef[] = [
     {
-      headerName: 'Amount (£)',
+      headerName: 'Amount',
       field: 'amount',
       filter: 'agNumberColumnFilter',
       sortable: true,
@@ -78,13 +80,26 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
     }
   ];
 
+  private mobileFields = ['description', 'amount', 'date'];
+
+  private gridApi: GridApi;
+
+  private columnApi: ColumnApi;
+
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
 
   constructor(private transactionStore: Store<TransactionState>) {
     this.expenses$ = this.transactionStore.select(selectExpenses);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (window.innerWidth <= 500) {
+      this.columnDefs = this.columnDefs.filter((cd) =>
+        this.mobileFields.includes(cd.field ?? '')
+      );
+      this.columnDefs.forEach((cd) => (cd.cellStyle = { fontSize: '11px' }));
+    }
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
@@ -93,6 +108,8 @@ export class ExpensesGridComponent implements OnInit, OnDestroy {
   onGridReady(params: GridReadyEvent) {
     this.rowData$ = this.expenses$;
     params.api.sizeColumnsToFit();
+    this.gridApi = params.api;
+    this.columnApi = params.columnApi;
   }
 
   onCellClicked(e: CellClickedEvent): void {

@@ -5,7 +5,7 @@ import { PieData } from 'src/app/shared/models/pie-data';
   selector: 'app-pie-grid-chart',
   templateUrl: './pie-grid-chart.component.html',
   styleUrls: ['./pie-grid-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class PieGridChartComponent implements OnInit {
   @Input()
@@ -16,11 +16,10 @@ export class PieGridChartComponent implements OnInit {
     transport: '#064B73',
     subscription: '#47B5FF',
     shopping: '#256D85',
-    other: '#FA532E',
+    other: '#FA532E'
   };
 
-  // view: any = [700, 550];
-  view: any = [625, 270];
+  view: any;
   gradient = false;
   showLegend = false;
   legendPosition: any = 'below';
@@ -46,7 +45,13 @@ export class PieGridChartComponent implements OnInit {
     return '#F9F3E6';
   };
 
-  constructor() {}
+  constructor() {
+    if (window.innerWidth <= 500) {
+      this.view = [540, 270];
+    } else {
+      this.view = [625, 270];
+    }
+  }
 
   ngOnInit(): void {}
 

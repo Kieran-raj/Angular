@@ -1,12 +1,45 @@
-tr {
-  text-align: center;
-  vertical-align: middle;
+.scrollable-row {
+  overflow-x: scroll;
+  flex-wrap: nowrap;
 }
 
-td {
-  padding: 0;
+.card-body {
+  color: #3f3f3f;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-.upcoming-table {
-  height: 5.8em;
+.outgoing-transaction {
+  background-color: #feeaea;
+  border-radius: inherit;
+}
+
+.incoming-transaction {
+  background-color: #e3ece6;
+  border-radius: inherit;
+}
+
+.unselected-transaction {
+  opacity: 40%;
+  cursor: pointer;
+}
+
+.selected-transaction {
+  opacity: 100%;
+  cursor: default;
+}
+
+.badge-danger {
+  background-color: #d00300;
+}
+
+#select-button:hover {
+  cursor: pointer;
+}
+
+#delete-selected-button,
+#edit-selected-button {
+  font-weight: 400;
 }

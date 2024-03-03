@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -153,6 +154,7 @@ import { CreateModalComponent } from './expenses/upcoming-grid/create-modal/crea
     MatSidenavModule,
     MatMenuModule,
     MatIconModule,
+    MatTooltipModule,
     NgxChartsModule,
     FontAwesomeModule,
     StoreModule.forRoot({

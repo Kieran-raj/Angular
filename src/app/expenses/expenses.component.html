@@ -1,99 +1,181 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
-<div class="header">Expenses</div>
-<div class="px-2 col-12" style="height: 100vh">
-  <div class="row" id="dashboard-panels">
-    <div class="col-7" style="overflow-y: hidden">
-      <div class="card mt-2 mx-0 row">
-        <div class="card-header border-0">Transaction overview</div>
-        <div class="container-fluid card-body cardBody shadow">
-          <div class="row pt-2">
-            <div class="col-12 pr-0">
-              <div class="row" id="chart-buttons">
-                <div class="col-10 pl-0" id="chart-side-bar" align="center">
-                  <app-expenses-side-bar
-                    class="pl-0"
-                    id="expenses-side-bar"
-                    (chartPeriod)="chartPeriodChange($event)"
-                  ></app-expenses-side-bar>
-                </div>
-                <div class="col-2 text-end" id="extra-button-col">
-                  <app-chart-drop-down
-                    (resetGraph)="resetGraph()"
-                  ></app-chart-drop-down>
-                </div>
-              </div>
-              <app-line-chart
-                *ngIf="chartData$ | async"
-                [sourceData]="chartData$ | async"
-                [xAxisTicks]="xAxisTicks"
-                [activeEntries]="activeEntries"
-                [isLoading]="isLineDataLoading"
-                [customToolTipTemplate]="lineChartToolTipRef"
-                [customSeriesTooltipTemplate]="lineChartSeriesToolTipRef"
-              >
-              </app-line-chart>
-            </div>
+
+<div class="row px-2 px-xl-0" id="header-row">
+  <div class="col-1 ps-1 pe-0 d-xl-none text-center" id="hamburger-menu-col">
+    <button
+      class="btn shadow-none p-0"
+      id="hamburger-menu-button"
+      (click)="launchMobileNavBar()"
+    >
+      <mat-icon id="mat-icon-menu">menu</mat-icon>
+    </button>
+  </div>
+  <div class="col-xl-12 col-11 ps-xl-2 ps-2 pe-0 py-xl-2 py-0 header">
+    Expenses
+  </div>
+</div>
+<div class="row" style="height: 100%" id="dashboard-panels">
+  <div class="col-12 col-xl-6">
+    <div class="card mx-0 row">
+      <div class="card-header border-0">
+        <div class="row">
+          <div
+            class="col-2 pe-0 d-flex justify-content-start align-items-center"
+          >
+            <mat-icon>insert_chart_outlined</mat-icon>
+          </div>
+          <div
+            class="col-8 my-auto d-flex justify-content-center align-items-center"
+          >
+            Transaction overview
           </div>
         </div>
       </div>
-      <div class="grid row">
-        <app-expenses-grid class="px-0 shadow"></app-expenses-grid>
+      <div
+        class="container-fluid card-body cardBody shadow px-2 py-0"
+        id="transactions-chart"
+      >
+        <div class="row pt-2">
+          <div class="col-12">
+            <div class="row" id="chart-buttons">
+              <div class="col-10" id="chart-side-bar" align="center">
+                <app-expenses-side-bar
+                  id="expenses-side-bar"
+                  (chartPeriod)="chartPeriodChange($event)"
+                ></app-expenses-side-bar>
+              </div>
+              <div class="col-2 text-end" id="extra-button-col">
+                <app-chart-drop-down
+                  (resetGraph)="resetGraph()"
+                ></app-chart-drop-down>
+              </div>
+            </div>
+            <app-line-chart
+              *ngIf="chartData$ | async"
+              [sourceData]="chartData$ | async"
+              [xAxisTicks]="xAxisTicks"
+              [activeEntries]="activeEntries"
+              [isLoading]="isLineDataLoading"
+              [customToolTipTemplate]="lineChartToolTipRef"
+              [customSeriesTooltipTemplate]="lineChartSeriesToolTipRef"
+            >
+            </app-line-chart>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-5">
-      <div class="card mt-2 mx-0 row">
-        <div class="card-header border-0">Category Breakdown</div>
-        <div class="container-fluid card-body cardBody shadow">
-          <div class="col-12" id="pie-chart" align="center">
-            <app-pie-grid-chart
-              *ngIf="pieData.length > 0"
-              [sourceData]="pieData"
-            ></app-pie-grid-chart>
+    <div class="grid row">
+      <app-expenses-grid class="px-0 shadow"></app-expenses-grid>
+    </div>
+  </div>
+  <div class="col-12 col-xl-6">
+    <div class="card mt-2 mt-xl-0 mx-0 row">
+      <div class="card-header border-0">
+        <div class="row">
+          <div class="col-2 d-flex justify-content-start align-items-center">
+            <mat-icon>pie_chart</mat-icon>
+          </div>
+          <div
+            class="col-8 my-auto d-flex justify-content-center align-items-center"
+          >
+            Category Breakdown
           </div>
         </div>
       </div>
-      <div class="card mt-2 mx-0 row">
-        <div class="card-header border-0">Recent In / Out</div>
-        <div class="container-fluid card-body cardBody shadow">
-          <div class="col-12" id="monthly-flow-chart">
-            <app-net-flow-bar-chart></app-net-flow-bar-chart>
+      <div class="container-fluid card-body cardBody shadow">
+        <div class="col-12" id="pie-chart" align="center">
+          <app-pie-grid-chart
+            *ngIf="pieData.length > 0"
+            [sourceData]="pieData"
+          ></app-pie-grid-chart>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-2 mx-0 row" id="recent-in-out-chart">
+      <div class="card-header border-0">
+        <div class="row">
+          <div class="col-2 d-flex justify-content-start align-items-center">
+            <mat-icon>import_export</mat-icon>
+          </div>
+          <div
+            class="col-8 my-auto d-flex justify-content-center align-items-center"
+          >
+            Recent In / Out
           </div>
         </div>
       </div>
-      <div class="card mt-2 mx-0 row">
-        <div class="card-header py-0 border-0">
-          <div class="row">
-            <div class="col-6 my-auto">Upcoming transactions</div>
-            <div class="col-1 ms-auto">
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="dropDownMenu"
-                id="upcoming-dropdown-button"
-              >
-                <mat-icon>more_vert</mat-icon>
-              </button>
+      <div class="container-fluid card-body cardBody shadow">
+        <div class="col-12" id="monthly-flow-chart">
+          <app-net-flow-bar-chart></app-net-flow-bar-chart>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-2 mx-0 row">
+      <div class="card-header py-0 border-0">
+        <div class="row">
+          <div class="col-2 d-flex justify-content-start align-items-center">
+            <mat-icon>event</mat-icon>
+          </div>
+          <div
+            class="col-8 my-auto d-flex justify-content-center align-items-center"
+          >
+            {{
+              isMultipleSelectionUpcomingTransactions
+                ? "Editing..."
+                : "Upcoming transactions"
+            }}
+          </div>
+          <div
+            class="col-2 d-flex justify-content-end"
+            id="upcoming-transactions-menu-button"
+          >
+            <button
+              *ngIf="isMultipleSelectionUpcomingTransactions"
+              mat-icon-button
+              (click)="setMutlipleSelection(false)"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
 
-              <mat-menu #dropDownMenu="matMenu">
-                <button
-                  mat-menu-item
-                  id="chart-nav-new-dropdown-item"
-                  (click)="openDialog('CreateUserOptionComponent')"
-                >
-                  <mat-icon>create</mat-icon>
-                  <span>New recurring transaction</span>
-                </button>
-              </mat-menu>
-            </div>
+            <button
+              *ngIf="!isMultipleSelectionUpcomingTransactions"
+              mat-icon-button
+              [matMenuTriggerFor]="dropDownMenu"
+              id="upcoming-dropdown-button"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #dropDownMenu="matMenu">
+              <button
+                mat-menu-item
+                id="chart-nav-new-dropdown-item"
+                (click)="setMutlipleSelection(true)"
+              >
+                <mat-icon>done_all</mat-icon>
+                <span>Select transactions</span>
+              </button>
+              <button
+                mat-menu-item
+                id="chart-nav-new-dropdown-item"
+                (click)="openDialog('CreateUserOptionComponent')"
+              >
+                <mat-icon>create</mat-icon>
+                <span>New recurring transaction</span>
+              </button>
+            </mat-menu>
           </div>
         </div>
-        <div
-          class="container-fluid card-body cardBody shadow"
-          style="overflow-y: scroll"
-        >
-          <div class="col-12" align="center">
-            <app-upcoming-grid></app-upcoming-grid>
-          </div>
-        </div>
+      </div>
+      <div
+        class="container-fluid card-body cardBody shadow"
+        [ngStyle]="{
+          'padding-top': isMultipleSelectionUpcomingTransactions ? '0px' : ''
+        }"
+      >
+        <app-upcoming-grid
+          [isSelectingTransactions]="isMultipleSelectionUpcomingTransactions"
+        ></app-upcoming-grid>
       </div>
     </div>
   </div>

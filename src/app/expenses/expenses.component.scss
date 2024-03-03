@@ -1,14 +1,23 @@
+$border-radius: 0.5rem;
+
+app-line-chart {
+  overflow: hidden;
+}
+
 .card-header {
   background-color: #005da6;
   color: white;
+  border-radius: $border-radius $border-radius 0 0 !important;
+  font-size: large;
+}
+
+.card {
+  border-radius: $border-radius;
 }
 
 .header {
   font-size: x-large;
   color: #063a5b;
-  padding-left: 0.5rem;
-  padding-top: 1rem;
-  padding-bottom: 0.3rem;
 }
 
 .close {
@@ -17,6 +26,8 @@
 
 .cardBody {
   height: fit-content;
+  overflow-x: scroll;
+  border-radius: $border-radius;
 }
 
 .grid {
@@ -27,7 +38,19 @@
   padding-right: 0;
   padding-left: 0;
   padding-top: 0.5rem;
-  padding-bottom: 14rem;
+}
+
+mat-icon {
+  height: 10px;
+  width: 10px;
+}
+
+#mat-icon-menu {
+  color: #063a5b;
+}
+
+#panel-list-left {
+  padding: 0rem;
 }
 
 #pie-chart-body {
@@ -38,6 +61,17 @@
   grid-column-end: span 4;
 }
 
-#dashboard-panels {
-  height: 95vh;
+#hamburger-menu-button {
+  background-color: #f8f9fd;
+  width: 25px;
+  height: 25px;
+}
+
+#hamburger-menu-col {
+  width: fit-content;
+}
+
+#transactions-chart {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
 }

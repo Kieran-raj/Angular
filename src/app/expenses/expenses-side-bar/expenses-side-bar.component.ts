@@ -26,7 +26,7 @@ export class ExpensesSideBarComponent implements OnInit {
    * Chart Period Choices
    * @type {string[]}
    */
-  public periodChoices = ['Default', '1m', '6m', '1y'];
+  public periodChoices = ['Default', '1m', '6m', '1y', 'All'];
 
   /**
    * Period choice
@@ -52,7 +52,7 @@ export class ExpensesSideBarComponent implements OnInit {
    */
   public dateLabels: ['Start Date', 'End Date'];
 
-  constructor(private transactionStore: Store<TransactionState>) {}
+  constructor() {}
 
   ngOnInit(): void {}
 

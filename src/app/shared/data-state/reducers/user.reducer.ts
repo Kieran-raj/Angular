@@ -82,11 +82,11 @@ export const userReducer = createReducer(
     if (userOptions === null) {
       userOptions = {};
       userOptions[action.action] = {
-        options: [action.userOptionId],
+        options: [action.userOptionIds],
         isProcessing: false
       };
     } else {
-      userOptions[action.action].options = [action.userOptionId];
+      userOptions[action.action].options = [action.userOptionIds];
     }
 
     return {

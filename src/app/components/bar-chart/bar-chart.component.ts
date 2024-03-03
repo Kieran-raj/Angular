@@ -5,14 +5,14 @@ import {
   OnInit,
   Output,
   TemplateRef,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class BarChartComponent implements OnInit {
   /**
@@ -73,7 +73,7 @@ export class BarChartComponent implements OnInit {
   @Input()
   public scheme = 'vivid';
 
-  view: any = [1150, 350];
+  view: any = [750, 300];
 
   xAxisLabel = 'Year';
 
@@ -86,7 +86,11 @@ export class BarChartComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (window.innerWidth <= 500) {
+      this.view = [750, 200];
+    }
+  }
 
   onSelect($event: Event): void {
     this.selected.emit($event);
