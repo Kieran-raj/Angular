@@ -1,5 +1,5 @@
 <div id="dialog">
-  <h2 mat-dialog-title>Monthly Breakdown | {{ title }}</h2>
+  <h2 id="dialog-title">Monthly Breakdown | {{ title }}</h2>
   <mat-dialog-content class="mat-typography" id="mat-dialog">
     <div
       *ngIf="isLoading$ | async"
@@ -9,38 +9,27 @@
     </div>
 
     <div class="row">
-      <div class="col-3 offset-1 align-self-center">
-        <div class="row" id="in-amount">
-          <div class="col-1 px-0">
-            <fa-icon [icon]="arrowUpIcon" size="2x"></fa-icon>
-          </div>
-          <div class="col-11 px-5">
-            <h4>£{{ inAmount | number: ".2" }}</h4>
-          </div>
-        </div>
-        <div class="row" id="out-amount">
-          <div class="col-1 px-0">
-            <fa-icon [icon]="arrowDownIcon" size="2x"></fa-icon>
-          </div>
-          <div class="col-11 px-5">
-            <h4>£{{ outAmount | number: ".2" }}</h4>
-          </div>
-        </div>
-        <div class="row"><hr /></div>
-        <div class="row" id="net-amount">
-          <div class="col-1 px-0"><h4>Net:</h4></div>
-          <div class="col-11 px-5">
-            <h4>£{{ inAmount - outAmount | number: ".2" }}</h4>
-          </div>
-        </div>
-      </div>
-      <div class="col-8 align-self-center">
+      <div class="col-12 d-flex align-items-start justify-content-center">
         <app-pie-chart
           *ngIf="!(isLoading$ | async)"
           [sourceData]="formatePieData(monthlyBreakdownData)"
           [view]="pieChartSize"
+          [showLegend]="false"
         >
         </app-pie-chart>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col px-0 d-flex justify-content-center" id="in-amount">
+        <fa-icon [icon]="arrowUpIcon" size="1x"></fa-icon>
+        £{{ inAmount | number: ".2" }}
+      </div>
+      <div class="col px-0 d-flex justify-content-center" id="out-amount">
+        <fa-icon [icon]="arrowDownIcon" size="1x"></fa-icon>
+        £{{ outAmount | number: ".2" }}
+      </div>
+      <div class="col px-0 d-flex justify-content-center">
+        £{{ inAmount - outAmount | number: ".2" }}
       </div>
     </div>
   </mat-dialog-content>

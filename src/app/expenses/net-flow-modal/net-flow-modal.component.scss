@@ -1,5 +1,5 @@
-mat-dialog-container {
-  overflow: hidden;
+fa-icon {
+  padding-right: 0.3rem;
 }
 
 .mat-raised-button {
@@ -13,4 +13,10 @@ mat-dialog-container {
 
 #out-amount {
   color: #cc0000;
+}
+
+@media screen and (max-width: 1200px) {
+  #dialog-title {
+    font-size: 18px;
+  }
 }

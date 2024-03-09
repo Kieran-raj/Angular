@@ -4,12 +4,12 @@ import {
   Inject,
   Input,
   OnInit,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   faArrowTrendDown,
-  faArrowTrendUp,
+  faArrowTrendUp
 } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { CategoricalAmounts } from 'src/app/shared/models/categorical-amounts';
@@ -19,7 +19,7 @@ import { PieData } from '../../shared/models/pie-data';
   selector: 'app-net-flow-modal',
   templateUrl: './net-flow-modal.component.html',
   styleUrls: ['./net-flow-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class NetFlowModalComponent implements OnInit {
   /**
@@ -65,6 +65,11 @@ export class NetFlowModalComponent implements OnInit {
   public pieChartSize = [300, 300];
 
   /**
+   * Pie chart options
+   */
+  // public pieChartSize = [150, 150];
+
+  /**
    * Arrow down icon
    */
   public arrowDownIcon = faArrowTrendDown;
@@ -97,7 +102,7 @@ export class NetFlowModalComponent implements OnInit {
       return data.map((catAmount) => ({
         name: catAmount.category,
         value: catAmount.amount,
-        pctOfTotal: catAmount.percentage,
+        pctOfTotal: catAmount.percentage
       }));
     }
     return [];
