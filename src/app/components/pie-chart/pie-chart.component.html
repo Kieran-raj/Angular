@@ -5,6 +5,8 @@
     [results]="sourceData"
     [animations]="false"
     [customColors]="colors"
+    [legend]="showLegend"
+    [legendPosition]="legendPosition"
   >
     <ng-template #tooltipTemplate let-model="model" class="tooltip">
       <div class="col">
@@ -23,7 +25,7 @@
               <strong>Amount</strong>
             </h5>
             <h4 class="my-0 mx-0" style="color: #233d53">
-              <strong>£{{ model.value | number : ".2" }}</strong>
+              <strong>£{{ model.value | number: ".2" }}</strong>
             </h4>
           </div>
         </div>

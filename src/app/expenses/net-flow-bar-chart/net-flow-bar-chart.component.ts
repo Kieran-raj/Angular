@@ -131,20 +131,16 @@ export class NetFlowBarChartComponent implements OnInit {
     );
 
     dialogConfig.disableClose = false;
-    // dialogConfig.height = '100%';
-    // dialogConfig.width = '100%';
 
     this.dialogInstance = this.dialogService.open(
       NetFlowModalComponent,
       dialogConfig
     );
 
-    this.dialogInstance
-      ?.afterClosed()
-      .subscribe(() => {
-        this.subscriptions.forEach((sub) => sub.unsubscribe());
-      })
-      .unsubscribe();
+    var afterClosed = this.dialogInstance?.afterClosed().subscribe(() => {
+      this.subscriptions.forEach((sub) => sub.unsubscribe());
+      afterClosed.unsubscribe();
+    });
   }
 
   private generateTitle(year: string, month: string): string {
