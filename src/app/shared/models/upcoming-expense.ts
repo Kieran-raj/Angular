@@ -27,5 +27,5 @@ export interface UpcomingExpense {
   /**
    * Date
    */
-  date: string;
+  nextDate: string;
 }

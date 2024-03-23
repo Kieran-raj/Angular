@@ -141,6 +141,6 @@ export class UpcomingGridComponent implements OnInit, OnDestroy, OnChanges {
 
     const difference = Math.abs(currentDate - itemDate);
 
-    return Math.floor(difference / (1000 * 60 * 60 * 24));
+    return Math.floor(difference / (1000 * 60 * 60 * 24)) + 1;
   }
 }
