@@ -176,8 +176,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
    */
   private dialogInstance: MatDialogRef<any, any>;
 
-  private offCanvasRef: NgbOffcanvasRef;
-
   /**
    * Successful update
    * @type {boolean}
@@ -298,7 +296,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
       this.router.events
         .pipe(filter((event) => event instanceof NavigationStart))
         .subscribe((_) => {
-          this.offCanvasRef.close();
+          this.offCanvcasService?.dismiss();
         })
     );
   }
@@ -357,11 +355,11 @@ export class ExpensesComponent implements OnInit, AfterViewInit {
   }
 
   public launchMobileNavBar() {
-    this.offCanvasRef = this.offCanvcasService.open(NavBarComponent);
+    this.offCanvcasService.open(NavBarComponent);
   }
 
   private isMobileDevice() {
-    return window.innerWidth <= 500;
+    return window.innerWidth <= 1200;
   }
 
   private openModal(content: any) {

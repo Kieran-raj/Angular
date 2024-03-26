@@ -1,3 +1,16 @@
+$border-radius: 0.5rem; //place in global css
+
+img {
+  border-radius: 50%;
+  padding: 0% !important;
+  object-fit: cover;
+}
+
+.card,
+.card-body {
+  border-radius: $border-radius;
+}
+
 .header {
   font-size: x-large;
   color: #063a5b;
@@ -34,6 +47,27 @@
   );
 }
 
+#user-photo {
+  height: 8rem;
+  width: 8rem;
+}
+
+#user-name-text {
+  color: #063a5b;
+}
+
 #delete-account-button {
   margin-top: 2rem;
+}
+
+#hamburger-menu-button {
+  background-color: #f8f9fd;
+  color: #063a5b;
+  .material-icons {
+    font-size: 2rem;
+  }
+}
+
+#hamburger-menu-col {
+  width: fit-content;
 }

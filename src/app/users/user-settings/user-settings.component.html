@@ -1,17 +1,55 @@
 <app-header-details [pageTitle]="pageTitle"></app-header-details>
-<div class="header">Account Settings</div>
-<div class="row">
-  <div class="col-lg-4 col-xl-3" style="height: 100%">
+<div class="row px-2 px-xl-0 pb-2 pt-2 pt-xl-2" id="header-row">
+  <div class="col-1 ps-1 pe-0 d-xl-none text-center" id="hamburger-menu-col">
+    <button
+      class="btn shadow-none p-0"
+      id="hamburger-menu-button"
+      (click)="launchMobileNavBar()"
+    >
+      <mat-icon class="d-flex align-items-center" id="mat-icon-menu"
+        >menu</mat-icon
+      >
+    </button>
+  </div>
+  <div
+    class="d-flex align-items-center col-xl-12 col-11 ps-xl-2 ps-2 pe-0 py-xl-2 py-0 header"
+  >
+    Account Settings
+  </div>
+</div>
+<div class="row pt-xl-0">
+  <div
+    class="col-12 col-xl-5"
+    style="height: 100%"
+    *ngIf="showUserSettingsNavBar"
+  >
     <div class="card" id="user-profile-nav-card">
       <div class="card-body shadow">
         <div class="col">
-          <div class="row" *ngFor="let button of buttons">
+          <div class="mb-4 d-xl-none" id="reduced-user-info">
+            <div class="row justify-content-center mb-4">
+              <img
+                alt="User logo"
+                [src]="(user$ | async)?.photo"
+                id="user-photo"
+              />
+            </div>
+            <div class="row align-content-center">
+              <span
+                class="d-flex display-5 justify-content-center"
+                id="user-name-text"
+                >{{ getDisplayUserName(user$ | async) }}</span
+              >
+            </div>
+          </div>
+          <div class="row pb-4 pb-xl-0" *ngFor="let button of buttons">
             <button
               class="btn shadow-none"
               [routerLink]="[button.path]"
               [ngClass]="
                 getRoute().includes(button.path) ? 'selected-button' : ''
               "
+              (click)="setNavBar(button.path)"
             >
               <div class="row">
                 <div class="col-2" [ngClass]="button.customCssClass">
@@ -39,7 +77,11 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-8 col-xl-7" style="height: 100%">
+  <div
+    *ngIf="showComponentSetting"
+    class="col-12 col-xl-7"
+    style="height: 100%"
+  >
     <div class="card">
       <div class="card-body shadow"><router-outlet></router-outlet></div>
     </div>

@@ -144,6 +144,8 @@ import { CreateModalComponent } from './expenses/upcoming-grid/create-modal/crea
     ]),
     BrowserAnimationsModule,
     NgbModule,
+
+    // Material UI Modules
     MatButtonModule,
     MatDialogModule,
     MatDividerModule,
@@ -155,6 +157,7 @@ import { CreateModalComponent } from './expenses/upcoming-grid/create-modal/crea
     MatMenuModule,
     MatIconModule,
     MatTooltipModule,
+
     NgxChartsModule,
     FontAwesomeModule,
     StoreModule.forRoot({

@@ -178,7 +178,6 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
   }
 
   public cancelCallBack() {
-    this.formGroup.controls['displayName'].disable();
     Object.keys(this.initialFormData).forEach((key) => {
       this.formGroup.controls[key].setValue(this.initialFormData[key]);
     });

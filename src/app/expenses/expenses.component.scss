@@ -62,9 +62,11 @@ mat-icon {
 }
 
 #hamburger-menu-button {
+  color: #063a5b;
   background-color: #f8f9fd;
-  width: 25px;
-  height: 25px;
+  .material-icons {
+    font-size: 2rem;
+  }
 }
 
 #hamburger-menu-col {

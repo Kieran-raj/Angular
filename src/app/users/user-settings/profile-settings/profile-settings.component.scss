@@ -23,10 +23,6 @@ hr {
   opacity: 8%;
 }
 
-.header-button {
-  margin-top: 1rem;
-}
-
 .form-labels {
   color: #063a5b;
   font-weight: 500;
@@ -83,21 +79,17 @@ hr {
   margin-left: 3rem;
 }
 
-#header-text-col {
-  margin-top: 1rem;
-  margin-right: 0rem;
-  padding-right: 0;
+#return-back-button {
+  color: #063a5b;
 }
 
-@media screen and (max-width: 1400px) {
-  #user-photo {
-    height: 80px;
-    width: 80px;
-  }
+#end-of-form-breakline {
+  margin-bottom: 0.5rem;
 }
 
 @media screen and (max-width: 1200px) {
-  .header-button {
-    margin-left: 1.6rem;
+  #user-photo {
+    height: 80px;
+    width: 80px;
   }
 }
